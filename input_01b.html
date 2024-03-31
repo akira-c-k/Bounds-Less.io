@@ -1,0 +1,1176 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <title>Bounds-Less</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /*-------------
+            ---   all   ---
+            -------------*/
+            html {
+                background-color: rgb(255,255,255);
+            }
+
+            /*--------------
+            ---   body   ---
+            --------------*/
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin: 0 auto;
+                padding: 0 auto;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                font-family: 'Times New Roman', serif;
+            }
+
+            /*---------------
+            ---   pulse   ---
+            ---------------*/
+            @keyframes pulse {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: .25;
+                    transform: scale(.75);
+                }
+            }
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+            .pulse_container {
+                width: 120px;
+                display: flex;
+                margin: 0 auto;
+                justify-content: space-between;
+                align-items: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .pulse_bubble {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: rgba(85,170,255,1);
+            }
+            .pulse_bubble_00 {
+                animation: pulse .4s ease 0s infinite alternate;
+            }
+            .pulse_bubble_01 {
+                animation: pulse .4s ease .2s infinite alternate;
+            }
+            .pulse_bubble_02 {
+                animation: pulse .4s ease .4s infinite alternate;
+            }
+
+            /*----------------
+            ---   header   ---
+            -----------------*/
+            header {
+                position: fixed;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 10%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                background-color: rgb(85,85,85);
+                justify-content: space-between;
+                z-index: 999;
+            }
+            header .logo_img {
+                margin-left: 10px;
+                max-height: 80%;
+            }
+            header .right {
+                display: flex;
+                margin-left: auto;
+            }
+            header .question_icon {                
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                justify-content: center;
+                margin: 0px 10px;
+            }
+            header .hamburger_icon {
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                color: rgb(255,255,255);
+                font-size: 30px;
+                margin: 0px 10px;
+            }
+            header .modal_container {
+                display: none;
+                position: fixed;
+                top: 50px;
+                right: 50px;
+                width: 260px;
+                height: 150px;
+                background: rgba(0, 0, 0, 0.5);
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            }
+            header .modal {
+                display: flex;
+                flex-direction: column;
+                background-color: rgb(255,255,255);
+                width: 220px;
+                height: 120px;
+                padding: 5px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                align-items: center;
+            }
+            header .transition {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 80%;
+                height: 30%;
+                margin: 3%;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            header .transition:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*--------------
+            ---   main   ---
+            ---------------*/
+            main {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(255,255,255);
+            }
+
+            /*-----------------------
+            ---   main: support   ---
+            -----------------------*/
+            main .support {
+                position: fixed;
+                top: 12%;
+                left: 10%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            main .msg {
+                display: block;
+                margin-right: 20px;
+            }
+            main .all_btn {
+                width: 120px;
+                height: 20px;
+                font-size: 10px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .all_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .all_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .all_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*-------------------------
+            ---   main: accordion   ---
+            -------------------------*/
+            main .details {
+                position: fixed;
+                top: 15%;
+                left: 10%;
+                width: 80%;
+                height: 600px;
+                overflow: scroll;
+            }
+            main .details_summary {
+                position: relative;
+                display: block;
+                padding: 20px;
+                color: rgba(0,0,0,1);
+                font-weight: bold;
+                text-align: left;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+            main .work_summary_odd {
+                background-color: rgba(85,85,255,0.85);
+                color: rgba(255,255,255,1);
+            }
+            main .work_summary_even {
+                background-color: rgba(15,85,255,1.00);
+                color: rgba(255,255,255,1);
+            }
+            main .communication_summary_odd {
+                background-color: rgba(255,85,85,0.85);
+                color: rgba(255,255,255,1);
+            }
+            main .communication_summary_even {
+                background-color: rgba(255,85,15,1.00);
+                color: rgba(255,255,255,1);
+            }
+            main .details_btn {
+                display: inline-block;
+                position: absolute;
+                top: 35%;
+                left: 2%;
+                &:before, &:after {
+                    content: "";
+                    background-color: rgba(255,255,255,1);
+                    border-radius: 10px;
+                    width: 18px;
+                    height: 4px;
+                    position: absolute;
+                    top: 7px;
+                    left: 0;
+                }
+                &:before {  
+                    transition: height 2.0s;
+                    width: 4px;
+                    height: 18px;
+                    top: 0;
+                    left: 7px;
+                }
+                &.is_active {
+                    &:before {
+                        transition: height 2.0s;
+                        width: 4px;
+                        height: 0px;
+                        top: 0;
+                        left: 7px;
+                    }
+                }
+            }
+            main .details_txt {
+                display: inline-block;
+                margin-left: 40px;
+            }
+            main .details_content {
+                /*--- transition setting ---*/
+                transition: height 2s;
+                height: 0px;
+                overflow: hidden;
+                /*--- other setting ---*/
+                color: rgba(0,0,0,1);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            main .details_content .is_active {
+                /*--- transition setting ---*/
+                transition: height 2s;
+                height: 180px;
+                overflow: hidden;
+            }
+            main .work_content_odd {
+                width: 100%;
+                height: 20%;
+                background-color: rgba(85,85,255,0.15);
+            }
+            main .work_content_even {
+                width: 100%;
+                height: 20%;
+                background-color: rgba(15,15,170,0.15);
+            }
+            main .communication_content_odd {
+                width: 100%;
+                height: 20%;
+                background-color: rgba(255,85,85,0.15);
+            }
+            main .communication_content_even {
+                width: 100%;
+                height: 20%;
+                background-color: rgba(170,15,15,0.15);
+            }
+            main .details_levels {
+                padding: 0px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            main .details_level {
+                display: inline-block;
+                text-align: left;
+                padding-left: 80px;
+            }
+            main .details_check {
+                margin-right: 20px;
+            }
+
+            /*-------------------
+            ---   main: btn   ---
+            -------------------*/
+            main .next {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            main .next_btn {
+                position: fixed;
+                top: 90%;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .next_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .next_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .next_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*----------------
+            ---   footer   ---
+            -----------------*/
+            footer {
+                position: fixed;
+                top: 95%;
+                left: 0%;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 5%;
+                background-color: rgba(0,0,0,0.15);
+            }
+            footer .footer_link {
+                width: 100%;
+                height: 100%;
+                background-image: url("media/logout.png");
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: -1%;
+            }
+            footer .footer_tips {
+                display: none;
+            }
+            footer .footer_link:hover + .footer_tips {
+                display: block;
+                position: absolute;
+                background-color: rgb(242,242,242);
+                border: 1px solid rgb(255,255,255);
+                color: rgb(97,64,57);
+                padding: 5px;
+                margin-bottom: 80px;
+                margin-right: 0px;
+                z-index: 1;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!---------------
+        ---   pulse   ---
+        ---------------->
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner_box">
+                <div class="pulse_container">  
+                    <div class="pulse_bubble pulse_bubble_00"></div>
+                    <div class="pulse_bubble pulse_bubble_01"></div>
+                    <div class="pulse_bubble pulse_bubble_02"></div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------
+        ---   header   ---
+        ----------------->
+        <header>
+            <img class="logo_img" src="media/logo.svg" id="logo_img">
+            <div class="right">
+                <div class="question_icon" id="question_icon"><img src="media/question.png" width="40px" height="40px"></div>
+                <div class="hamburger_icon" id="hamburger_icon">&#9776;</div>
+                <div class="modal_container" id="modal_container">
+                    <div class="modal" id="modal">
+                        <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
+                        <button class="transition_02 transition" id="transition_02" value="02">経験年数の更新</button>
+                        <button class="transition_03 transition" id="transition_03" value="03">成果・ビジョンの更新</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--------------
+        ---   main   ---
+        --------------->
+        <main>
+            <div class="support">
+                <div class="msg" id="msg"></div>
+                <button class="all_btn" id="all_btn" onclick="openAccordion()">全て開く／閉じる</button>
+            </div>
+
+            <div class="details">
+                <!--------------------------
+                ---   main: details_01   ---
+                --------------------------->
+                <div id="details_01">
+                    <div class="details_summary work_summary_odd" id="details_summary_01" onclick="accordionAction()">
+                        <span class="details_btn" id="details_btn_01"></span>
+                        <span class="details_txt" id="details_txt_01">現状の把握：情報収集の範囲</span>
+                    </div>
+                    <div class="details_content" id="details_content_01">
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">1:  担当業務に必要な情報を収集している</span>
+                            <input type="checkbox" class="details_check" id="details_level_01_01">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">2:  チームレベルの業務に必要な情報を収集・分析している</span>
+                            <input type="checkbox" class="details_check" id="details_level_01_02">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">3:  所属する部署に関連する業務に必要な情報を収集・分析している</span>
+                            <input type="checkbox" class="details_check" id="details_level_01_03">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">4:  他部署や顧客等の情報を収集し、自社に与える影響を多角的に分析している</span>
+                            <input type="checkbox" class="details_check" id="details_level_01_04">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">5:  業界全体の情報を収集し、自社に与える影響を多角的に分析している</span>
+                            <input type="checkbox" class="details_check" id="details_level_01_05">
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: details_01   ---
+                --------------------------->
+                <!--------------------------
+                ---   main: details_02   ---
+                --------------------------->
+                <div id="details_02">
+                    <div class="details_summary work_summary_even" id="details_summary_02" onclick="accordionAction()">
+                        <span class="details_btn" id="details_btn_02"></span>
+                        <span class="details_txt" id="details_txt_02">課題の設定：解決困難度から見た課題のレベル</span>
+                    </div>
+                    <div class="details_content" id="details_content_02">
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">1:  自ら課題を設定することはない</span>
+                            <input type="checkbox" class="details_check" id="details_level_02_01">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">2:  決まった対応策で対応可能な問題を扱っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_02_02">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">3:  既存の解決策の中から最適な方法を選択することで対応可能な問題を扱っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_02_03">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">4:  既存の解決策を応用することで対応可能な問題を扱っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_02_04">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">5:  前例がなく、自ら仮説を立てて解決策を導き出すような問題を扱っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_02_05">
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: details_02   ---
+                --------------------------->
+                <!--------------------------
+                ---   main: details_03   ---
+                --------------------------->
+                <div id="details_03">
+                    <div class="details_summary work_summary_odd" id="details_summary_03" onclick="accordionAction()">
+                        <span class="details_btn" id="details_btn_03"></span>
+                        <span class="details_txt" id="details_txt_03">計画の立案：関係者の影響範囲</span>
+                    </div>
+                    <div class="details_content" id="details_content_03">
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">1:  担当業務の計画を立案している</span>
+                            <input type="checkbox" class="details_check" id="details_level_03_01">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">2:  チームレベルの計画・施策を立案している</span>
+                            <input type="checkbox" class="details_check" id="details_level_03_02">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">3:  所属する部署の計画・施策を立案している</span>
+                            <input type="checkbox" class="details_check" id="details_level_03_03">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">4:  他部署にも影響を与えるような計画・戦略を立案している</span>
+                            <input type="checkbox" class="details_check" id="details_level_03_04">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">5:  会社全体の計画・戦略を立案している</span>
+                            <input type="checkbox" class="details_check" id="details_level_03_05">
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: details_03   ---
+                --------------------------->
+                <!--------------------------
+                ---   main: details_04   ---
+                --------------------------->
+                <div id="details_04">
+                    <div class="details_summary work_summary_even" id="details_summary_04" onclick="accordionAction()">
+                        <span class="details_btn" id="details_btn_04"></span>
+                        <span class="details_txt" id="details_txt_04">課題の遂行：課題の遂行方法の新規性</span>
+                    </div>
+                    <div class="details_content" id="details_content_04">
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">1:  指示を受け、既存の方法を用いて進めている</span>
+                            <input type="checkbox" class="details_check" id="details_level_04_01">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">2:  おおまかな指示を受け、既存の方法から最適な方法を選択して進めている</span>
+                            <input type="checkbox" class="details_check" id="details_level_04_02">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">3:  既存の方法を自分なりに改善して進めている</span>
+                            <input type="checkbox" class="details_check" id="details_level_04_03">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">4:  既存の方法を活用しつつ、一部について新しい方法を考案して進めている</span>
+                            <input type="checkbox" class="details_check" id="details_level_04_04">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">5:  既存の方法がない場合には、必要に応じて新しい方法を考案して進めている</span>
+                            <input type="checkbox" class="details_check" id="details_level_04_05">
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: details_04   ---
+                --------------------------->
+                <!--------------------------
+                ---   main: details_05   ---
+                --------------------------->
+                <div id="details_05">
+                    <div class="details_summary work_summary_odd" id="details_summary_05" onclick="accordionAction()">
+                        <span class="details_btn" id="details_btn_05"></span>
+                        <span class="details_txt" id="details_txt_05">状況への対応：意思決定のレベル</span>
+                    </div>
+                    <div class="details_content" id="details_content_05">
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">1:  先輩や上司に指示を仰いで対応している</span>
+                            <input type="checkbox" class="details_check" id="details_level_05_01">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">2:  既存の方法やマニュアルに従って対応している</span>
+                            <input type="checkbox" class="details_check" id="details_level_05_02">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">3:  自らの担当業務において、既存の方法やマニュアルを変更して対応している</span>
+                            <input type="checkbox" class="details_check" id="details_level_05_03">
+                        </div>
+                        <div class="details_levels work_content_even">
+                            <span class="details_level">4:  自部門のリスクを考慮して、既存の方法やマニュアルを超えた対応をしている</span>
+                            <input type="checkbox" class="details_check" id="details_level_05_04">
+                        </div>
+                        <div class="details_levels work_content_odd">
+                            <span class="details_level">5:  経営上のリスクを考慮して、既存の方法やマニュアルを超えた対応をしている</span>
+                            <input type="checkbox" class="details_check" id="details_level_05_05">
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: details_05   ---
+                --------------------------->
+                <!--------------------------
+                ---   main: details_06   ---
+                --------------------------->
+                <div id="details_06">
+                    <div class="details_summary communication_summary_even" id="details_summary_06" onclick="accordionAction()">
+                        <span class="details_btn" id="details_btn_06"></span>
+                        <span class="details_txt" id="details_txt_06">社内対応：コミュニケーション相手の属性</span>
+                    </div>
+                    <div class="details_content" id="details_content_06">
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">1:  所属する部署の人に、業務連絡や担当業務の説明を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_06_01">
+                        </div>
+                        <div class="details_levels communication_content_even">
+                            <span class="details_level">2:  所属する部署の人と、合意を得るための交渉や折衝を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_06_02">
+                        </div>
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">3:  他部署の人に、業務連絡や担当業務の説明を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_06_03">
+                        </div>
+                        <div class="details_levels communication_content_even">
+                            <span class="details_level">4:  他部署の人と、合意を得るための交渉や折衝を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_06_04">
+                        </div>
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">5:  他部署の人と、新たな価値を生み出すためのコミュニケーションを行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_06_05">
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: details_06   ---
+                --------------------------->
+                <!--------------------------
+                ---   main: details_07   ---
+                --------------------------->
+                <div id="details_07">
+                    <div class="details_summary communication_summary_odd" id="details_summary_07" onclick="accordionAction()">
+                        <span class="details_btn" id="details_btn_07"></span>
+                        <span class="details_txt" id="details_txt_07">社外対応：コミュニケーションの目的</span>
+                    </div>
+                    <div class="details_content" id="details_content_07">
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">1:  社外の人とコミュニケーションをとることはない</span>
+                            <input type="checkbox" class="details_check" id="details_level_07_01">
+                        </div>
+                        <div class="details_levels communication_content_even">
+                            <span class="details_level">2:  情報交換・情報収集等を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_07_02">
+                        </div>
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">3:  業務を遂行するための連絡や調整を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_07_03">
+                        </div>
+                        <div class="details_levels communication_content_even">
+                            <span class="details_level">4:  合意を得るための交渉や折衝を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_07_04">
+                        </div>
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">5:  新たな価値を生み出すためのコミュニケーションを行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_07_05">
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: details_07   ---
+                --------------------------->
+                <!--------------------------
+                ---   main: details_08   ---
+                --------------------------->
+                <div id="details_08">
+                    <div class="details_summary communication_summary_even" id="details_summary_08" onclick="accordionAction()">
+                        <span class="details_btn" id="details_btn_08"></span>
+                        <span class="details_txt" id="details_txt_08">上司対応：コミュニケーションの複雑性</span>
+                    </div>
+                    <div class="details_content" id="details_content_08">
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">1:  直属の上司に、こまめに、自身の担当業務の報告・連絡・相談を行ったうえで、作業の進め方の指示や、フィードバックを受けている</span>
+                            <input type="checkbox" class="details_check" id="details_level_08_01">
+                        </div>
+                        <div class="details_levels communication_content_even">
+                            <span class="details_level">2:  直属の上司に、定期的に、自身の担当業務の進捗報告を行った上で、問題が生じた場合には相談を行い、フィードバックを受けている</span>
+                            <input type="checkbox" class="details_check" id="details_level_08_02">
+                        </div>
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">3:  所属する部署の管理職に、チームの状況を報告するとともに、課題やそれに対する改善策の提案を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_08_03">
+                        </div>
+                        <div class="details_levels communication_content_even">
+                            <span class="details_level">4:  他部署の管理職にも、所属する部署の状況を報告するとともに、課題やそれに対する改善策の提案を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_08_04">
+                        </div>
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">5:  経営層にも、自社の課題やそれに対する改善策を提案している</span>
+                            <input type="checkbox" class="details_check" id="details_level_08_05">
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: details_08   ---
+                --------------------------->
+                <!--------------------------
+                ---   main: details_09   ---
+                --------------------------->
+                <div id="details_09">
+                    <div class="details_summary communication_summary_odd" id="details_summary_09" onclick="accordionAction()">
+                        <span class="details_btn" id="details_btn_09"></span>
+                        <span class="details_txt" id="details_txt_09">部下マネジメント：マネジメントの責任範囲</span>
+                    </div>
+                    <div class="details_content" id="details_content_09">
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">1:  上位者の指示に従って業務に従事する立場であり、他者に助言等を行うことはない</span>
+                            <input type="checkbox" class="details_check" id="details_level_09_01">
+                        </div>
+                        <div class="details_levels communication_content_even">
+                            <span class="details_level">2:  同僚や後輩に、助言を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_09_02">
+                        </div>
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">3:  同僚や後輩に、業務の進捗管理を行いながら、指導を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_09_03">
+                        </div>
+                        <div class="details_levels communication_content_even">
+                            <span class="details_level">4:  部下に、キャリアプランをふまえた指導・育成を行っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_09_04">
+                        </div>
+                        <div class="details_levels communication_content_odd">
+                            <span class="details_level">5:  部下に、会社のビジョンや経営戦略に基づいて、権限を委譲したり、チャレンジングな仕事を与えたりすることで、指導・育成を図っている</span>
+                            <input type="checkbox" class="details_check" id="details_level_09_05">
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: details_09   ---
+                --------------------------->
+            </div>
+
+            <div class="next">
+                <button class="next_btn" id="next_btn" onclick="view_transition(event)">次へ</button>
+                <span class="next_tips" id="next_tips"></span>
+            </div>
+        </main>
+
+        <footer>
+            <a href="login.html" class="footer_link"></a>
+            <span class="footer_tips">ログアウト</span>
+        </footer>
+
+        <script>
+            ///////////////////
+            //   variables   //
+            ///////////////////
+            const api_gateway = "https://atusbl52m9.execute-api.us-east-1.amazonaws.com/boundsless";
+            const userid = sessionStorage.getItem("userid");
+            const name = sessionStorage.getItem("name");
+            const question_icon = document.getElementById("question_icon");
+            const question_modal_container = document.getElementById("question_modal_container");
+            const question_close = document.getElementById("question_close");
+            const hamburger_icon = document.getElementById("hamburger_icon");
+            const modal_container = document.getElementById("modal_container");
+            const next_btn = document.getElementById("next_btn");
+            const next_tips = document.getElementById("next_tips");
+            const transition_01 = document.getElementById("transition_01");
+            const transition_02 = document.getElementById("transition_02");
+            const transition_03 = document.getElementById("transition_03");
+
+            let cntOpen = 0;
+
+            ///////////////////
+            //   functions   //
+            ///////////////////
+            function showLoading() {
+                document.getElementById("loading").style.display = "block";
+            };
+            function hideLoading() {
+                document.getElementById("loading").style.display = "none";
+            };
+
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("msg").innerHTML = name + "さんのポータブルスキル階層";
+                portableskill_understand_level = Number(sessionStorage.getItem("portableskill_understand_level"));
+                portableskill_issue_level = Number(sessionStorage.getItem("portableskill_issue_level"));
+                portableskill_plan_level = Number(sessionStorage.getItem("portableskill_plan_level"));
+                portableskill_do_level = Number(sessionStorage.getItem("portableskill_do_level"));
+                portableskill_response_level = Number(sessionStorage.getItem("portableskill_response_level"));
+                portableskill_in_level = Number(sessionStorage.getItem("portableskill_in_level"));
+                portableskill_out_level = Number(sessionStorage.getItem("portableskill_out_level"));
+                portableskill_senior_level = Number(sessionStorage.getItem("portableskill_senior_level"));
+                portableskill_junior_level = Number(sessionStorage.getItem("portableskill_junior_level"));
+
+                document.getElementById(
+                    "details_level_01_0" + String(portableskill_understand_level)
+                ).checked = true
+                document.getElementById(
+                    "details_level_02_0" + String(portableskill_issue_level)
+                ).checked = true
+                document.getElementById(
+                    "details_level_03_0" + String(portableskill_plan_level)
+                ).checked = true
+                document.getElementById(
+                    "details_level_04_0" + String(portableskill_do_level)
+                ).checked = true
+                document.getElementById(
+                    "details_level_05_0" + String(portableskill_response_level)
+                ).checked = true
+                document.getElementById(
+                    "details_level_06_0" + String(portableskill_in_level)
+                ).checked = true
+                document.getElementById(
+                    "details_level_07_0" + String(portableskill_out_level)
+                ).checked = true
+                document.getElementById(
+                    "details_level_08_0" + String(portableskill_senior_level)
+                ).checked = true
+                document.getElementById(
+                    "details_level_09_0" + String(portableskill_junior_level)
+                ).checked = true
+            });
+
+            document.addEventListener('DOMContentLoaded', function() {
+                let checkboxes = document.querySelectorAll('.details_check');
+                checkboxes.forEach(function(checkbox) {
+                    checkbox.addEventListener('change', function() {
+                        if (this.checked) {
+                            let parentDiv = this.closest('.details_content');
+                            let siblingCheckboxes = parentDiv.querySelectorAll('.details_check');
+                            
+                            siblingCheckboxes.forEach(function(siblingCheckbox) {
+                                if (siblingCheckbox !== checkbox) {
+                                    siblingCheckbox.checked = false;
+                                }
+                            });
+                        }
+                    });
+                });
+            });
+
+            function accordionAction() {
+                let details_btn = document.getElementById("details_btn_" + event.target.id.slice(-2));
+                let details_content = document.getElementById("details_content_" + event.target.id.slice(-2));
+
+                if (details_btn.classList.contains("is_active")) {
+                    details_btn.classList.remove("is_active");
+                    details_content.classList.remove("is_active");
+                    details_content.style.height = "0px";
+                } else {
+                    details_btn.classList.add("is_active");
+                    details_content.classList.add("is_active");
+                    details_content.style.height = "180px";
+                }
+            };
+
+            function openAccordion() {
+                let details_btn_01 = document.getElementById("details_btn_01");
+                let details_content_01 = document.getElementById("details_content_01");
+                let details_btn_02 = document.getElementById("details_btn_02");
+                let details_content_02 = document.getElementById("details_content_02");
+                let details_btn_03 = document.getElementById("details_btn_03");
+                let details_content_03 = document.getElementById("details_content_03");
+                let details_btn_04 = document.getElementById("details_btn_04");
+                let details_content_04 = document.getElementById("details_content_04");
+                let details_btn_05 = document.getElementById("details_btn_05");
+                let details_content_05 = document.getElementById("details_content_05");
+                let details_btn_06 = document.getElementById("details_btn_06");
+                let details_content_06 = document.getElementById("details_content_06");
+                let details_btn_07 = document.getElementById("details_btn_07");
+                let details_content_07 = document.getElementById("details_content_07");
+                let details_btn_08 = document.getElementById("details_btn_08");
+                let details_content_08 = document.getElementById("details_content_08");
+                let details_btn_09 = document.getElementById("details_btn_09");
+                let details_content_09 = document.getElementById("details_content_09");
+
+                if (cntOpen % 2 === 0) {
+                    details_btn_01.classList.add("is_active");
+                    details_content_01.classList.add("is_active");
+                    details_content_01.style.height = "180px";
+                    details_btn_02.classList.add("is_active");
+                    details_content_02.classList.add("is_active");
+                    details_content_02.style.height = "180px";
+                    details_btn_03.classList.add("is_active");
+                    details_content_03.classList.add("is_active");
+                    details_content_03.style.height = "180px";
+                    details_btn_04.classList.add("is_active");
+                    details_content_04.classList.add("is_active");
+                    details_content_04.style.height = "180px";
+                    details_btn_05.classList.add("is_active");
+                    details_content_05.classList.add("is_active");
+                    details_content_05.style.height = "180px";
+                    details_btn_06.classList.add("is_active");
+                    details_content_06.classList.add("is_active");
+                    details_content_06.style.height = "180px";
+                    details_btn_07.classList.add("is_active");
+                    details_content_07.classList.add("is_active");
+                    details_content_07.style.height = "180px";
+                    details_btn_08.classList.add("is_active");
+                    details_content_08.classList.add("is_active");
+                    details_content_08.style.height = "180px";
+                    details_btn_09.classList.add("is_active");
+                    details_content_09.classList.add("is_active");
+                    details_content_09.style.height = "180px";
+                    cntOpen += 1
+                } else {
+                    details_btn_01.classList.remove("is_active");
+                    details_content_01.classList.remove("is_active");
+                    details_content_01.style.height = "0px";
+                    details_btn_02.classList.remove("is_active");
+                    details_content_02.classList.remove("is_active");
+                    details_content_02.style.height = "0px";
+                    details_btn_03.classList.remove("is_active");
+                    details_content_03.classList.remove("is_active");
+                    details_content_03.style.height = "0px";
+                    details_btn_04.classList.remove("is_active");
+                    details_content_04.classList.remove("is_active");
+                    details_content_04.style.height = "0px";
+                    details_btn_05.classList.remove("is_active");
+                    details_content_05.classList.remove("is_active");
+                    details_content_05.style.height = "0px";
+                    details_btn_06.classList.remove("is_active");
+                    details_content_06.classList.remove("is_active");
+                    details_content_06.style.height = "0px";
+                    details_btn_07.classList.remove("is_active");
+                    details_content_07.classList.remove("is_active");
+                    details_content_07.style.height = "0px";
+                    details_btn_08.classList.remove("is_active");
+                    details_content_08.classList.remove("is_active");
+                    details_content_08.style.height = "0px";
+                    details_btn_09.classList.remove("is_active");
+                    details_content_09.classList.remove("is_active");
+                    details_content_09.style.height = "0px";
+                    cntOpen += 1
+                }
+            };
+
+            function view_transition(event) {
+                let now = new Date();
+                let year = now.getFullYear();
+                let month = ("0" + (now.getMonth() + 1)).slice(-2);
+                let day = ("0" + now.getDate()).slice(-2);
+                let hours = ("0" + now.getHours()).slice(-2);
+                let minutes = ("0" + now.getMinutes()).slice(-2);
+                let seconds = ("0" + now.getSeconds()).slice(-2);
+                let timestamp = year + month + day + hours + minutes + seconds;
+
+                if (details_level_01_01.checked === true) {
+                    tmp_portableskill_understand_level = 1
+                } else if (details_level_01_02.checked === true) {
+                    tmp_portableskill_understand_level = 2
+                } else if (details_level_01_03.checked === true) {
+                    tmp_portableskill_understand_level = 3
+                } else if (details_level_01_04.checked === true) {
+                    tmp_portableskill_understand_level = 4
+                } else if (details_level_01_05.checked === true) {
+                    tmp_portableskill_understand_level = 5
+                };
+                if (details_level_02_01.checked === true) {
+                    tmp_portableskill_issue_level = 1
+                } else if (details_level_02_02.checked === true) {
+                    tmp_portableskill_issue_level = 2
+                } else if (details_level_02_03.checked === true) {
+                    tmp_portableskill_issue_level = 3
+                } else if (details_level_02_04.checked === true) {
+                    tmp_portableskill_issue_level = 4
+                } else if (details_level_02_05.checked === true) {
+                    tmp_portableskill_issue_level = 5
+                };
+                if (details_level_03_01.checked === true) {
+                    tmp_portableskill_plan_level = 1
+                } else if (details_level_03_02.checked === true) {
+                    tmp_portableskill_plan_level = 2
+                } else if (details_level_03_03.checked === true) {
+                    tmp_portableskill_plan_level = 3
+                } else if (details_level_03_04.checked === true) {
+                    tmp_portableskill_plan_level = 4
+                } else if (details_level_03_05.checked === true) {
+                    tmp_portableskill_plan_level = 5
+                };
+                if (details_level_04_01.checked === true) {
+                    tmp_portableskill_do_level = 1
+                } else if (details_level_04_02.checked === true) {
+                    tmp_portableskill_do_level = 2
+                } else if (details_level_04_03.checked === true) {
+                    tmp_portableskill_do_level = 3
+                } else if (details_level_04_04.checked === true) {
+                    tmp_portableskill_do_level = 4
+                } else if (details_level_04_05.checked === true) {
+                    tmp_portableskill_do_level = 5
+                };
+                if (details_level_05_01.checked === true) {
+                    tmp_portableskill_response_level = 1
+                } else if (details_level_05_02.checked === true) {
+                    tmp_portableskill_response_level = 2
+                } else if (details_level_05_03.checked === true) {
+                    tmp_portableskill_response_level = 3
+                } else if (details_level_05_04.checked === true) {
+                    tmp_portableskill_response_level = 4
+                } else if (details_level_05_05.checked === true) {
+                    tmp_portableskill_response_level = 5
+                };
+                if (details_level_06_01.checked === true) {
+                    tmp_portableskill_in_level = 1
+                } else if (details_level_06_02.checked === true) {
+                    tmp_portableskill_in_level = 2
+                } else if (details_level_06_03.checked === true) {
+                    tmp_portableskill_in_level = 3
+                } else if (details_level_06_04.checked === true) {
+                    tmp_portableskill_in_level = 4
+                } else if (details_level_06_05.checked === true) {
+                    tmp_portableskill_in_level = 5
+                };
+                if (details_level_07_01.checked === true) {
+                    tmp_portableskill_out_level = 1
+                } else if (details_level_07_02.checked === true) {
+                    tmp_portableskill_out_level = 2
+                } else if (details_level_07_03.checked === true) {
+                    tmp_portableskill_out_level = 3
+                } else if (details_level_07_04.checked === true) {
+                    tmp_portableskill_out_level = 4
+                } else if (details_level_07_05.checked === true) {
+                    tmp_portableskill_out_level = 5
+                };
+                if (details_level_08_01.checked === true) {
+                    tmp_portableskill_senior_level = 1
+                } else if (details_level_08_02.checked === true) {
+                    tmp_portableskill_senior_level = 2
+                } else if (details_level_08_03.checked === true) {
+                    tmp_portableskill_senior_level = 3
+                } else if (details_level_08_04.checked === true) {
+                    tmp_portableskill_senior_level = 4
+                } else if (details_level_08_05.checked === true) {
+                    tmp_portableskill_senior_level = 5
+                };
+                if (details_level_09_01.checked === true) {
+                    tmp_portableskill_junior_level = 1
+                } else if (details_level_09_02.checked === true) {
+                    tmp_portableskill_junior_level = 2
+                } else if (details_level_09_03.checked === true) {
+                    tmp_portableskill_junior_level = 3
+                } else if (details_level_09_04.checked === true) {
+                    tmp_portableskill_junior_level = 4
+                } else if (details_level_09_05.checked === true) {
+                    tmp_portableskill_junior_level = 5
+                };
+
+                let data = {
+                    "task": "save_01b",
+                    "timestamp": timestamp,
+                    "userid": userid,
+                    "name": name,
+                    "tmp_portableskill_understand_level": tmp_portableskill_understand_level,
+                    "tmp_portableskill_issue_level": tmp_portableskill_issue_level,
+                    "tmp_portableskill_plan_level": tmp_portableskill_plan_level,
+                    "tmp_portableskill_do_level": tmp_portableskill_do_level,
+                    "tmp_portableskill_response_level": tmp_portableskill_response_level,
+                    "tmp_portableskill_in_level": tmp_portableskill_in_level,
+                    "tmp_portableskill_out_level": tmp_portableskill_out_level,
+                    "tmp_portableskill_senior_level": tmp_portableskill_senior_level,
+                    "tmp_portableskill_junior_level": tmp_portableskill_junior_level
+                };
+
+                console.log({
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+                showLoading();
+                fetch(api_gateway, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log("Success!!");
+                    sessionStorage.setItem("portableskill_understand_level", tmp_portableskill_understand_level);
+                    sessionStorage.setItem("portableskill_issue_level", tmp_portableskill_issue_level);
+                    sessionStorage.setItem("portableskill_plan_level", tmp_portableskill_plan_level);
+                    sessionStorage.setItem("portableskill_do_level", tmp_portableskill_do_level);
+                    sessionStorage.setItem("portableskill_response_level", tmp_portableskill_response_level);
+                    sessionStorage.setItem("portableskill_in_level", tmp_portableskill_in_level);
+                    sessionStorage.setItem("portableskill_out_level", tmp_portableskill_out_level);
+                    sessionStorage.setItem("portableskill_senior_level", tmp_portableskill_senior_level);
+                    sessionStorage.setItem("portableskill_junior_level", tmp_portableskill_junior_level);
+                    hideLoading();
+                    window.location.href = "input_02.html";
+                })
+                .catch(error => {
+                    console.error("API Error to api_gateway:", error);
+                });
+            };
+
+            hamburger_icon.addEventListener("click", () => {
+                if (hamburger_icon.innerHTML === "×" | hamburger_icon.innerHTML === "&times;") {
+                    modal_container.style.display = "none";
+                    hamburger_icon.innerHTML = "&#9776;";
+                } else {
+                    modal_container.style.display = "flex";
+                    hamburger_icon.innerHTML = "&times;";
+                };
+            });
+            
+            question_icon.addEventListener("click", () => {
+                window.location.href = "qa.html";
+            });
+
+            transition_01.addEventListener("click", function() {
+                window.location.href = "index.html";
+            });
+
+            transition_02.addEventListener("click", function() {
+                window.location.href = "index.html"; // have to change
+            });
+
+            transition_03.addEventListener("click", function() {
+                window.location.href = "index.html"; // have to change
+            });
+        </script>
+    </body>
+</html>

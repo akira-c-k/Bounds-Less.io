@@ -1,0 +1,367 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <title>Bounds-Less</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /*-------------
+            ---   all   ---
+            -------------*/
+            html {
+                background-color: rgb(255,255,255);
+            }
+
+            /*--------------
+            ---   body   ---
+            --------------*/
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin: 0 auto;
+                padding: 0 auto;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                font-family: 'Times New Roman', serif;
+            }
+
+            /*---------------
+            ---   pulse   ---
+            ---------------*/
+            @keyframes pulse {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: .25;
+                    transform: scale(.75);
+                }
+            }
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+            .pulse_container {
+                width: 120px;
+                display: flex;
+                margin: 0 auto;
+                justify-content: space-between;
+                align-items: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .pulse_bubble {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: rgba(85,170,255,1);
+            }
+            .pulse_bubble_00 {
+                animation: pulse .4s ease 0s infinite alternate;
+            }
+            .pulse_bubble_01 {
+                animation: pulse .4s ease .2s infinite alternate;
+            }
+            .pulse_bubble_02 {
+                animation: pulse .4s ease .4s infinite alternate;
+            }
+
+            /*----------------
+            ---   header   ---
+            -----------------*/
+            header {
+                position: fixed;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 10%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                background-color: rgb(85,85,85);
+                z-index: 999;
+            }
+            header .logo_img {
+                margin-left: 10px;
+                max-height: 80%;
+            }
+
+            /*--------------
+            ---   main   ---
+            ---------------*/
+            main {
+                width: 100%;
+                height: 85%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin-top: 7%;
+            }
+            main .top_part {
+                position: fixed;
+                top: 45%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+            main .center_part {
+                position: fixed;
+                top: 50%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+            main .bottom_part {
+                position: fixed;
+                top: 55%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            main .left_part {
+                width: 120px;
+                align-items: center;
+                justify-content: center;
+            }
+            main .right_part {
+                width: 160px;
+                align-items: center;
+                justify-content: center;
+            }
+            main .transition {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 120px;
+                height: 30px;
+                margin: 3%;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .transition:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: '';
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .transition:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .transition:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*----------------
+            ---   footer   ---
+            -----------------*/
+            footer {
+                position: fixed;
+                top: 95%;
+                left: 0%;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 5%;
+                background-color: rgba(0,0,0,0.15);
+            }
+        </style>
+    </head>
+
+    <body>
+        <!---------------
+        ---   pulse   ---
+        ---------------->
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner_box">
+                <div class="pulse_container">  
+                    <div class="pulse_bubble pulse_bubble_00"></div>
+                    <div class="pulse_bubble pulse_bubble_01"></div>
+                    <div class="pulse_bubble pulse_bubble_02"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!----------------
+        ---   header   ---
+        ----------------->
+        <header>
+            <img class="logo_img" src="media/logo.svg" id="logo_img">
+        </header>
+
+        <!--------------
+        ---   main   ---
+        --------------->
+        <main>
+            <div class="top_part">
+                <div class="left_part">ユーザID</div>
+                <div class="right_part">
+                    <input type="text" class="input" id="userid_input" placeholder="数値8桁">
+                </div>
+            </div>
+            <div class="center_part">
+                <div class="left_part">名前</div>
+                <div class="right_part">
+                    <input type="text" class="input" id="name_input" placeholder="半角全角スペース不要">
+                </div>
+            </div>
+            <div class="bottom_part">
+                <button class="transition" id="transition">ログイン</button>
+            </div>
+        </main>
+
+        <!----------------
+        ---   footer   ---
+        ----------------->
+        <footer>
+        </footer>
+    </body>
+
+    <script>
+        ///////////////////
+        //   variables   //
+        ///////////////////
+        const api_gateway_se = "https://hu1440uej5.execute-api.us-east-1.amazonaws.com/boundsless_se" // startExectuion
+        const api_gateway_de = "https://77zbraub9k.execute-api.us-east-1.amazonaws.com/boundsless_de" // descriveExectuion
+        const userid_input = document.getElementById("userid_input")    
+        const name_input = document.getElementById("name_input")
+        const transition = document.getElementById("transition")
+
+        ///////////////////
+        //   functions   //
+        ///////////////////
+        function showLoading() {
+            document.getElementById("loading").style.display = "block";
+        };
+        function hideLoading() {
+            document.getElementById("loading").style.display = "none";
+        };
+
+        function describeExecution(timestamp) {
+            let deData = {
+                "task": "login",
+                "timestamp": timestamp,
+                "userid": userid_input.value,
+                "name": name_input.value,
+            };
+            fetch(api_gateway_de, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(deData),
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log("API Response to api_gateway_de:", result);
+                if (result === "RUNNING") {
+                    setTimeout(() => {
+                        describeExecution(timestamp);
+                    }, 5000);
+                } else {
+                    let getData = result;
+                    console.log("getData ===>");
+                    sessionStorage.setItem("userid", getData.userid);
+                    sessionStorage.setItem("name", getData.name);
+                    sessionStorage.setItem("viewid_00", getData.viewid_00);
+                    sessionStorage.setItem("viewid_01", getData.viewid_01);
+                    sessionStorage.setItem("viewid_02", getData.viewid_02);
+                    sessionStorage.setItem("name_00", getData.name_00);
+                    sessionStorage.setItem("name_01", getData.name_01);
+                    sessionStorage.setItem("name_02", getData.name_02);
+                    sessionStorage.setItem("similarity_label_00", getData.similarity_label_00);
+                    sessionStorage.setItem("similarity_label_01", getData.similarity_label_01);
+                    sessionStorage.setItem("similarity_label_02", getData.similarity_label_02);
+                    sessionStorage.setItem("firstPortableSkill_00", getData.firstPortableSkill_00);
+                    sessionStorage.setItem("firstPortableSkill_01", getData.firstPortableSkill_01);
+                    sessionStorage.setItem("firstPortableSkill_02", getData.firstPortableSkill_02);
+                    sessionStorage.setItem("secondPortableSkill_00", getData.secondPortableSkill_00);
+                    sessionStorage.setItem("secondPortableSkill_01", getData.secondPortableSkill_01);
+                    sessionStorage.setItem("secondPortableSkill_02", getData.secondPortableSkill_02);
+                    sessionStorage.setItem("thirdPortableSkill_00", getData.thirdPortableSkill_00);
+                    sessionStorage.setItem("thirdPortableSkill_01", getData.thirdPortableSkill_01);
+                    sessionStorage.setItem("thirdPortableSkill_02", getData.thirdPortableSkill_02);
+                    sessionStorage.setItem("firstFunction_00", getData.firstFunction_00);
+                    sessionStorage.setItem("firstFunction_01", getData.firstFunction_01);
+                    sessionStorage.setItem("firstFunction_02", getData.firstFunction_02);
+                    console.log("Success!!");
+                    hideLoading();
+                    window.location.href = "index.html"
+                }
+            })
+            .catch(error => {
+                console.error("API Error to api_gateway_de:", error);
+            })
+        };
+
+        transition.addEventListener("click", () => {
+            let now = new Date();
+            let year = now.getFullYear();
+            let month = ("0" + (now.getMonth() + 1)).slice(-2);
+            let day = ("0" + now.getDate()).slice(-2);
+            let hours = ("0" + now.getHours()).slice(-2);
+            let minutes = ("0" + now.getMinutes()).slice(-2);
+            let seconds = ("0" + now.getSeconds()).slice(-2);
+            let timestamp = year + month + day + hours + minutes + seconds;
+            let seData = {
+                "task": "login",
+                "timestamp": timestamp,
+                "userid": userid_input.value,
+                "name": name_input.value,
+            };
+            console.log({
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(seData),
+            });
+            showLoading();
+            fetch(api_gateway_se, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(seData),
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log("API Response to api_gateway_se:", result);
+                if (result === "START") {
+                    describeExecution(timestamp);
+                }
+            })
+            .catch(error => {
+                console.error("API Error to api_gateway_se:", error);
+            });
+        });
+
+    </script>
+</html>

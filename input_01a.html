@@ -1,0 +1,1009 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <title>Bounds-Less</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /*-------------
+            ---   all   ---
+            -------------*/
+            html {
+                background-color: rgb(255,255,255);
+            }
+
+            table {
+                position: fixed;
+                top: 15%;
+                left: 20%;
+                width: 60%;
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+            table,th,td{
+                border: none;
+            }
+
+            /*--------------
+            ---   body   ---
+            --------------*/
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin: 0 auto;
+                padding: 0 auto;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                font-family: 'Times New Roman', serif;
+            }
+
+            /*---------------
+            ---   pulse   ---
+            ---------------*/
+            @keyframes pulse {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: .25;
+                    transform: scale(.75);
+                }
+            }
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+            .pulse_container {
+                width: 120px;
+                display: flex;
+                margin: 0 auto;
+                justify-content: space-between;
+                align-items: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .pulse_bubble {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: rgba(85,170,255,1);
+            }
+            .pulse_bubble_00 {
+                animation: pulse .4s ease 0s infinite alternate;
+            }
+            .pulse_bubble_01 {
+                animation: pulse .4s ease .2s infinite alternate;
+            }
+            .pulse_bubble_02 {
+                animation: pulse .4s ease .4s infinite alternate;
+            }
+
+            /*----------------
+            ---   header   ---
+            -----------------*/
+            header {
+                position: fixed;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 10%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                background-color: rgb(85,85,85);
+                justify-content: space-between;
+                z-index: 999;
+            }
+            header .logo_img {
+                margin-left: 10px;
+                max-height: 80%;
+            }
+            header .right {
+                display: flex;
+                margin-left: auto;
+            }
+            header .question_icon {                
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                justify-content: center;
+                margin: 0px 10px;
+            }
+            header .hamburger_icon {
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                color: rgb(255,255,255);
+                font-size: 30px;
+                margin: 0px 10px;
+            }
+            header .modal_container {
+                display: none;
+                position: fixed;
+                top: 50px;
+                right: 50px;
+                width: 260px;
+                height: 150px;
+                background: rgba(0, 0, 0, 0.5);
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            }
+            header .modal {
+                display: flex;
+                flex-direction: column;
+                background-color: rgb(255,255,255);
+                width: 220px;
+                height: 120px;
+                padding: 5px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                align-items: center;
+            }
+            header .transition {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 80%;
+                height: 30%;
+                margin: 3%;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            header .transition:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: '';
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*--------------
+            ---   main   ---
+            ---------------*/
+            main {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(255,255,255);
+            }
+
+            /*-------------------
+            ---   main: msg   ---
+            -------------------*/
+            main .msg {
+                position: fixed;
+                top: 12%;
+                left: 20%;
+            }
+
+            /*-------------------
+            ---   main: col   ---
+            -------------------*/
+            main .hcol_1 {
+                width: 18%;
+            }
+            main .hcol_2 {
+                width: 38%;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+            }
+            main .hcol_3 {
+                width: 8%;
+                text-align: center;
+            }
+            main .col_1 {
+                width: 18%;
+                text-align: center;
+            }
+            main .col_2 {
+                width: 38%;
+            }
+            main .col_3 {
+                width: 8%;
+            }
+
+            /*-------------------
+            ---   main: row   ---
+            -------------------*/
+            main .heading {
+                background-color: rgba(85,85,85,0.15);
+            }
+            main .row0 {
+                background-color: rgba(85,85,255,0.85);
+                color: rgba(255,255,255,1);
+            }
+            main .row1 {
+                height: 60px;
+                background-color: rgba(15,15,170,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row2 {
+                height: 60px;
+                background-color: rgba(85,85,255,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row3 {
+                height: 60px;
+                background-color: rgba(15,15,170,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row4 {
+                height: 60px;
+                background-color: rgba(85,85,255,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row5 {
+                height: 60px;
+                background-color: rgba(15,15,170,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row6 {
+                background-color: rgba(255,85,85,0.85);
+                color: rgba(255,255,255,1);
+            }
+            main .row7 {
+                height: 60px;
+                background-color: rgba(170,15,15,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row8 {
+                height: 60px;
+                background-color: rgba(255,85,85,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row9 {
+                height: 60px;
+                background-color: rgba(170,15,15,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row10 {
+                height: 60px;
+                background-color: rgba(255,85,85,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row11 {
+                height: 60px;
+                background-color: rgba(85,85,85,0.85);
+                color: rgba(255,255,255,1);
+            }
+
+            /*---------------------------
+            ---   main: upper/lower   ---
+            ---------------------------*/
+            main .upper_side {
+                width: 360px;
+                margin-top: 2px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            main .lower_side {
+                width: 360px;
+                display: flex;
+                justify-content: space-between;
+                margin-top: 4px;
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 10px;
+                color: rgba(85,85,85,1);
+            }
+
+            /*--------------------------
+            ---   main: uniqueness   ---
+            --------------------------*/
+            main .rng {
+                width: 360px;
+                -webkit-appearance: none;
+                appearance: none;
+            }
+            main .rng:focus {
+                outline: none;
+            }
+            main .rng::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 1px;
+                cursor: pointer;
+                box-shadow: none;
+                background: rgb(0,0,0);
+                border-radius: 0px;
+                border: 0px solid rgb(0,0,0);
+            }
+            main .rng::-moz-range-track {
+                width: 100%;
+                height: 1px;
+                cursor: pointer;
+                box-shadow: none;
+                background: rgb(0,0,0);
+                border-radius: 0px;
+                border: 0px solid rgb(0,0,0);
+            }
+            main .rng::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                box-shadow: none;
+                border: 0px solid rgb(80,80,80);
+                box-shadow: 0px 10px 10px rgba(80,80,80,0.25);
+                height: 18px;
+                width: 8px;
+                border-radius: 22px;
+                background: rgb(80,80,80);
+                cursor: pointer;
+                margin-top: -10px;
+            }
+            main .rng::-moz-range-thumb{
+                    box-shadow: none;
+                    border: 0px solid rgb(0,0,0);
+                    box-shadow: 0px 10px 10px rgba(0,0,0,0.25);
+                    height: 18px;
+                    width: 8px;
+                    border-radius: 22px;
+                    background: rgba(0,0,0,1);
+                    cursor: pointer;
+                    -webkit-appearance: none;
+                    appearance: none; /* Standard property for compatibility */
+                    margin-top: -20px;
+            }
+            main .rng::-moz-focus-outer {
+                border: 0;
+            }
+            main .val {
+                position: relative;
+                display: block;
+                width: 24px;
+                height: 24px;
+                background: transparent;
+                border-radius: 50%;
+                text-align: center;
+                font-weight: bold;
+                padding-top: 4px;
+                box-sizing: border-box;
+                border: 1px solid rgb(0,0,0);
+                color: rgb(0,0,0);
+                font-size: 12px;
+                margin: 0 auto;
+            }
+
+            /*-------------------
+            ---   main: btn   ---
+            -------------------*/
+            main .next {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            main .next_btn {
+                position: fixed;
+                top: 90%;
+                left: 48%;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .next_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: '';
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .next_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .next_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+            main .next_tips {
+                visibility: hidden;
+                position: fixed;
+                top: 90.25%;
+                left: 57%;
+                display: block;
+            }
+            main .next_btn:hover +.next_tips {
+                visibility: visible;
+                opacity: 1;
+                color: rgba(255,0,0,0.85);
+            }
+
+            /*----------------
+            ---   footer   ---
+            -----------------*/
+            footer {
+                position: fixed;
+                top: 95%;
+                left: 0%;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 5%;
+                background-color: rgba(0,0,0,0.15);
+            }
+            footer .footer_link {
+                width: 100%;
+                height: 100%;
+                background-image: url("media/logout.png");
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: -1%;
+            }
+            footer .footer_tips {
+                display: none;
+            }
+            footer .footer_link:hover + .footer_tips {
+                display: block;
+                position: absolute;
+                background-color: rgb(242,242,242);
+                border: 1px solid rgb(255,255,255);
+                color: rgb(97,64,57);
+                padding: 5px;
+                margin-bottom: 80px;
+                margin-right: 0px;
+                z-index: 1;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!---------------
+        ---   pulse   ---
+        ---------------->
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner_box">
+                <div class="pulse_container">  
+                    <div class="pulse_bubble pulse_bubble_00"></div>
+                    <div class="pulse_bubble pulse_bubble_01"></div>
+                    <div class="pulse_bubble pulse_bubble_02"></div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------
+        ---   header   ---
+        ----------------->
+        <header>
+            <img class="logo_img" src="media/logo.svg" id="logo_img">
+            <div class="right">
+                <div class="question_icon" id="question_icon"><img src="media/question.png" width="40px" height="40px"></div>
+                <div class="hamburger_icon" id="hamburger_icon">&#9776;</div>
+                <div class="modal_container" id="modal_container">
+                    <div class="modal" id="modal">
+                        <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
+                        <button class="transition_02 transition" id="transition_02" value="02">経験年数の更新</button>
+                        <button class="transition_03 transition" id="transition_03" value="03">成果・ビジョンの更新</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--------------
+        ---   main   ---
+        --------------->
+        <main>
+            <div class="msg" id="msg"></div>
+            <table>
+                <!----------------------------
+                ---   main: col => start   ---
+                ----------------------------->
+                <tr class="heading">
+                    <th class="hcol_1"></th>
+                    <th class="hcol_2">ポータブルスキル</th>
+                    <th class="hcol_3"><span id="val_row0"></span>点</th>
+                </tr>
+                <!--------------------------
+                ---   main: col => end   ---
+                --------------------------->
+                <!-----------------------------
+                ---   main: row0 => start   ---
+                ------------------------------>
+                <tr class="row0">
+                    <th class="col_1">仕事の仕方</th>
+                    <th class="col_2"></th>
+                    <th class="col_3"></th>
+                </tr>
+                <!---------------------------
+                ---   main: row0 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row1 => start   ---
+                ------------------------------>
+                <tr class="row1">
+                    <td class="col_1">
+                        <span>現状の把握</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row1" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row1"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row1 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row2 => start   ---
+                ------------------------------>
+                <tr class="row2">
+                    <td class="col_1">
+                        <span>課題の設定</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row2" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row2"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row2 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row3 => start   ---
+                ------------------------------>
+                <tr class="row3">
+                    <td class="col_1">  
+                        <span>計画の立案</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row3" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row3"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row3 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row4 => start   ---
+                ------------------------------>
+                <tr class="row4">
+                    <td class="col_1">
+                        <span>課題の遂行</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row4" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row4"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row4 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row5 => start   ---
+                ------------------------------>
+                <tr class="row5">
+                    <td class="col_1">
+                        <span>状況への対応</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row5" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row5"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row5 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row6 => start   ---
+                ------------------------------>
+                <tr class="row6">
+                    <th class="col_1">人との関わり方</th>
+                    <th class="col_2"></th>
+                    <th class="col_3"></th>
+                </tr>
+                <!---------------------------
+                ---   main: row6 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row7 => start   ---
+                ------------------------------>
+                <tr class="row7">
+                    <td class="col_1">
+                        <span>社内対応</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row7" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row7"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row7 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row8 => start   ---
+                ------------------------------>
+                <tr class="row8">
+                    <td class="col_1">
+                        <span>社外対応</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row8" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row8"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row8 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row9 => start   ---
+                ------------------------------>
+                <tr class="row9">
+                    <td class="col_1">
+                        <span>上司対応</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row9" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row9"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row9 => end   ---
+                ---------------------------->
+                <!------------------------------
+                ---   main: row10 => start   ---
+                ------------------------------->
+                <tr class="row10">
+                    <td class="col_1">
+                        <span>部下マネジメント</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row10" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row10"></span>
+                    </td>
+                </tr>
+                <!----------------------------
+                ---   main: row10 => end   ---
+                ----------------------------->
+            </table>
+            <div class="next">
+                <button class="next_btn" id="next_btn" onclick="view_transition(event)" disabled>保存して次へ</button>
+                <span class="next_tips" id="next_tips"></span>
+            </div>
+        </main>
+
+        <footer>
+            <a href="login.html" class="footer_link"></a>
+            <span class="footer_tips">ログアウト</span>
+        </footer>
+
+        <script>
+            ///////////////////
+            //   variables   //
+            ///////////////////
+            const api_gateway = "https://atusbl52m9.execute-api.us-east-1.amazonaws.com/boundsless";
+            const userid = sessionStorage.getItem("userid");
+            const name = sessionStorage.getItem("name");
+            const viewid = sessionStorage.getItem("viewid");
+            const viewname = sessionStorage.getItem("viewname");
+            const question_icon = document.getElementById("question_icon");
+            const question_modal_container = document.getElementById("question_modal_container");
+            const question_close = document.getElementById("question_close");
+            const hamburger_icon = document.getElementById("hamburger_icon");
+            const modal_container = document.getElementById("modal_container");
+            const next_btn = document.getElementById("next_btn");
+            const next_tips = document.getElementById("next_tips");
+            const transition_01 = document.getElementById("transition_01");
+            const transition_02 = document.getElementById("transition_02");
+            const transition_03 = document.getElementById("transition_03");
+
+            let val_row0 = document.getElementById("val_row0");
+            let val_row1 = document.getElementById("val_row1");
+            let rng_row1 = document.getElementById("rng_row1");
+            let val_row2 = document.getElementById("val_row2");
+            let rng_row2 = document.getElementById("rng_row2");
+            let val_row3 = document.getElementById("val_row3");
+            let rng_row3 = document.getElementById("rng_row3");
+            let val_row4 = document.getElementById("val_row4");
+            let rng_row4 = document.getElementById("rng_row4");
+            let val_row5 = document.getElementById("val_row5");
+            let rng_row5 = document.getElementById("rng_row5");
+            let val_row6 = document.getElementById("val_row6");
+            let val_row7 = document.getElementById("val_row7");
+            let rng_row7 = document.getElementById("rng_row7");
+            let val_row8 = document.getElementById("val_row8");
+            let rng_row8 = document.getElementById("rng_row8");
+            let val_row9 = document.getElementById("val_row9");
+            let rng_row9 = document.getElementById("rng_row9");
+            let val_row10 = document.getElementById("val_row10");
+            let rng_row10 = document.getElementById("rng_row10");
+
+            ///////////////////
+            //   functions   //
+            ///////////////////
+            function showLoading() {
+                document.getElementById("loading").style.display = "block";
+            };
+            function hideLoading() {
+                document.getElementById("loading").style.display = "none";
+            };
+
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("msg").innerHTML = name + "さんのポータブルスキル配分";
+                portableskill_understand_uniqueness = Number(sessionStorage.getItem("portableskill_understand_uniqueness"));
+                portableskill_issue_uniqueness = Number(sessionStorage.getItem("portableskill_issue_uniqueness"));
+                portableskill_plan_uniqueness = Number(sessionStorage.getItem("portableskill_plan_uniqueness"));
+                portableskill_do_uniqueness = Number(sessionStorage.getItem("portableskill_do_uniqueness"));
+                portableskill_response_uniqueness = Number(sessionStorage.getItem("portableskill_response_uniqueness"));
+                portableskill_in_uniqueness = Number(sessionStorage.getItem("portableskill_in_uniqueness"));
+                portableskill_out_uniqueness = Number(sessionStorage.getItem("portableskill_out_uniqueness"));
+                portableskill_senior_uniqueness = Number(sessionStorage.getItem("portableskill_senior_uniqueness"));
+                portableskill_junior_uniqueness = Number(sessionStorage.getItem("portableskill_junior_uniqueness"));
+                val_row1.textContent = portableskill_understand_uniqueness;
+                document.getElementById("rng_row1").setAttribute("value", portableskill_understand_uniqueness);
+                val_row2.textContent = portableskill_issue_uniqueness;
+                document.getElementById("rng_row2").setAttribute("value", portableskill_issue_uniqueness);
+                val_row3.textContent = portableskill_plan_uniqueness;
+                document.getElementById("rng_row3").setAttribute("value", portableskill_plan_uniqueness);
+                val_row4.textContent = portableskill_do_uniqueness;
+                document.getElementById("rng_row4").setAttribute("value", portableskill_do_uniqueness);
+                val_row5.textContent = portableskill_response_uniqueness;
+                document.getElementById("rng_row5").setAttribute("value", portableskill_response_uniqueness);
+                val_row7.textContent = portableskill_in_uniqueness;
+                document.getElementById("rng_row7").setAttribute("value", portableskill_in_uniqueness);
+                val_row8.textContent = portableskill_out_uniqueness;
+                document.getElementById("rng_row8").setAttribute("value", portableskill_out_uniqueness);
+                val_row9.textContent = portableskill_senior_uniqueness;
+                document.getElementById("rng_row9").setAttribute("value", portableskill_senior_uniqueness);
+                val_row10.textContent = portableskill_junior_uniqueness;
+                document.getElementById("rng_row10").setAttribute("value", portableskill_junior_uniqueness);
+                let portableskill_sum =
+                    Number(val_row1.textContent) +
+                    Number(val_row2.textContent) +
+                    Number(val_row3.textContent) +
+                    Number(val_row4.textContent) +
+                    Number(val_row5.textContent) +
+                    Number(val_row7.textContent) +
+                    Number(val_row8.textContent) +
+                    Number(val_row9.textContent) +
+                    Number(val_row10.textContent)
+                val_row0.textContent = portableskill_sum
+                if (portableskill_sum != 29) {
+                    next_btn.disabled = true;
+                    next_tips.innerHTML = "持ち味は合計で29点にしてください";
+                } else {
+                    next_btn.disabled = false;
+                    next_tips.innerHTML = "";
+                };
+            });
+
+            function updateScore() {
+                portableskill_understand_uniqueness = Number(document.getElementById("rng_row1").value);
+                portableskill_issue_uniqueness = Number(document.getElementById("rng_row2").value);
+                portableskill_plan_uniqueness = Number(document.getElementById("rng_row3").value);
+                portableskill_do_uniqueness = Number(document.getElementById("rng_row4").value);
+                portableskill_response_uniqueness = Number(document.getElementById("rng_row5").value);
+                portableskill_in_uniqueness = Number(document.getElementById("rng_row7").value);
+                portableskill_out_uniqueness = Number(document.getElementById("rng_row8").value);
+                portableskill_senior_uniqueness = Number(document.getElementById("rng_row9").value);
+                portableskill_junior_uniqueness = Number(document.getElementById("rng_row10").value);
+                val_row1.textContent = portableskill_understand_uniqueness;
+                document.getElementById("rng_row1").setAttribute("value", portableskill_understand_uniqueness);
+                val_row2.textContent = portableskill_issue_uniqueness;
+                document.getElementById("rng_row2").setAttribute("value", portableskill_issue_uniqueness);
+                val_row3.textContent = portableskill_plan_uniqueness;
+                document.getElementById("rng_row3").setAttribute("value", portableskill_plan_uniqueness);
+                val_row4.textContent = portableskill_do_uniqueness;
+                document.getElementById("rng_row4").setAttribute("value", portableskill_do_uniqueness);
+                val_row5.textContent = portableskill_response_uniqueness;
+                document.getElementById("rng_row5").setAttribute("value", portableskill_response_uniqueness);
+                val_row7.textContent = portableskill_in_uniqueness;
+                document.getElementById("rng_row7").setAttribute("value", portableskill_in_uniqueness);
+                val_row8.textContent = portableskill_out_uniqueness;
+                document.getElementById("rng_row8").setAttribute("value", portableskill_out_uniqueness);
+                val_row9.textContent = portableskill_senior_uniqueness;
+                document.getElementById("rng_row9").setAttribute("value", portableskill_senior_uniqueness);
+                val_row10.textContent = portableskill_junior_uniqueness;
+                document.getElementById("rng_row10").setAttribute("value", portableskill_junior_uniqueness);
+                let portableskill_sum =
+                    Number(val_row1.textContent) +
+                    Number(val_row2.textContent) +
+                    Number(val_row3.textContent) +
+                    Number(val_row4.textContent) +
+                    Number(val_row5.textContent) +
+                    Number(val_row7.textContent) +
+                    Number(val_row8.textContent) +
+                    Number(val_row9.textContent) +
+                    Number(val_row10.textContent)
+                val_row0.textContent = portableskill_sum
+                if (portableskill_sum != 29) {
+                    next_btn.disabled = true;
+                    next_tips.innerHTML = "持ち味は合計で29点にしてください";
+                } else {
+                    next_btn.disabled = false;
+                    next_tips.innerHTML = "";
+                };
+            };
+
+            function view_transition(event) {
+                let now = new Date();
+                let year = now.getFullYear();
+                let month = ("0" + (now.getMonth() + 1)).slice(-2);
+                let day = ("0" + now.getDate()).slice(-2);
+                let hours = ("0" + now.getHours()).slice(-2);
+                let minutes = ("0" + now.getMinutes()).slice(-2);
+                let seconds = ("0" + now.getSeconds()).slice(-2);
+                let timestamp = year + month + day + hours + minutes + seconds;
+                console.log(event.target.id.slice(-2));
+                let data = {
+                    "task": "save_01a",
+                    "timestamp": timestamp,
+                    "userid": userid,
+                    "name": name,
+                    "tmp_portableskill_understand_uniqueness": Number(document.getElementById("rng_row1").value),
+                    "tmp_portableskill_issue_uniqueness": Number(document.getElementById("rng_row2").value),
+                    "tmp_portableskill_plan_uniqueness": Number(document.getElementById("rng_row3").value),
+                    "tmp_portableskill_do_uniqueness": Number(document.getElementById("rng_row4").value),
+                    "tmp_portableskill_response_uniqueness": Number(document.getElementById("rng_row5").value),
+                    "tmp_portableskill_in_uniqueness": Number(document.getElementById("rng_row7").value),
+                    "tmp_portableskill_out_uniqueness": Number(document.getElementById("rng_row8").value),
+                    "tmp_portableskill_senior_uniqueness": Number(document.getElementById("rng_row9").value),
+                    "tmp_portableskill_junior_uniqueness": Number(document.getElementById("rng_row10").value)
+                };
+                console.log({
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+                showLoading();
+                fetch(api_gateway, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log("Success!!");
+                    sessionStorage.setItem("portableskill_understand_uniqueness", Number(document.getElementById("rng_row1").value));
+                    sessionStorage.setItem("portableskill_issue_uniqueness", Number(document.getElementById("rng_row2").value));
+                    sessionStorage.setItem("portableskill_plan_uniqueness", Number(document.getElementById("rng_row3").value));
+                    sessionStorage.setItem("portableskill_do_uniqueness", Number(document.getElementById("rng_row4").value));
+                    sessionStorage.setItem("portableskill_response_uniqueness", Number(document.getElementById("rng_row5").value));
+                    sessionStorage.setItem("portableskill_in_uniqueness", Number(document.getElementById("rng_row7").value));
+                    sessionStorage.setItem("portableskill_out_uniqueness", Number(document.getElementById("rng_row8").value));
+                    sessionStorage.setItem("portableskill_senior_uniqueness", Number(document.getElementById("rng_row9").value));
+                    sessionStorage.setItem("portableskill_junior_uniqueness", Number(document.getElementById("rng_row10").value));
+                    hideLoading();
+                    window.location.href = "input_01b.html";
+                })
+                .catch(error => {
+                    console.error("API Error to api_gateway:", error);
+                });
+            };
+
+            hamburger_icon.addEventListener("click", () => {
+                if (hamburger_icon.innerHTML === "×" | hamburger_icon.innerHTML === "&times;") {
+                    modal_container.style.display = "none";
+                    hamburger_icon.innerHTML = "&#9776;";
+                } else {
+                    modal_container.style.display = "flex";
+                    hamburger_icon.innerHTML = "&times;";
+                };
+            });
+            
+            question_icon.addEventListener("click", () => {
+                window.location.href = "qa.html";
+            });
+
+            transition_01.addEventListener("click", function() {
+                window.location.href = "index.html";
+            });
+
+            transition_02.addEventListener("click", function() {
+                window.location.href = "index.html"; // have to change
+            });
+
+            transition_03.addEventListener("click", function() {
+                window.location.href = "index.html"; // have to change
+            });
+        </script>
+    </body>
+</html>

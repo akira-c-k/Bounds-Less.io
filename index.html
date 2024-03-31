@@ -1,0 +1,1234 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <title>Bounds-Less</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /*-------------
+            ---   all   ---
+            -------------*/
+            html {
+                background-color: rgb(255,255,255);
+            }
+
+            table {
+                position: fixed;
+                top: 20%;
+                left: 20%;
+                width: 60%;
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+            table,th,td{
+                border: none;
+            }
+
+            /*--------------
+            ---   body   ---
+            --------------*/
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin: 0 auto;
+                padding: 0 auto;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                font-family: 'Times New Roman', serif;
+            }
+
+            /*---------------
+            ---   pulse   ---
+            ---------------*/
+            @keyframes pulse {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: .25;
+                    transform: scale(.75);
+                }
+            }
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+            .pulse_container {
+                width: 120px;
+                display: flex;
+                margin: 0 auto;
+                justify-content: space-between;
+                align-items: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .pulse_bubble {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: rgba(85,170,255,1);
+            }
+            .pulse_bubble_00 {
+                animation: pulse .4s ease 0s infinite alternate;
+            }
+            .pulse_bubble_01 {
+                animation: pulse .4s ease .2s infinite alternate;
+            }
+            .pulse_bubble_02 {
+                animation: pulse .4s ease .4s infinite alternate;
+            }
+
+            /*----------------
+            ---   header   ---
+            -----------------*/
+            header {
+                position: fixed;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 10%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                background-color: rgb(85,85,85);
+                justify-content: space-between;
+                z-index: 999;
+            }
+            header .logo_img {
+                margin-left: 10px;
+                max-height: 80%;
+            }
+            header .right {
+                display: flex;
+                margin-left: auto;
+            }
+            header .question_icon {
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                justify-content: center;
+                margin: 0px 10px;
+            }
+            header .hamburger_icon {
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                color: rgb(255,255,255);
+                font-size: 30px;
+                margin: 0px 10px;
+            }
+            header .modal_container {
+                display: none;
+                position: fixed;
+                top: 50px;
+                right: 50px;
+                width: 260px;
+                height: 150px;
+                background: rgba(0, 0, 0, 0.5);
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            }
+            header .modal {
+                display: flex;
+                flex-direction: column;
+                background-color: rgb(255,255,255);
+                width: 220px;
+                height: 120px;
+                padding: 5px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                align-items: center;
+            }
+            header .transition {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 80%;
+                height: 30%;
+                margin: 3%;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            header .transition:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: '';
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*--------------
+            ---   main   ---
+            ---------------*/
+            main {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(255,255,255);
+            }
+
+            /*-------------------
+            ---   main: msg   ---
+            -------------------*/
+            main .msg {
+                position: fixed;
+                top: 17%;
+                left: 20%;
+            }
+
+            /*-------------------
+            ---   main: row   ---
+            -------------------*/
+            main .heading {
+                height: 40px;
+                background-color: rgba(85,85,85,0.85);
+                color: rgba(255,255,255,1);
+            }
+            main .row0 {
+                height: 180px;
+                background-color: rgba(255,85,85,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row1 {
+                height: 180px;
+                background-color: rgba(85,255,85,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row2 {
+                height: 180px;
+                background-color: rgba(85,85,255,0.15);
+                color: rgba(0,0,0,1);
+            }
+
+            /*-------------------
+            ---   main: col   ---
+            -------------------*/
+            main .hcol_1 {
+                width: 20%;
+            }
+            main .hcol_2 {
+                width: 20%;
+            }
+            main .hcol_3 {
+                width: 30%;
+            }
+            main .hcol_4 {
+                width: 30%;
+            }
+            main .col_1 {
+                width: 20%;
+            }
+            main .col_2 {
+                width: 20%;
+            }
+            main .col_3 {
+                width: 30%;
+            }
+            main .col_4 {
+                width: 30%;
+            }
+
+            /*-----------------------
+            ---   main: profile   ---
+            -----------------------*/
+            main .container {
+                display: block;
+                margin: 0 auto;
+                flex-direction: column;
+            }
+            main .name {
+                width: 80px;
+                height: 20px;
+                display: block;
+                margin: 5px auto;
+                text-align: center;
+            }
+            main .img {
+                width: 120px;
+                height: 120px;
+                display: block;
+                margin: 5px auto;
+                cursor: pointer;
+            }
+            main .f_img {
+                width: 120px;
+                height: 120px;
+                display: block;
+                margin: 5px auto;
+                /* cursor: pointer; */
+            }
+
+            /*---------------------------
+            ---   main: star_rating   ---
+            ---------------------------*/
+            main .star_rating_container {
+                display: block;
+                margin: 0 auto;
+                text-align: center;
+            }
+            main .star_rating{
+                position: relative;
+                z-index: 0;
+                display: inline-block;
+                white-space: nowrap;
+                color: rgba(170,170,170,0.85);
+                margin: 0 auto;
+                /*font-size: 30px;*/
+            }
+            main .star_rating:before, main .star_rating:after{
+                content: '★★★★★';
+            }
+            main .star_rating:after{
+                position: absolute;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                overflow: hidden;
+                white-space: nowrap;
+                color: rgba(0,0,0,0.85);
+            }
+            main .star_rating[data-rate="5"]:after{ width: 100%; }
+            main .star_rating[data-rate="4"]:after{ width: 80%; }
+            main .star_rating[data-rate="3"]:after{ width: 60%; }
+            main .star_rating[data-rate="2"]:after{ width: 40%; }
+            main .star_rating[data-rate="1"]:after{ width: 20%; }
+
+            /*----------------------------------
+            ---   main: firstPortableSkill   ---
+            ----------------------------------*/
+            main .firstPortableSkill {
+                width: 160px;
+                height: 20px;
+                display: block;
+                margin: 5px auto;
+                text-align: center;
+            }
+
+            /*-----------------------------
+            ---   main: firstFunction   ---
+            -----------------------------*/
+            main .firstFunction {
+                width: 160px;
+                height: 20px;
+                display: block;
+                margin: 5px auto;
+                text-align: center;
+            }
+
+            /*----------------
+            ---   footer   ---
+            -----------------*/
+            footer {
+                position: fixed;
+                top: 95%;
+                left: 0%;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 5%;
+                background-color: rgba(0,0,0,0.15);
+            }
+            footer .footer_link {
+                width: 100%;
+                height: 100%;
+                background-image: url("media/logout.png");
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: -1%;
+            }
+            footer .footer_tips {
+                display: none;
+            }
+            footer .footer_link:hover + .footer_tips {
+                display: block;
+                position: absolute;
+                background-color: rgb(242,242,242);
+                border: 1px solid rgb(255,255,255);
+                color: rgb(97,64,57);
+                padding: 5px;
+                margin-bottom: 80px;
+                margin-right: 0px;
+                z-index: 1;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    </head>
+
+    <body>
+        <!---------------
+        ---   pulse   ---
+        ---------------->
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner_box">
+                <div class="pulse_container">  
+                    <div class="pulse_bubble pulse_bubble_00"></div>
+                    <div class="pulse_bubble pulse_bubble_01"></div>
+                    <div class="pulse_bubble pulse_bubble_02"></div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------
+        ---   header   ---
+        ----------------->
+        <header>
+            <img class="logo_img" src="media/logo.svg" id="logo_img">
+            <div class="hamburger_icon" id="hamburger_icon">&#9776;</div>
+            <div class="modal_container" id="modal_container">
+                <div class="modal" id="modal">
+                    <button class="transition_01 transition" id="transition_01" value="01">マイページの更新</button>
+                    <button class="transition_02 transition" id="transition_02" value="02" disabled>検索</button>
+                    <button class="transition_03 transition" id="transition_03" value="03" disabled>チャット</button>
+                </div>
+            </div>
+        </header>
+
+        <!--------------
+        ---   main   ---
+        --------------->
+        <main>
+            <div class="msg">あなたと相性の良いメンバーを探してみましょう</div>
+            <table>
+                <!-------------------
+                ---   main: col   ---
+                -------------------->
+                <tr class="heading">
+                    <th class="hcol_1">名前</th>
+                    <th class="hcol_2">ビジョン類似度</th>
+                    <th class="hcol_3">持ち味</th>
+                    <th class="hcol_4">主な業務経験</th>
+                </tr>
+                <!-----------------------------
+                ---   main: row0 => start   ---
+                ------------------------------>
+                <tr class="row0">
+                    <td class="col_1" id="view_transition">
+                        <div class="container">
+                            <img class="img" src="" id="img_00" onclick="view_transition(event)">
+                            <div class="name" id="name_00"></div>
+                        </div>
+                    </td>
+                    <td class="col_2">
+                        <div class="star_rating_container">
+                            <span class="star_rating" id="star_rating_00" data-rate=""></span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <img class="f_img" src="" id="firstPortableSkill_00_en">
+                        <div class="firstPortableSkill" id="firstPortableSkill_00"></div>
+                    </td>
+                    <td class="col_4">
+                        <img class="f_img" src="" id="firstFunction_00_en">
+                        <div class="firstFunction"  id="firstFunction_00"></div>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row0 => end   ---
+                 --------------------------->
+                <!-----------------------------
+                ---   main: row1 => start   ---
+                ------------------------------>
+                <tr class="row1">
+                    <td class="col_1" id="view_transition">
+                        <div class="container">
+                            <img class="img" src="" id="img_01" onclick="view_transition(event)">
+                            <div class="name" id="name_01"></div>
+                        </div>
+                    </td>
+                    <td class="col_2">
+                        <div class="star_rating_container">
+                            <span class="star_rating" id="star_rating_01" data-rate=""></span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <img class="f_img" src="" id="firstPortableSkill_01_en">
+                        <div class="firstPortableSkill" id="firstPortableSkill_01"></div>
+                    </td>
+                    <td class="col_4">
+                        <img class="f_img" src="" id="firstFunction_01_en">
+                        <div class="firstFunction"  id="firstFunction_01"></div>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row1 => end   ---
+                 --------------------------->
+                <!-----------------------------
+                ---   main: row2 => start   ---
+                ------------------------------>
+                <tr class="row2">
+                    <td class="col_1" id="view_transition">
+                        <div class="container">
+                            <img class="img" src="" id="img_02" onclick="view_transition(event)">
+                            <div class="name" id="name_02"></div>
+                        </div>
+                    </td>
+                    <td class="col_2">
+                        <div class="star_rating_container">
+                            <span class="star_rating" id="star_rating_02" data-rate=""></span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <img class="f_img" src="" id="firstPortableSkill_02_en">
+                        <div class="firstPortableSkill" id="firstPortableSkill_02"></div>
+                    </td>
+                    <td class="col_4">
+                        <img class="f_img" src="" id="firstFunction_02_en">
+                        <div class="firstFunction"  id="firstFunction_02"></div>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row2 => end   ---
+                 --------------------------->
+                </table>
+        </main>
+    
+        <!----------------
+        ---   footer   ---
+        ----------------->
+        <footer>
+            <a href="login.html" class="footer_link"></a>
+            <span class="footer_tips">ログアウト</span>
+        </footer>
+    </body>
+
+    <script>
+        ///////////////////
+        //   variables   //
+        ///////////////////
+        const api_gateway = "https://atusbl52m9.execute-api.us-east-1.amazonaws.com/boundsless";
+        const hamburger_icon = document.getElementById("hamburger_icon");
+        const modal_container = document.getElementById("modal_container");
+        const transition_01 = document.getElementById("transition_01");
+        const transition_02 = document.getElementById("transition_02");
+        const transition_03 = document.getElementById("transition_03");
+        const userid = sessionStorage.getItem("userid");
+        const name = sessionStorage.getItem("name");
+
+        ///////////////////
+        //   functions   //
+        ///////////////////
+        function showLoading() {
+            document.getElementById("loading").style.display = "block";
+        };
+        function hideLoading() {
+            document.getElementById("loading").style.display = "none";
+        };
+
+        hamburger_icon.addEventListener("click", () => {
+            if (hamburger_icon.innerHTML === "×" | hamburger_icon.innerHTML === "&times;") {
+                modal_container.style.display = "none";
+                hamburger_icon.innerHTML = "&#9776;";
+            } else {
+                modal_container.style.display = "flex";
+                hamburger_icon.innerHTML = "&times;";
+            };
+        });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // get temprary data from sessionStorage
+            let name_00 = sessionStorage.getItem("name_00");
+            let name_01 = sessionStorage.getItem("name_01");
+            let name_02 = sessionStorage.getItem("name_02");
+            let viewid_00 = sessionStorage.getItem("viewid_00");
+            let viewid_01 = sessionStorage.getItem("viewid_01");
+            let viewid_02 = sessionStorage.getItem("viewid_02");
+            let similarity_label_00 = Number(sessionStorage.getItem("similarity_label_00"));
+            let similarity_label_01 = Number(sessionStorage.getItem("similarity_label_01"));
+            let similarity_label_02 = Number(sessionStorage.getItem("similarity_label_02"));
+            firstPortableSkill_00 = sessionStorage.getItem("firstPortableSkill_00");
+            firstPortableSkill_01 = sessionStorage.getItem("firstPortableSkill_01");
+            firstPortableSkill_02 = sessionStorage.getItem("firstPortableSkill_02");
+            secondPortableSkill_00 = sessionStorage.getItem("secondPortableSkill_00");
+            secondPortableSkill_01 = sessionStorage.getItem("secondPortableSkill_01");
+            secondPortableSkill_02 = sessionStorage.getItem("secondPortableSkill_02");
+            thirdPortableSkill_00 = sessionStorage.getItem("thirdPortableSkill_00");
+            thirdPortableSkill_01 = sessionStorage.getItem("thirdPortableSkill_01");
+            thirdPortableSkill_02 = sessionStorage.getItem("thirdPortableSkill_02");
+            if (firstPortableSkill_00 === "現状の把握") {
+                firstPortableSkill_00_en = "portableskill_understand";
+            } else if (firstPortableSkill_00 === "課題の設定") {
+                firstPortableSkill_00_en = "portableskill_issue";
+            } else if (firstPortableSkill_00 === "計画の立案") {
+                firstPortableSkill_00_en = "portableskill_plan";
+            } else if (firstPortableSkill_00 === "課題の遂行") {
+                firstPortableSkill_00_en = "portableskill_do";
+            } else if (firstPortableSkill_00 === "状況への対応") {
+                firstPortableSkill_00_en = "portableskill_response";
+            } else if (firstPortableSkill_00 === "社内対応") {
+                firstPortableSkill_00_en = "portableskill_in";
+            } else if (firstPortableSkill_00 === "社外対応") {
+                firstPortableSkill_00_en = "portableskill_out";
+            } else if (firstPortableSkill_00 === "上司対応") {
+                firstPortableSkill_00_en = "portableskill_senior";
+            } else if (firstPortableSkill_00 === "部下マネジメント") {
+                firstPortableSkill_00_en = "portableskill_junior";
+            };
+            if (firstPortableSkill_01 === "現状の把握") {
+                firstPortableSkill_01_en = "portableskill_understand";
+            } else if (firstPortableSkill_01 === "課題の設定") {
+                firstPortableSkill_01_en = "portableskill_issue";
+            } else if (firstPortableSkill_01 === "計画の立案") {
+                firstPortableSkill_01_en = "portableskill_plan";
+            } else if (firstPortableSkill_01 === "課題の遂行") {
+                firstPortableSkill_01_en = "portableskill_do";
+            } else if (firstPortableSkill_01 === "状況への対応") {
+                firstPortableSkill_01_en = "portableskill_response";
+            } else if (firstPortableSkill_01 === "社内対応") {
+                firstPortableSkill_01_en = "portableskill_in";
+            } else if (firstPortableSkill_01 === "社外対応") {
+                firstPortableSkill_01_en = "portableskill_out";
+            } else if (firstPortableSkill_01 === "上司対応") {
+                firstPortableSkill_01_en = "portableskill_senior";
+            } else if (firstPortableSkill_01 === "部下マネジメント") {
+                firstPortableSkill_01_en = "portableskill_junior";
+            };
+            if (firstPortableSkill_02 === "現状の把握") {
+                firstPortableSkill_02_en = "portableskill_understand";
+            } else if (firstPortableSkill_02 === "課題の設定") {
+                firstPortableSkill_02_en = "portableskill_issue";
+            } else if (firstPortableSkill_02 === "計画の立案") {
+                firstPortableSkill_02_en = "portableskill_plan";
+            } else if (firstPortableSkill_02 === "課題の遂行") {
+                firstPortableSkill_02_en = "portableskill_do";
+            } else if (firstPortableSkill_02 === "状況への対応") {
+                firstPortableSkill_02_en = "portableskill_response";
+            } else if (firstPortableSkill_02 === "社内対応") {
+                firstPortableSkill_02_en = "portableskill_in";
+            } else if (firstPortableSkill_02 === "社外対応") {
+                firstPortableSkill_02_en = "portableskill_out";
+            } else if (firstPortableSkill_02 === "上司対応") {
+                firstPortableSkill_02_en = "portableskill_senior";
+            } else if (firstPortableSkill_02 === "部下マネジメント") {
+                firstPortableSkill_02_en = "portableskill_junior";
+            };
+            if (secondPortableSkill_00 === "現状の把握") {
+                secondPortableSkill_00_en = "portableskill_understand";
+            } else if (secondPortableSkill_00 === "課題の設定") {
+                secondPortableSkill_00_en = "portableskill_issue";
+            } else if (secondPortableSkill_00 === "計画の立案") {
+                secondPortableSkill_00_en = "portableskill_plan";
+            } else if (secondPortableSkill_00 === "課題の遂行") {
+                secondPortableSkill_00_en = "portableskill_do";
+            } else if (secondPortableSkill_00 === "状況への対応") {
+                secondPortableSkill_00_en = "portableskill_response";
+            } else if (secondPortableSkill_00 === "社内対応") {
+                secondPortableSkill_00_en = "portableskill_in";
+            } else if (secondPortableSkill_00 === "社外対応") {
+                secondPortableSkill_00_en = "portableskill_out";
+            } else if (secondPortableSkill_00 === "上司対応") {
+                secondPortableSkill_00_en = "portableskill_senior";
+            } else if (secondPortableSkill_00 === "部下マネジメント") {
+                secondPortableSkill_00_en = "portableskill_junior";
+            };
+            if (secondPortableSkill_01 === "現状の把握") {
+                secondPortableSkill_01_en = "portableskill_understand";
+            } else if (secondPortableSkill_01 === "課題の設定") {
+                secondPortableSkill_01_en = "portableskill_issue";
+            } else if (secondPortableSkill_01 === "計画の立案") {
+                secondPortableSkill_01_en = "portableskill_plan";
+            } else if (secondPortableSkill_01 === "課題の遂行") {
+                secondPortableSkill_01_en = "portableskill_do";
+            } else if (secondPortableSkill_01 === "状況への対応") {
+                secondPortableSkill_01_en = "portableskill_response";
+            } else if (secondPortableSkill_01 === "社内対応") {
+                secondPortableSkill_01_en = "portableskill_in";
+            } else if (secondPortableSkill_01 === "社外対応") {
+                secondPortableSkill_01_en = "portableskill_out";
+            } else if (secondPortableSkill_01 === "上司対応") {
+                secondPortableSkill_01_en = "portableskill_senior";
+            } else if (secondPortableSkill_01 === "部下マネジメント") {
+                secondPortableSkill_01_en = "portableskill_junior";
+            };
+            if (secondPortableSkill_02 === "現状の把握") {
+                secondPortableSkill_02_en = "portableskill_understand";
+            } else if (secondPortableSkill_02 === "課題の設定") {
+                secondPortableSkill_02_en = "portableskill_issue";
+            } else if (secondPortableSkill_02 === "計画の立案") {
+                secondPortableSkill_02_en = "portableskill_plan";
+            } else if (secondPortableSkill_02 === "課題の遂行") {
+                secondPortableSkill_02_en = "portableskill_do";
+            } else if (secondPortableSkill_02 === "状況への対応") {
+                secondPortableSkill_02_en = "portableskill_response";
+            } else if (secondPortableSkill_02 === "社内対応") {
+                secondPortableSkill_02_en = "portableskill_in";
+            } else if (secondPortableSkill_02 === "社外対応") {
+                secondPortableSkill_02_en = "portableskill_out";
+            } else if (secondPortableSkill_02 === "上司対応") {
+                secondPortableSkill_02_en = "portableskill_senior";
+            } else if (secondPortableSkill_02 === "部下マネジメント") {
+                secondPortableSkill_02_en = "portableskill_junior";
+            };
+            if (thirdPortableSkill_00 === "現状の把握") {
+                thirdPortableSkill_00_en = "portableskill_understand";
+            } else if (thirdPortableSkill_00 === "課題の設定") {
+                thirdPortableSkill_00_en = "portableskill_issue";
+            } else if (thirdPortableSkill_00 === "計画の立案") {
+                thirdPortableSkill_00_en = "portableskill_plan";
+            } else if (thirdPortableSkill_00 === "課題の遂行") {
+                thirdPortableSkill_00_en = "portableskill_do";
+            } else if (thirdPortableSkill_00 === "状況への対応") {
+                thirdPortableSkill_00_en = "portableskill_response";
+            } else if (thirdPortableSkill_00 === "社内対応") {
+                thirdPortableSkill_00_en = "portableskill_in";
+            } else if (thirdPortableSkill_00 === "社外対応") {
+                thirdPortableSkill_00_en = "portableskill_out";
+            } else if (thirdPortableSkill_00 === "上司対応") {
+                thirdPortableSkill_00_en = "portableskill_senior";
+            } else if (thirdPortableSkill_00 === "部下マネジメント") {
+                thirdPortableSkill_00_en = "portableskill_junior";
+            };
+            if (thirdPortableSkill_01 === "現状の把握") {
+                thirdPortableSkill_01_en = "portableskill_understand";
+            } else if (thirdPortableSkill_01 === "課題の設定") {
+                thirdPortableSkill_01_en = "portableskill_issue";
+            } else if (thirdPortableSkill_01 === "計画の立案") {
+                thirdPortableSkill_01_en = "portableskill_plan";
+            } else if (thirdPortableSkill_01 === "課題の遂行") {
+                thirdPortableSkill_01_en = "portableskill_do";
+            } else if (thirdPortableSkill_01 === "状況への対応") {
+                thirdPortableSkill_01_en = "portableskill_response";
+            } else if (thirdPortableSkill_01 === "社内対応") {
+                thirdPortableSkill_01_en = "portableskill_in";
+            } else if (thirdPortableSkill_01 === "社外対応") {
+                thirdPortableSkill_01_en = "portableskill_out";
+            } else if (thirdPortableSkill_01 === "上司対応") {
+                thirdPortableSkill_01_en = "portableskill_senior";
+            } else if (thirdPortableSkill_01 === "部下マネジメント") {
+                thirdPortableSkill_01_en = "portableskill_junior";
+            };
+            if (thirdPortableSkill_02 === "現状の把握") {
+                thirdPortableSkill_02_en = "portableskill_understand";
+            } else if (thirdPortableSkill_02 === "課題の設定") {
+                thirdPortableSkill_02_en = "portableskill_issue";
+            } else if (thirdPortableSkill_02 === "計画の立案") {
+                thirdPortableSkill_02_en = "portableskill_plan";
+            } else if (thirdPortableSkill_02 === "課題の遂行") {
+                thirdPortableSkill_02_en = "portableskill_do";
+            } else if (thirdPortableSkill_02 === "状況への対応") {
+                thirdPortableSkill_02_en = "portableskill_response";
+            } else if (thirdPortableSkill_02 === "社内対応") {
+                thirdPortableSkill_02_en = "portableskill_in";
+            } else if (thirdPortableSkill_02 === "社外対応") {
+                thirdPortableSkill_02_en = "portableskill_out";
+            } else if (thirdPortableSkill_02 === "上司対応") {
+                thirdPortableSkill_02_en = "portableskill_senior";
+            } else if (thirdPortableSkill_02 === "部下マネジメント") {
+                thirdPortableSkill_02_en = "portableskill_junior";
+            };
+            let firstFunction_00 = sessionStorage.getItem("firstFunction_00");
+            let firstFunction_01 = sessionStorage.getItem("firstFunction_01");
+            let firstFunction_02 = sessionStorage.getItem("firstFunction_02");
+            if (firstFunction_00 === "営業") {
+                firstFunction_00_en = "function_sales";
+            } else if (firstFunction_00 === "販売・サービス") {
+                firstFunction_00_en = "function_service";
+            } else if (firstFunction_00 === "経営企画") {
+                firstFunction_00_en = "function_plan";
+            } else if (firstFunction_00 === "財務") {
+                firstFunction_00_en = "function_finance";
+            } else if (firstFunction_00 === "経理") {
+                firstFunction_00_en = "function_accounting";
+            } else if (firstFunction_00 === "人事・総務・労務") {
+                firstFunction_00_en = "function_ow";
+            } else if (firstFunction_00 === "知財・特許") {
+                firstFunction_00_en = "function_ip";
+            } else if (firstFunction_00 === "法務") {
+                firstFunction_00_en = "function_law";
+            } else if (firstFunction_00 === "広報・マーケティング") {
+                firstFunction_00_en = "function_marketing";
+            } else if (firstFunction_00 === "専門領域・ドメイン知識") {
+                firstFunction_00_en = "function_ex";
+            };
+            if (firstFunction_01 === "営業") {
+                firstFunction_01_en = "function_sales";
+            } else if (firstFunction_01 === "販売・サービス") {
+                firstFunction_01_en = "function_service";
+            } else if (firstFunction_01 === "経営企画") {
+                firstFunction_01_en = "function_plan";
+            } else if (firstFunction_01 === "財務") {
+                firstFunction_01_en = "function_finance";
+            } else if (firstFunction_01 === "経理") {
+                firstFunction_01_en = "function_accounting";
+            } else if (firstFunction_01 === "人事・総務・労務") {
+                firstFunction_01_en = "function_ow";
+            } else if (firstFunction_01 === "知財・特許") {
+                firstFunction_01_en = "function_ip";
+            } else if (firstFunction_01 === "法務") {
+                firstFunction_01_en = "function_law";
+            } else if (firstFunction_01 === "広報・マーケティング") {
+                firstFunction_01_en = "function_marketing";
+            } else if (firstFunction_01 === "専門領域・ドメイン知識") {
+                firstFunction_01_en = "function_ex";
+            };
+            if (firstFunction_02 === "営業") {
+                firstFunction_02_en = "function_sales";
+            } else if (firstFunction_02 === "販売・サービス") {
+                firstFunction_02_en = "function_service";
+            } else if (firstFunction_02 === "経営企画") {
+                firstFunction_02_en = "function_plan";
+            } else if (firstFunction_02 === "財務") {
+                firstFunction_02_en = "function_finance";
+            } else if (firstFunction_02 === "経理") {
+                firstFunction_02_en = "function_accounting";
+            } else if (firstFunction_02 === "人事・総務・労務") {
+                firstFunction_02_en = "function_ow";
+            } else if (firstFunction_02 === "知財・特許") {
+                firstFunction_02_en = "function_ip";
+            } else if (firstFunction_02 === "法務") {
+                firstFunction_02_en = "function_law";
+            } else if (firstFunction_02 === "広報・マーケティング") {
+                firstFunction_02_en = "function_marketing";
+            } else if (firstFunction_02 === "専門領域・ドメイン知識") {
+                firstFunction_02_en = "function_ex";
+            };
+
+            // upload text if the data exists
+            if (name_00) {
+                document.getElementById("name_00").innerHTML = name_00;
+            };
+            if (name_01) {
+                document.getElementById("name_01").innerHTML = name_01;
+            };
+            if (name_02) {
+                document.getElementById("name_02").innerHTML = name_02;
+            };
+            if (viewid_00) {
+                document.getElementById('img_00').setAttribute("src", "media/" + viewid_00 + ".svg");
+            };
+            if (viewid_01) {
+                document.getElementById('img_01').setAttribute("src", "media/" + viewid_01 + ".svg");
+            };
+            if (viewid_02) {
+                document.getElementById('img_02').setAttribute("src", "media/" + viewid_02 + ".svg");
+            };
+            if (similarity_label_00) {
+                document.getElementById('star_rating_00').setAttribute("data-rate", similarity_label_00);
+            };
+            if (similarity_label_01) {
+                document.getElementById('star_rating_01').setAttribute("data-rate", similarity_label_01);
+            };
+            if (similarity_label_02) {
+                document.getElementById('star_rating_02').setAttribute("data-rate", similarity_label_02);
+            };
+            if (firstPortableSkill_00) {
+                document.getElementById("firstPortableSkill_00").innerHTML = firstPortableSkill_00;
+                document.getElementById("firstPortableSkill_00_en").setAttribute("src", "media/" + firstPortableSkill_00_en + ".svg");
+            };
+            if (firstPortableSkill_01) {
+                document.getElementById("firstPortableSkill_01").innerHTML = firstPortableSkill_01;
+                document.getElementById("firstPortableSkill_01_en").setAttribute("src", "media/" + firstPortableSkill_01_en + ".svg");
+            };
+            if (firstPortableSkill_02) {
+                document.getElementById("firstPortableSkill_02").innerHTML = firstPortableSkill_02;
+                document.getElementById("firstPortableSkill_02_en").setAttribute("src", "media/" + firstPortableSkill_02_en + ".svg");
+            };
+            if (firstFunction_00) {
+                document.getElementById("firstFunction_00").innerHTML = firstFunction_00;
+                document.getElementById("firstFunction_00_en").setAttribute("src", "media/" + firstFunction_00_en + ".svg");
+            };
+            if (firstFunction_01) {
+                document.getElementById("firstFunction_01").innerHTML = firstFunction_01;
+                document.getElementById("firstFunction_01_en").setAttribute("src", "media/" + firstFunction_01_en + ".svg");
+            };
+            if (firstFunction_02) {
+                document.getElementById("firstFunction_02").innerHTML = firstFunction_02;
+                document.getElementById("firstFunction_02_en").setAttribute("src", "media/" + firstFunction_02_en + ".svg");
+            };
+        });
+
+        function view_transition(event) {
+            let now = new Date();
+            let year = now.getFullYear();
+            let month = ("0" + (now.getMonth() + 1)).slice(-2);
+            let day = ("0" + now.getDate()).slice(-2);
+            let hours = ("0" + now.getHours()).slice(-2);
+            let minutes = ("0" + now.getMinutes()).slice(-2);
+            let seconds = ("0" + now.getSeconds()).slice(-2);
+            let timestamp = year + month + day + hours + minutes + seconds;
+            console.log(event.target.id.slice(-2));
+            if (event.target.id.slice(-2) === "00") {
+                viewid = sessionStorage.getItem("viewid_00");
+                sessionStorage.setItem("firstPortableSkill", firstPortableSkill_00);
+                sessionStorage.setItem("firstPortableSkill_en", firstPortableSkill_00_en);
+                sessionStorage.setItem("secondPortableSkill", secondPortableSkill_00);
+                sessionStorage.setItem("secondPortableSkill_en", secondPortableSkill_00_en);
+                sessionStorage.setItem("thirdPortableSkill", thirdPortableSkill_00);
+                sessionStorage.setItem("thirdPortableSkill_en", thirdPortableSkill_00_en);
+            } else if (event.target.id.slice(-2) === "01") {
+                viewid = sessionStorage.getItem("viewid_01");
+                sessionStorage.setItem("firstPortableSkill", firstPortableSkill_01);
+                sessionStorage.setItem("firstPortableSkill_en", firstPortableSkill_01_en);
+                sessionStorage.setItem("secondPortableSkill", secondPortableSkill_01);
+                sessionStorage.setItem("secondPortableSkill_en", secondPortableSkill_01_en);
+                sessionStorage.setItem("thirdPortableSkill", thirdPortableSkill_01);
+                sessionStorage.setItem("thirdPortableSkill_en", thirdPortableSkill_01_en);
+            } else if (event.target.id.slice(-2) === "02") {
+                viewid = sessionStorage.getItem("viewid_02");
+                sessionStorage.setItem("firstPortableSkill", firstPortableSkill_02);
+                sessionStorage.setItem("firstPortableSkill_en", firstPortableSkill_02_en);
+                sessionStorage.setItem("secondPortableSkill", secondPortableSkill_02);
+                sessionStorage.setItem("secondPortableSkill_en", secondPortableSkill_02_en);
+                sessionStorage.setItem("thirdPortableSkill", thirdPortableSkill_02);
+                sessionStorage.setItem("thirdPortableSkill_en", thirdPortableSkill_02_en);
+            };
+            console.log(viewid);
+            let data = {
+                "task": "view",
+                "timestamp": timestamp,
+                "userid": userid,
+                "name": name,
+                "viewid": viewid
+            };
+            console.log({
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            showLoading();
+            fetch(api_gateway, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                let getData = result;
+                console.log("getData ===>");
+                sessionStorage.setItem("userid", getData.userid);
+                sessionStorage.setItem("name", getData.name);
+                sessionStorage.setItem("viewid", getData.viewid);
+                sessionStorage.setItem("viewname", getData.viewname);
+                sessionStorage.setItem("portableskill_understand_uniqueness", getData.portableskill_understand_uniqueness);
+                sessionStorage.setItem("portableskill_issue_uniqueness", getData.portableskill_issue_uniqueness);
+                sessionStorage.setItem("portableskill_plan_uniqueness", getData.portableskill_plan_uniqueness);
+                sessionStorage.setItem("portableskill_do_uniqueness", getData.portableskill_do_uniqueness);
+                sessionStorage.setItem("portableskill_response_uniqueness", getData.portableskill_response_uniqueness);
+                sessionStorage.setItem("portableskill_in_uniqueness", getData.portableskill_in_uniqueness);
+                sessionStorage.setItem("portableskill_out_uniqueness", getData.portableskill_out_uniqueness);
+                sessionStorage.setItem("portableskill_senior_uniqueness", getData.portableskill_senior_uniqueness);
+                sessionStorage.setItem("portableskill_junior_uniqueness", getData.portableskill_junior_uniqueness);
+                sessionStorage.setItem("portableskill_understand_level", getData.portableskill_understand_level);
+                sessionStorage.setItem("portableskill_issue_level", getData.portableskill_issue_level);
+                sessionStorage.setItem("portableskill_plan_level", getData.portableskill_plan_level);
+                sessionStorage.setItem("portableskill_do_level", getData.portableskill_do_level);
+                sessionStorage.setItem("portableskill_response_level", getData.portableskill_response_level);
+                sessionStorage.setItem("portableskill_in_level", getData.portableskill_in_level);
+                sessionStorage.setItem("portableskill_out_level", getData.portableskill_out_level);
+                sessionStorage.setItem("portableskill_senior_level", getData.portableskill_senior_level);
+                sessionStorage.setItem("portableskill_junior_level", getData.portableskill_junior_level);
+                sessionStorage.setItem("function_sales_enterprise_year", getData.function_sales_enterprise_year);
+                sessionStorage.setItem("function_sales_person_year", getData.function_sales_person_year);
+                sessionStorage.setItem("function_sales_mr_year", getData.function_sales_mr_year);
+                sessionStorage.setItem("function_sales_abroad_year", getData.function_sales_abroad_year);
+                sessionStorage.setItem("function_sales_agent_year", getData.function_sales_agent_year);
+                sessionStorage.setItem("function_sales_fp_year", getData.function_sales_fp_year);
+                sessionStorage.setItem("function_sales_se_year", getData.function_sales_se_year);
+                sessionStorage.setItem("function_sales_inbound_year", getData.function_sales_inbound_year);
+                sessionStorage.setItem("function_sales_outbound_year", getData.function_sales_outbound_year);
+                sessionStorage.setItem("function_sales_manager_year", getData.function_sales_manager_year);
+                sessionStorage.setItem("function_sales_supervisor_year", getData.function_sales_supervisor_year);
+                sessionStorage.setItem("function_service_storedeveloper_year", getData.function_service_storedeveloper_year);
+                sessionStorage.setItem("function_service_buyer_year", getData.function_service_buyer_year);
+                sessionStorage.setItem("function_plan_manageaccount_year", getData.function_plan_manageaccount_year);
+                sessionStorage.setItem("function_plan_budget_year", getData.function_plan_budget_year);
+                sessionStorage.setItem("function_plan_analytics_year", getData.function_plan_analytics_year);
+                sessionStorage.setItem("function_plan_subsidiary_year", getData.function_plan_subsidiary_year);
+                sessionStorage.setItem("function_plan_ma_year", getData.function_plan_ma_year);
+                sessionStorage.setItem("function_plan_strategy_year", getData.function_plan_strategy_year);
+                sessionStorage.setItem("function_plan_business_year", getData.function_plan_business_year);
+                sessionStorage.setItem("function_plan_research_year", getData.function_plan_research_year);
+                sessionStorage.setItem("function_finance_plan_year", getData.function_finance_plan_year);
+                sessionStorage.setItem("function_finance_accounting_year", getData.function_finance_accounting_year);
+                sessionStorage.setItem("function_finance_cf_year", getData.function_finance_cf_year);
+                sessionStorage.setItem("function_finance_loan_year", getData.function_finance_loan_year);
+                sessionStorage.setItem("function_accounting_tax_year", getData.function_accounting_tax_year);
+                sessionStorage.setItem("function_accounting_settlement_year", getData.function_accounting_settlement_year);
+                sessionStorage.setItem("function_accounting_conslidated_year", getData.function_accounting_conslidated_year);
+                sessionStorage.setItem("function_accounting_pl_year", getData.function_accounting_pl_year);
+                sessionStorage.setItem("function_accounting_bs_year", getData.function_accounting_bs_year);
+                sessionStorage.setItem("function_accounting_securiteisreport_year", getData.function_accounting_securiteisreport_year);
+                sessionStorage.setItem("function_accounting_taxreport_year", getData.function_accounting_taxreport_year);
+                sessionStorage.setItem("function_accounting_costing_year", getData.function_accounting_costing_year);
+                sessionStorage.setItem("function_accounting_document_year", getData.function_accounting_document_year);
+                sessionStorage.setItem("function_ow_plan_year", getData.function_ow_plan_year);
+                sessionStorage.setItem("function_ow_system_year", getData.function_ow_system_year);
+                sessionStorage.setItem("function_ow_fresh_year", getData.function_ow_fresh_year);
+                sessionStorage.setItem("function_ow_mid_year", getData.function_ow_mid_year);
+                sessionStorage.setItem("function_ow_train_year", getData.function_ow_train_year);
+                sessionStorage.setItem("function_ow_salary_year", getData.function_ow_salary_year);
+                sessionStorage.setItem("function_ow_labor_year", getData.function_ow_labor_year);
+                sessionStorage.setItem("function_ow_exective_year", getData.function_ow_exective_year);
+                sessionStorage.setItem("function_ow_ga_year", getData.function_ow_ga_year);
+                sessionStorage.setItem("function_ip_innerpatent_year", getData.function_ip_innerpatent_year);
+                sessionStorage.setItem("function_ip_outerpatent_year", getData.function_ip_outerpatent_year);
+                sessionStorage.setItem("function_ip_trademark_year", getData.function_ip_trademark_year);
+                sessionStorage.setItem("function_law_stock_year", getData.function_law_stock_year);
+                sessionStorage.setItem("function_law_contractnegotiate_year", getData.function_law_contractnegotiate_year);
+                sessionStorage.setItem("function_law_contractcheck_year", getData.function_law_contractcheck_year);
+                sessionStorage.setItem("function_law_ma_year", getData.function_law_ma_year);
+                sessionStorage.setItem("function_law_compriance_year", getData.function_law_compriance_year);
+                sessionStorage.setItem("function_law_issue_year", getData.function_law_issue_year);
+                sessionStorage.setItem("function_law_apprival_year", getData.function_law_apprival_year);
+                sessionStorage.setItem("function_marketing_strategy_year", getData.function_marketing_strategy_year);
+                sessionStorage.setItem("function_marketing_research_year", getData.function_marketing_research_year);
+                sessionStorage.setItem("function_marketing_plan_year", getData.function_marketing_plan_year);
+                sessionStorage.setItem("function_marketing_promo_year", getData.function_marketing_promo_year);
+                sessionStorage.setItem("function_marketing_logistic_year", getData.function_marketing_logistic_year);
+                sessionStorage.setItem("function_marketing_media_year", getData.function_marketing_media_year);
+                sessionStorage.setItem("function_marketing_creative_year", getData.function_marketing_creative_year);
+                sessionStorage.setItem("function_marketing_ad_year", getData.function_marketing_ad_year);
+                sessionStorage.setItem("function_marketing_pr_year", getData.function_marketing_pr_year);
+                sessionStorage.setItem("function_marketing_budget_year", getData.function_marketing_budget_year);
+                sessionStorage.setItem("function_marketing_ir_year", getData.function_marketing_ir_year);
+                sessionStorage.setItem("function_ex_membermanagement_year", getData.function_ex_membermanagement_year);
+                sessionStorage.setItem("function_ex_projectmanagement_year", getData.function_ex_projectmanagement_year);
+                sessionStorage.setItem("function_ex_cosultant_year", getData.function_ex_cosultant_year);
+                sessionStorage.setItem("function_ex_presales_year", getData.function_ex_presales_year);
+                sessionStorage.setItem("function_ex_definition_year", getData.function_ex_definition_year);
+                sessionStorage.setItem("function_ex_basedesign_year", getData.function_ex_basedesign_year);
+                sessionStorage.setItem("function_ex_detaildesign_year", getData.function_ex_detaildesign_year);
+                sessionStorage.setItem("function_ex_develop_year", getData.function_ex_develop_year);
+                sessionStorage.setItem("function_ex_test_year", getData.function_ex_test_year);
+                sessionStorage.setItem("function_ex_rd_year", getData.function_ex_rd_year);
+                sessionStorage.setItem("function_ex_product_year", getData.function_ex_product_year);
+                sessionStorage.setItem("function_ex_localize_year", getData.function_ex_localize_year);
+                sessionStorage.setItem("function_ex_testing_year", getData.function_ex_testing_year);
+                sessionStorage.setItem("function_ex_networkdesign_year", getData.function_ex_networkdesign_year);
+                sessionStorage.setItem("function_ex_nertworkmanagement_year", getData.function_ex_nertworkmanagement_year);
+                sessionStorage.setItem("function_ex_serverdesign_year", getData.function_ex_serverdesign_year);
+                sessionStorage.setItem("function_ex_servermanagement_year", getData.function_ex_servermanagement_year);
+                sessionStorage.setItem("function_ex_dbdesign_year", getData.function_ex_dbdesign_year);
+                sessionStorage.setItem("function_ex_dbmanagement_year", getData.function_ex_dbmanagement_year);
+                sessionStorage.setItem("function_ex_systemmanagement_year", getData.function_ex_systemmanagement_year);
+                sessionStorage.setItem("function_ex_technicalsupport_year", getData.function_ex_technicalsupport_year);
+                sessionStorage.setItem("function_ex_training_year", getData.function_ex_training_year);
+                sessionStorage.setItem("function_ex_dataanalytics_year", getData.function_ex_dataanalytics_year);
+                sessionStorage.setItem("achieve_01", getData.achieve_01);
+                sessionStorage.setItem("achieve_02", getData.achieve_02);
+                sessionStorage.setItem("achieve_03", getData.achieve_03);
+                sessionStorage.setItem("achieve_04", getData.achieve_04);
+                sessionStorage.setItem("achieve_05", getData.achieve_05);
+                sessionStorage.setItem("achieve_06", getData.achieve_06);
+                sessionStorage.setItem("achieve_07", getData.achieve_07);
+                sessionStorage.setItem("achieve_08", getData.achieve_08);
+                sessionStorage.setItem("achieve_09", getData.achieve_09);
+                sessionStorage.setItem("achieve_10", getData.achieve_10);
+                sessionStorage.setItem("vision", getData.vision);
+                sessionStorage.setItem("tag_01", getData.tag_01);
+                sessionStorage.setItem("tag_02", getData.tag_02);
+                sessionStorage.setItem("tag_03", getData.tag_03);
+                console.log("Success!!");
+                hideLoading();
+                window.location.href = "view_01.html";
+            })
+            .catch(error => {
+                console.error("API Error to api_gateway:", error);
+            });
+        };
+
+        transition_01.addEventListener("click", () => {
+            let now = new Date();
+            let year = now.getFullYear();
+            let month = ("0" + (now.getMonth() + 1)).slice(-2);
+            let day = ("0" + now.getDate()).slice(-2);
+            let hours = ("0" + now.getHours()).slice(-2);
+            let minutes = ("0" + now.getMinutes()).slice(-2);
+            let seconds = ("0" + now.getSeconds()).slice(-2);
+            let timestamp = year + month + day + hours + minutes + seconds;
+            let data = {
+                "task": "input",
+                "timestamp": timestamp,
+                "userid": userid,
+                "name": name
+            };
+            console.log({
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            });
+            showLoading();
+            fetch(api_gateway, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            })
+            .then(response => response.json())
+            .then(result => {
+                let getData = result;
+                console.log("getData ===>");
+                sessionStorage.setItem("userid", getData.userid);
+                sessionStorage.setItem("name", getData.name);
+                sessionStorage.setItem("portableskill_understand_uniqueness", getData.portableskill_understand_uniqueness);
+                sessionStorage.setItem("portableskill_issue_uniqueness", getData.portableskill_issue_uniqueness);
+                sessionStorage.setItem("portableskill_plan_uniqueness", getData.portableskill_plan_uniqueness);
+                sessionStorage.setItem("portableskill_do_uniqueness", getData.portableskill_do_uniqueness);
+                sessionStorage.setItem("portableskill_response_uniqueness", getData.portableskill_response_uniqueness);
+                sessionStorage.setItem("portableskill_in_uniqueness", getData.portableskill_in_uniqueness);
+                sessionStorage.setItem("portableskill_out_uniqueness", getData.portableskill_out_uniqueness);
+                sessionStorage.setItem("portableskill_senior_uniqueness", getData.portableskill_senior_uniqueness);
+                sessionStorage.setItem("portableskill_junior_uniqueness", getData.portableskill_junior_uniqueness);
+                sessionStorage.setItem("portableskill_understand_level", getData.portableskill_understand_level);
+                sessionStorage.setItem("portableskill_issue_level", getData.portableskill_issue_level);
+                sessionStorage.setItem("portableskill_plan_level", getData.portableskill_plan_level);
+                sessionStorage.setItem("portableskill_do_level", getData.portableskill_do_level);
+                sessionStorage.setItem("portableskill_response_level", getData.portableskill_response_level);
+                sessionStorage.setItem("portableskill_in_level", getData.portableskill_in_level);
+                sessionStorage.setItem("portableskill_out_level", getData.portableskill_out_level);
+                sessionStorage.setItem("portableskill_senior_level", getData.portableskill_senior_level);
+                sessionStorage.setItem("portableskill_junior_level", getData.portableskill_junior_level);
+                sessionStorage.setItem("function_sales_enterprise_year", getData.function_sales_enterprise_year);
+                sessionStorage.setItem("function_sales_person_year", getData.function_sales_person_year);
+                sessionStorage.setItem("function_sales_mr_year", getData.function_sales_mr_year);
+                sessionStorage.setItem("function_sales_abroad_year", getData.function_sales_abroad_year);
+                sessionStorage.setItem("function_sales_agent_year", getData.function_sales_agent_year);
+                sessionStorage.setItem("function_sales_fp_year", getData.function_sales_fp_year);
+                sessionStorage.setItem("function_sales_se_year", getData.function_sales_se_year);
+                sessionStorage.setItem("function_sales_inbound_year", getData.function_sales_inbound_year);
+                sessionStorage.setItem("function_sales_outbound_year", getData.function_sales_outbound_year);
+                sessionStorage.setItem("function_sales_manager_year", getData.function_sales_manager_year);
+                sessionStorage.setItem("function_sales_supervisor_year", getData.function_sales_supervisor_year);
+                sessionStorage.setItem("function_service_storedeveloper_year", getData.function_service_storedeveloper_year);
+                sessionStorage.setItem("function_service_buyer_year", getData.function_service_buyer_year);
+                sessionStorage.setItem("function_plan_manageaccount_year", getData.function_plan_manageaccount_year);
+                sessionStorage.setItem("function_plan_budget_year", getData.function_plan_budget_year);
+                sessionStorage.setItem("function_plan_analytics_year", getData.function_plan_analytics_year);
+                sessionStorage.setItem("function_plan_subsidiary_year", getData.function_plan_subsidiary_year);
+                sessionStorage.setItem("function_plan_ma_year", getData.function_plan_ma_year);
+                sessionStorage.setItem("function_plan_strategy_year", getData.function_plan_strategy_year);
+                sessionStorage.setItem("function_plan_business_year", getData.function_plan_business_year);
+                sessionStorage.setItem("function_plan_research_year", getData.function_plan_research_year);
+                sessionStorage.setItem("function_finance_plan_year", getData.function_finance_plan_year);
+                sessionStorage.setItem("function_finance_accounting_year", getData.function_finance_accounting_year);
+                sessionStorage.setItem("function_finance_cf_year", getData.function_finance_cf_year);
+                sessionStorage.setItem("function_finance_loan_year", getData.function_finance_loan_year);
+                sessionStorage.setItem("function_accounting_tax_year", getData.function_accounting_tax_year);
+                sessionStorage.setItem("function_accounting_settlement_year", getData.function_accounting_settlement_year);
+                sessionStorage.setItem("function_accounting_conslidated_year", getData.function_accounting_conslidated_year);
+                sessionStorage.setItem("function_accounting_pl_year", getData.function_accounting_pl_year);
+                sessionStorage.setItem("function_accounting_bs_year", getData.function_accounting_bs_year);
+                sessionStorage.setItem("function_accounting_securiteisreport_year", getData.function_accounting_securiteisreport_year);
+                sessionStorage.setItem("function_accounting_taxreport_year", getData.function_accounting_taxreport_year);
+                sessionStorage.setItem("function_accounting_costing_year", getData.function_accounting_costing_year);
+                sessionStorage.setItem("function_accounting_document_year", getData.function_accounting_document_year);
+                sessionStorage.setItem("function_ow_plan_year", getData.function_ow_plan_year);
+                sessionStorage.setItem("function_ow_system_year", getData.function_ow_system_year);
+                sessionStorage.setItem("function_ow_fresh_year", getData.function_ow_fresh_year);
+                sessionStorage.setItem("function_ow_mid_year", getData.function_ow_mid_year);
+                sessionStorage.setItem("function_ow_train_year", getData.function_ow_train_year);
+                sessionStorage.setItem("function_ow_salary_year", getData.function_ow_salary_year);
+                sessionStorage.setItem("function_ow_labor_year", getData.function_ow_labor_year);
+                sessionStorage.setItem("function_ow_exective_year", getData.function_ow_exective_year);
+                sessionStorage.setItem("function_ow_ga_year", getData.function_ow_ga_year);
+                sessionStorage.setItem("function_ip_innerpatent_year", getData.function_ip_innerpatent_year);
+                sessionStorage.setItem("function_ip_outerpatent_year", getData.function_ip_outerpatent_year);
+                sessionStorage.setItem("function_ip_trademark_year", getData.function_ip_trademark_year);
+                sessionStorage.setItem("function_law_stock_year", getData.function_law_stock_year);
+                sessionStorage.setItem("function_law_contractnegotiate_year", getData.function_law_contractnegotiate_year);
+                sessionStorage.setItem("function_law_contractcheck_year", getData.function_law_contractcheck_year);
+                sessionStorage.setItem("function_law_ma_year", getData.function_law_ma_year);
+                sessionStorage.setItem("function_law_compriance_year", getData.function_law_compriance_year);
+                sessionStorage.setItem("function_law_issue_year", getData.function_law_issue_year);
+                sessionStorage.setItem("function_law_apprival_year", getData.function_law_apprival_year);
+                sessionStorage.setItem("function_marketing_strategy_year", getData.function_marketing_strategy_year);
+                sessionStorage.setItem("function_marketing_research_year", getData.function_marketing_research_year);
+                sessionStorage.setItem("function_marketing_plan_year", getData.function_marketing_plan_year);
+                sessionStorage.setItem("function_marketing_promo_year", getData.function_marketing_promo_year);
+                sessionStorage.setItem("function_marketing_logistic_year", getData.function_marketing_logistic_year);
+                sessionStorage.setItem("function_marketing_media_year", getData.function_marketing_media_year);
+                sessionStorage.setItem("function_marketing_creative_year", getData.function_marketing_creative_year);
+                sessionStorage.setItem("function_marketing_ad_year", getData.function_marketing_ad_year);
+                sessionStorage.setItem("function_marketing_pr_year", getData.function_marketing_pr_year);
+                sessionStorage.setItem("function_marketing_budget_year", getData.function_marketing_budget_year);
+                sessionStorage.setItem("function_marketing_ir_year", getData.function_marketing_ir_year);
+                sessionStorage.setItem("function_ex_membermanagement_year", getData.function_ex_membermanagement_year);
+                sessionStorage.setItem("function_ex_projectmanagement_year", getData.function_ex_projectmanagement_year);
+                sessionStorage.setItem("function_ex_cosultant_year", getData.function_ex_cosultant_year);
+                sessionStorage.setItem("function_ex_presales_year", getData.function_ex_presales_year);
+                sessionStorage.setItem("function_ex_definition_year", getData.function_ex_definition_year);
+                sessionStorage.setItem("function_ex_basedesign_year", getData.function_ex_basedesign_year);
+                sessionStorage.setItem("function_ex_detaildesign_year", getData.function_ex_detaildesign_year);
+                sessionStorage.setItem("function_ex_develop_year", getData.function_ex_develop_year);
+                sessionStorage.setItem("function_ex_test_year", getData.function_ex_test_year);
+                sessionStorage.setItem("function_ex_rd_year", getData.function_ex_rd_year);
+                sessionStorage.setItem("function_ex_product_year", getData.function_ex_product_year);
+                sessionStorage.setItem("function_ex_localize_year", getData.function_ex_localize_year);
+                sessionStorage.setItem("function_ex_testing_year", getData.function_ex_testing_year);
+                sessionStorage.setItem("function_ex_networkdesign_year", getData.function_ex_networkdesign_year);
+                sessionStorage.setItem("function_ex_nertworkmanagement_year", getData.function_ex_nertworkmanagement_year);
+                sessionStorage.setItem("function_ex_serverdesign_year", getData.function_ex_serverdesign_year);
+                sessionStorage.setItem("function_ex_servermanagement_year", getData.function_ex_servermanagement_year);
+                sessionStorage.setItem("function_ex_dbdesign_year", getData.function_ex_dbdesign_year);
+                sessionStorage.setItem("function_ex_dbmanagement_year", getData.function_ex_dbmanagement_year);
+                sessionStorage.setItem("function_ex_systemmanagement_year", getData.function_ex_systemmanagement_year);
+                sessionStorage.setItem("function_ex_technicalsupport_year", getData.function_ex_technicalsupport_year);
+                sessionStorage.setItem("function_ex_training_year", getData.function_ex_training_year);
+                sessionStorage.setItem("function_ex_dataanalytics_year", getData.function_ex_dataanalytics_year);
+                sessionStorage.setItem("achieve_01", getData.achieve_01);
+                sessionStorage.setItem("achieve_02", getData.achieve_02);
+                sessionStorage.setItem("achieve_03", getData.achieve_03);
+                sessionStorage.setItem("achieve_04", getData.achieve_04);
+                sessionStorage.setItem("achieve_05", getData.achieve_05);
+                sessionStorage.setItem("achieve_06", getData.achieve_06);
+                sessionStorage.setItem("achieve_07", getData.achieve_07);
+                sessionStorage.setItem("achieve_08", getData.achieve_08);
+                sessionStorage.setItem("achieve_09", getData.achieve_09);
+                sessionStorage.setItem("achieve_10", getData.achieve_10);
+                sessionStorage.setItem("vision", getData.vision);
+                sessionStorage.setItem("tag_01", getData.tag_01);
+                sessionStorage.setItem("tag_02", getData.tag_02);
+                sessionStorage.setItem("tag_03", getData.tag_03);
+                console.log("Success!!");
+                hideLoading();
+                window.location.href = "input_01a.html";
+            })
+            .catch(error => {
+                console.error("API Error to api_gateway:", error);
+            });
+        });
+
+    </script>
+    
+</html>

@@ -1,0 +1,928 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <title>Bounds-Less</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /*-------------
+            ---   all   ---
+            -------------*/
+            html {
+                background-color: rgb(255,255,255);
+            }
+
+            /*--------------
+            ---   body   ---
+            --------------*/
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin: 0 auto;
+                padding: 0 auto;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                font-family: 'Times New Roman', serif;
+            }
+
+            /*----------------
+            ---   header   ---
+            -----------------*/
+            header {
+                position: fixed;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 10%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                background-color: rgb(85,85,85);
+                justify-content: space-between;
+                z-index: 999;
+            }
+            header .logo_img {
+                margin-left: 10px;
+                max-height: 80%;
+            }
+            header .right {
+                display: flex;
+                margin-left: auto;
+            }
+            header .question_icon {                
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                justify-content: center;
+                margin: 0px 10px;
+            }
+            header .hamburger_icon {
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                color: rgb(255,255,255);
+                font-size: 30px;
+                margin: 0px 10px;
+            }
+            header .modal_container {
+                display: none;
+                position: fixed;
+                top: 50px;
+                right: 50px;
+                width: 260px;
+                height: 150px;
+                background: rgba(0, 0, 0, 0.5);
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            }
+            header .modal {
+                display: flex;
+                flex-direction: column;
+                background-color: rgb(255,255,255);
+                width: 220px;
+                height: 120px;
+                padding: 5px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                align-items: center;
+            }
+            header .transition {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 80%;
+                height: 30%;
+                margin: 3%;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            header .transition:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*--------------
+            ---   main   ---
+            ---------------*/
+            main {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(255,255,255);
+            }
+
+            /*-----------------------
+            ---   main: support   ---
+            -----------------------*/
+            main .support {
+                position: fixed;
+                top: 12%;
+                left: 20%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            main .msg {
+                display: block;
+                margin-right: 20px;
+            }
+            main .all_btn {
+                width: 120px;
+                height: 20px;
+                font-size: 10px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .all_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .all_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .all_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*-------------------------
+            ---   main: accordion   ---
+            -------------------------*/
+            main .tbl {
+                position: fixed;
+                top: 15%;
+                left: 20%;
+                width: 60%;
+                height: 600px;
+                overflow: scroll;
+            }
+            main .smr_odd {
+                background-color: rgba(85,85,255,0.85);
+                color: rgba(255,255,255,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_even {
+                background-color: rgba(255,85,85,0.85);
+                color: rgba(255,255,255,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_btn {
+                display: inline-block;
+                position: relative;
+                top: -40%;
+                left: 1%;
+                &:before, &:after {
+                    content: "";
+                    background-color: rgba(255,255,255,1);
+                    border-radius: 10px;
+                    width: 18px;
+                    height: 4px;
+                    position: absolute;
+                    top: 7px;
+                    left: 0;
+                }
+                &:before {  
+                    transition: height 2.0s;
+                    width: 4px;
+                    height: 18px;
+                    top: 0;
+                    left: 7px;
+                }
+                &.is_active {
+                    &:before {
+                        transition: height 2.0s;
+                        width: 4px;
+                        height: 0px;
+                        top: 0;
+                        left: 7px;
+                    }
+                }
+            }
+            main .smr_txt {
+                display: inline-block;
+                margin-top: 10px;
+                margin-left: 40px;
+            }
+            main .rows {
+                /*--- transition setting ---*/
+                transition: height 2s;
+                height: 0px;
+                overflow: hidden;
+                /*--- other setting ---*/
+                width: 100%;
+                color: rgba(0,0,0,1);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            main .rows .is_active {
+                /*--- transition setting ---*/
+                height: 180px;
+                transition: height 2s;
+                overflow: hidden;
+            }
+            main .oddBlue {
+                background-color: rgba(85,85,255,0.15);
+            }
+            main .evenBlue {
+                background-color: rgba(15,15,170,0.15);
+            }
+            main .oddRed {
+                background-color: rgba(255,85,85,0.15);
+            }
+            main .evenRed {
+                background-color: rgba(170,15,15,0.15);
+            }            
+            main .row {
+                width: 100%;
+                height: 80x;
+                padding: 0px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            main .row_label {
+                width: 10%;
+                display: inline-block;
+                text-align: center;
+            }
+            main .row_content {
+                width: 90%;
+                height: 80px;
+                display: flex;
+                flex-direction: row;
+            }
+            main .row_input {
+                resize: none;
+                width: 80%;
+                height: 75%;
+                margin: auto 3px;
+                border-radius: 2px;
+                border: solid 0.5px rgba(170,170,170,0.85);
+                text-align: left;
+            }
+            main .edit_btn {
+                width: 60px;
+                height: 30px;
+                font-size: 12px;
+                margin: auto 40px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .edit_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .edit_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .edit_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*-------------------
+            ---   main: add   ---
+            -------------------*/
+            main .add {
+                height: 40px;
+                background-color: rgba(170,170,170,0.15);
+            }
+            main .add_btn {
+                width: 120px;
+                height: 30px;
+                font-size: 12px;
+                margin: auto;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .add_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .add_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .add_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*-------------------
+            ---   main: tag   ---
+            -------------------*/
+            main .row_tag {
+                width: 100%;
+                height: 40px;
+                padding: 0px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            main .row_tag_content {
+                width: 90%;
+                height: 40px;
+                display: flex;
+                flex-direction: row;
+            }
+            main .tags {
+                width: 100%;
+                height: 100%;
+                margin: auto 6px;
+            }
+            main .tag {
+                resize: none;
+                width: 30%;
+                height: 65%;
+                margin-top: 4px;
+                margin-left: 4px;
+                border-radius: 2px;
+                border: solid 0.5px rgba(170,170,170,0.85);
+                font-size: 16px;
+                text-align: left;
+
+            }
+
+            /*---------------------
+            ---   main: modal   ---
+            ---------------------*/
+            main .modalArea {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                width: 1000px;
+                height: 650px;
+                transform: translate(-50%, -50%);
+                background-color: rgba(0,0,0,0.7);
+                border: 1px solid rgba(0,0,0,0.7);
+                flex-direction: column;
+                z-index: 2000;
+            }
+            main .modalTextArea {
+                display: block;
+                height: 60%;
+                width: 60%;
+                margin: auto;
+                border: solid 1.0px rgba(0,0,0,0.85);
+                border-radius: 2px;
+                z-index: 2000;
+            }
+            main .modalBtn {
+                display: block;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                margin: auto;
+                cursor: pointer;
+            }
+            main .modalBtn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: '';
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .modalBtn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .modalBtn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*-------------------
+            ---   main: btn   ---
+            -------------------*/
+            main .next {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            main .next_btn {
+                position: fixed;
+                top: 90%;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .next_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .next_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .next_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*----------------
+            ---   footer   ---
+            -----------------*/
+            footer {
+                position: fixed;
+                top: 95%;
+                left: 0%;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 5%;
+                background-color: rgba(0,0,0,0.15);
+            }
+            footer .footer_link {
+                width: 100%;
+                height: 100%;
+                background-image: url("media/logout.png");
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: -1%;
+            }
+            footer .footer_tips {
+                display: none;
+            }
+            footer .footer_link:hover + .footer_tips {
+                display: block;
+                position: absolute;
+                background-color: rgb(242,242,242);
+                border: 1px solid rgb(255,255,255);
+                color: rgb(97,64,57);
+                padding: 5px;
+                margin-bottom: 80px;
+                margin-right: 0px;
+                z-index: 1;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!----------------
+        ---   header   ---
+        ----------------->
+        <header>
+            <img class="logo_img" src="media/logo.svg" id="logo_img">
+            <div class="right">
+                <div class="question_icon" id="question_icon"><img src="media/question.png" width="40px" height="40px"></div>
+                <div class="hamburger_icon" id="hamburger_icon">&#9776;</div>
+                <div class="modal_container" id="modal_container">
+                    <div class="modal" id="modal">
+                        <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
+                        <button class="transition_02 transition" id="transition_02" value="02">経験年数の更新</button>
+                        <button class="transition_03 transition" id="transition_03" value="03">成果・ビジョンの更新</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--------------
+        ---   main   ---
+        --------------->
+        <main>
+            <div class="support">
+                <div class="msg" id="msg"></div>
+                <button class="all_btn" id="all_btn" onclick="openAccordion()">全て開く／閉じる</button>
+            </div>
+
+            <div class="tbl">
+                <!-----------------------
+                ---   main: achieve   ---
+                ------------------------>
+                <div id="achieve">
+                    <div class="smr_odd" id="achieve_smr" onclick="accordionAction()">
+                        <span class="smr_btn" id="achieve_btn"></span>
+                        <span class="smr_txt" id="achieve_txt">業務内外における成果</span>
+                    </div>
+                    <div class="rows" id="achieve_cnt">
+                        <div class="row oddBlue" id="achieves_01">
+                            <span class="row_label">1</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_01" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_01" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row evenBlue" id="achieves_02">
+                            <span class="row_label">2</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_02" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_02" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row oddBlue" id="achieves_03">
+                            <span class="row_label">3</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_03" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_03" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row evenBlue" id="achieves_04">
+                            <span class="row_label">4</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_04" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_04" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row oddBlue" id="achieves_05">
+                            <span class="row_label">5</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_05" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_05" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row evenBlue" id="achieves_06">
+                            <span class="row_label">6</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_06" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_06" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row oddBlue" id="achieves_07">
+                            <span class="row_label">7</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_07" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_07" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row evenBlue" id="achieves_08">
+                            <span class="row_label">8</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_08" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_08" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row oddBlue" id="achieves_09">
+                            <span class="row_label">9</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_09" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_09" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row evenBlue" id="achieves_10">
+                            <span class="row_label">10</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="achieve_10" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_10" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row add">
+                            <button class="add_btn" id="add_btn" onclick="addAction(event)" disabled>入力欄の追加</button>
+                        </div>
+                    </div>
+                </div>
+                <!-----------------------
+                ---   main: achieve   ---
+                ------------------------>
+                <!-----------------------
+                ---   main: vision   ---
+                ------------------------>
+                <div id="vision">
+                    <div class="smr_even" id="vision_smr" onclick="accordionAction()">
+                        <span class="smr_btn" id="vision_btn"></span>
+                        <span class="smr_txt" id="vision_txt">組織で目指す方向性（ビジョン）</span>
+                    </div>
+                    <div class="rows" id="vision_cnt">
+                        <div class="row oddRed">
+                            <span class="row_label">内容</span>
+                            <div class="row_content">
+                                <textarea class="row_input" id="vision_99" readonly></textarea>
+                                <button class="edit_btn" id="edit_btn_99" onclick="editAction(event)" disabled>編集</button>
+                            </div>
+                        </div>
+                        <div class="row_tag evenRed">
+                            <span class="row_label">タグ</span>
+                            <div class="row_tag_content">
+                                <div class="tags">
+                                    <textarea class="tag" id="tag_01" readonly placeholder=" #"></textarea>
+                                    <textarea class="tag" id="tag_02" readonly placeholder=" #"></textarea>
+                                    <textarea class="tag" id="tag_03" readonly placeholder=" #"></textarea>
+                                </div>
+                                <!-- <button class="save_btn" id="save_btn" onclick="saveAction(event)" disabled>保存</button> -->
+                            </div>
+                        </div>
+                    </div>
+            </div>
+                <!-----------------------
+                ---   main: vision   ---
+                ------------------------>
+                <!---------------------
+                ---   main: modal   ---
+                ---------------------->
+                <div class="modalArea" id="modalArea">
+                    <textarea class="modalTextArea" id="modalTextArea"></textarea>
+                    <button class="modalBtn" id="modalBtn" onclick="closeAction(event)">保存して閉じる</button>
+                </div>    
+                <!---------------------
+                ---   main: modal   ---
+                ---------------------->
+            </div>
+
+            <div class="next">
+                <button class="next_btn" id="next_btn" onclick="view_transition(event)">次へ</button>
+                <span class="next_tips" id="next_tips"></span>
+            </div>
+        </main>
+
+        <footer>
+            <a href="login.html" class="footer_link"></a>
+            <span class="footer_tips">ログアウト</span>
+        </footer>
+
+        <script>
+            ///////////////////
+            //   variables   //
+            ///////////////////
+            const api_gateway = "https://atusbl52m9.execute-api.us-east-1.amazonaws.com/boundsless";
+            const userid = sessionStorage.getItem("userid");
+            const name = sessionStorage.getItem("name");
+            const viewid = sessionStorage.getItem("viewid");
+            const viewname = sessionStorage.getItem("viewname");
+            const question_icon = document.getElementById("question_icon");
+            const question_modal_container = document.getElementById("question_modal_container");
+            const question_close = document.getElementById("question_close");
+            const hamburger_icon = document.getElementById("hamburger_icon");
+            const modal_container = document.getElementById("modal_container");
+            const next_btn = document.getElementById("next_btn");
+            const next_tips = document.getElementById("next_tips");
+            const transition_01 = document.getElementById("transition_01");
+            const transition_02 = document.getElementById("transition_02");
+            const transition_03 = document.getElementById("transition_03");
+            let visionCount = 1;
+
+            let cntOpen = 0;
+
+            ///////////////////
+            //   functions   //
+            ///////////////////
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("msg").innerHTML = viewname + "さんの業務内外での成果、組織で目指す方向性（ビジョン）";
+                if (sessionStorage.getItem("achieve_01") != "") {
+                    document.getElementById("achieves_01").style.display = "flex"
+                    achieveCount = 1
+                } else {
+                    document.getElementById("achieves_01").style.display = "none"
+                };
+                if (sessionStorage.getItem("achieve_02") != "") {
+                    document.getElementById("achieves_02").style.display = "flex"
+                    achieveCount = 2
+                } else {
+                    document.getElementById("achieves_02").style.display = "none"
+                };
+                if (sessionStorage.getItem("achieve_03") != "") {
+                    document.getElementById("achieves_03").style.display = "flex"
+                    achieveCount = 3
+                } else {
+                    document.getElementById("achieves_03").style.display = "none"
+                };
+                if (sessionStorage.getItem("achieve_04") != "") {
+                    document.getElementById("achieves_04").style.display = "flex"
+                    achieveCount = 4
+                } else {
+                    document.getElementById("achieves_04").style.display = "none"
+                };
+                if (sessionStorage.getItem("achieve_05") != "") {
+                    document.getElementById("achieves_05").style.display = "flex"
+                    achieveCount = 5
+                } else {
+                    document.getElementById("achieves_05").style.display = "none"
+                };
+                if (sessionStorage.getItem("achieve_06") != "") {
+                    document.getElementById("achieves_06").style.display = "flex"
+                    achieveCount = 6
+                } else {
+                    document.getElementById("achieves_06").style.display = "none"
+                };
+                if (sessionStorage.getItem("achieve_07") != "") {
+                    document.getElementById("achieves_07").style.display = "flex"
+                    achieveCount = 7
+                } else {
+                    document.getElementById("achieves_07").style.display = "none"
+                };
+                if (sessionStorage.getItem("achieve_08") != "") {
+                    document.getElementById("achieves_08").style.display = "flex"
+                    achieveCount = 8
+                } else {
+                    document.getElementById("achieves_08").style.display = "none"
+                };
+                if (sessionStorage.getItem("achieve_09") != "") {
+                    document.getElementById("achieves_09").style.display = "flex"
+                    achieveCount = 9
+                } else {
+                    document.getElementById("achieves_09").style.display = "none"
+                };
+                if (sessionStorage.getItem("achieve_10") != "") {
+                    document.getElementById("achieves_10").style.display = "flex"
+                    achieveCount = 10
+                } else {
+                    document.getElementById("achieves_10").style.display = "none"
+                };
+
+                document.getElementById("achieve_01").innerHTML = sessionStorage.getItem("achieve_01");
+                document.getElementById("achieve_02").innerHTML = sessionStorage.getItem("achieve_02");
+                document.getElementById("achieve_03").innerHTML = sessionStorage.getItem("achieve_03");
+                document.getElementById("achieve_04").innerHTML = sessionStorage.getItem("achieve_04");
+                document.getElementById("achieve_05").innerHTML = sessionStorage.getItem("achieve_05");
+                document.getElementById("achieve_06").innerHTML = sessionStorage.getItem("achieve_06");
+                document.getElementById("achieve_07").innerHTML = sessionStorage.getItem("achieve_07");
+                document.getElementById("achieve_08").innerHTML = sessionStorage.getItem("achieve_08");
+                document.getElementById("achieve_09").innerHTML = sessionStorage.getItem("achieve_09");
+                document.getElementById("achieve_10").innerHTML = sessionStorage.getItem("achieve_10");
+
+                document.getElementById("vision_99").innerHTML = sessionStorage.getItem("vision");
+                document.getElementById("tag_01").innerHTML = sessionStorage.getItem("tag_01");
+                document.getElementById("tag_02").innerHTML = sessionStorage.getItem("tag_02");
+                document.getElementById("tag_03").innerHTML = sessionStorage.getItem("tag_03");
+            });
+
+            function accordionAction() {
+                let cnt = document.getElementById(event.target.id.slice(0,-4) + "_cnt");
+                let btn = document.getElementById(event.target.id.slice(0,-4) + "_btn");
+
+                if (event.target.id.slice(0,-4) === "achieve") {
+                    heights = String(80 * achieveCount + 40);
+                } else if (event.target.id.slice(0,-4) === "vision") {
+                    heights = String(80 * visionCount + 40);
+                };
+
+                if (cnt.classList.contains("is_active")) {
+                    cnt.classList.remove("is_active");
+                    btn.classList.remove("is_active");
+                    cnt.style.height = "0px";
+                } else {
+                    cnt.classList.add("is_active");
+                    btn.classList.add("is_active");
+                    cnt.style.height = heights + "px";
+                };
+            };
+
+            function addAction(event) {
+                achieveCount += 1
+                if (achieveCount <= 9 ) {
+                    document.getElementById("achieves_0" + String(achieveCount)).style.display = "flex"
+                } else {
+                    document.getElementById("achieves_" + String(achieveCount)).style.display = "flex"
+                };
+                heights = String(80 * achieveCount + 40);
+                document.getElementById("achieve_cnt").style.height = heights + "px";
+            }
+
+            function editAction(event) {
+                if (event.target.id.slice(-2) === "99") {
+                    editTarget = document.getElementById("vision_99");
+                } else {
+                    editTarget = document.getElementById("achieve_" + event.target.id.slice(-2));
+                };
+                let modalArea = document.getElementById("modalArea");
+                let modalTextArea = document.getElementById("modalTextArea");
+                modalArea.style.display = "flex";
+                modalTextArea.value = editTarget.value
+            };
+
+            function closeAction(event) {
+                let modalArea = document.getElementById("modalArea");
+                let modalTextArea = document.getElementById("modalTextArea");
+                modalArea.style.display = "none";
+                editTarget.innerHTML = modalTextArea.value
+            };
+
+            function openAccordion() {
+                let txts_btn_01 = document.getElementById("achieve_btn");
+                let txts_content_01 = document.getElementById("achieve_cnt");
+                let txts_cnt_01 = achieveCount;
+                let txts_btn_02 = document.getElementById("vision_btn");
+                let txts_content_02 = document.getElementById("vision_cnt");
+                let txts_cnt_02 = visionCount;
+
+                if (cntOpen % 2 === 0) {
+                    txts_btn_01.classList.add("is_active");
+                    txts_content_01.classList.add("is_active");
+                    txts_content_01.style.height = String(80 * txts_cnt_01 + 40)+"px";
+                    txts_btn_02.classList.add("is_active");
+                    txts_content_02.classList.add("is_active");
+                    txts_content_02.style.height = String(80 * txts_cnt_02 + 40)+"px";
+                    cntOpen += 1
+                } else {
+                    txts_btn_01.classList.add("is_active");
+                    txts_content_01.classList.add("is_active");
+                    txts_content_01.style.height = "0px";
+                    txts_btn_02.classList.add("is_active");
+                    txts_content_02.classList.add("is_active");
+                    txts_content_02.style.height = "0px";
+                    cntOpen += 1
+                }
+            };
+
+            function view_transition(event) {
+                window.location.href = "index.html";
+            };
+
+            hamburger_icon.addEventListener("click", () => {
+                if (hamburger_icon.innerHTML === "×" | hamburger_icon.innerHTML === "&times;") {
+                    modal_container.style.display = "none";
+                    hamburger_icon.innerHTML = "&#9776;";
+                } else {
+                    modal_container.style.display = "flex";
+                    hamburger_icon.innerHTML = "&times;";
+                };
+            });
+            
+            question_icon.addEventListener("click", () => {
+                window.location.href = "qa.html";
+            });
+
+            transition_01.addEventListener("click", function() {
+                window.location.href = "index.html";
+            });
+
+            transition_02.addEventListener("click", function() {
+                window.location.href = "index.html"; // have to change
+            });
+
+            transition_03.addEventListener("click", function() {
+                window.location.href = "index.html"; // have to change
+            });
+        </script>
+    </body>
+</html>
