@@ -194,15 +194,15 @@
                 height: 600px;
                 overflow: scroll;
             }
-            main .smr_odd {
-                background-color: rgba(85,85,255,0.85);
-                color: rgba(255,255,255,1);
+            main .smr_02 {
+                background-color: rgba(170,255,170,1);
+                color: rgba(0,0,0,1);
                 height: 40px;
                 justify-content: center;
             }
-            main .smr_even {
-                background-color: rgba(255,85,85,0.85);
-                color: rgba(255,255,255,1);
+            main .smr_05 {
+                background-color: rgba(85,170,85,1);
+                color: rgba(0,0,0,1);
                 height: 40px;
                 justify-content: center;
             }
@@ -213,7 +213,7 @@
                 left: 1%;
                 &:before, &:after {
                     content: "";
-                    background-color: rgba(255,255,255,1);
+                    background-color: rgba(0,0,0,1);
                     border-radius: 10px;
                     width: 18px;
                     height: 4px;
@@ -261,18 +261,12 @@
                 transition: height 2s;
                 overflow: hidden;
             }
-            main .oddBlue {
-                background-color: rgba(85,85,255,0.15);
+            main .oddColor {
+                background-color: rgba(240,240,240,0.15);
             }
-            main .evenBlue {
-                background-color: rgba(15,15,170,0.15);
+            main .evenColor {
+                background-color: rgba(240,240,240,0.85);
             }
-            main .oddRed {
-                background-color: rgba(255,85,85,0.15);
-            }
-            main .evenRed {
-                background-color: rgba(170,15,15,0.15);
-            }            
             main .row {
                 width: 100%;
                 height: 80x;
@@ -337,7 +331,7 @@
             -------------------*/
             main .add {
                 height: 40px;
-                background-color: rgba(170,170,170,0.15);
+                background-color: rgba(255,255,255,1);
             }
             main .add_btn {
                 width: 120px;
@@ -470,9 +464,41 @@
                 justify-content: center;
                 align-items: center;
             }
+            main .back_btn {
+                position: fixed;
+                top: 90%;
+                margin-right: 15%;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .back_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .back_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .back_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
             main .next_btn {
                 position: fixed;
                 top: 90%;
+                margin-left: 15%;
                 width: 120px;
                 height: 30px;
                 border: 2px solid rgba(0,0,0,1);
@@ -551,8 +577,8 @@
                 <div class="modal_container" id="modal_container">
                     <div class="modal" id="modal">
                         <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
-                        <button class="transition_02 transition" id="transition_02" value="02">経験年数の更新</button>
-                        <button class="transition_03 transition" id="transition_03" value="03">成果・ビジョンの更新</button>
+                        <button class="transition_02 transition" id="transition_02" value="02" disabled>検索</button>
+                        <button class="transition_03 transition" id="transition_03" value="03" disabled>チャット</button>
                     </div>
                 </div>
             </div>
@@ -572,75 +598,75 @@
                 ---   main: achieve   ---
                 ------------------------>
                 <div id="achieve">
-                    <div class="smr_odd" id="achieve_smr" onclick="accordionAction()">
+                    <div class="smr_02" id="achieve_smr" onclick="accordionAction()">
                         <span class="smr_btn" id="achieve_btn"></span>
                         <span class="smr_txt" id="achieve_txt">業務内外における成果</span>
                     </div>
                     <div class="rows" id="achieve_cnt">
-                        <div class="row oddBlue" id="achieves_01">
+                        <div class="row oddColor" id="achieves_01">
                             <span class="row_label">1</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_01" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_01" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row evenBlue" id="achieves_02">
+                        <div class="row evenColor" id="achieves_02">
                             <span class="row_label">2</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_02" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_02" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row oddBlue" id="achieves_03">
+                        <div class="row oddColor" id="achieves_03">
                             <span class="row_label">3</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_03" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_03" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row evenBlue" id="achieves_04">
+                        <div class="row evenColor" id="achieves_04">
                             <span class="row_label">4</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_04" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_04" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row oddBlue" id="achieves_05">
+                        <div class="row oddColor" id="achieves_05">
                             <span class="row_label">5</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_05" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_05" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row evenBlue" id="achieves_06">
+                        <div class="row evenColor" id="achieves_06">
                             <span class="row_label">6</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_06" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_06" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row oddBlue" id="achieves_07">
+                        <div class="row oddColor" id="achieves_07">
                             <span class="row_label">7</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_07" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_07" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row evenBlue" id="achieves_08">
+                        <div class="row evenColor" id="achieves_08">
                             <span class="row_label">8</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_08" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_08" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row oddBlue" id="achieves_09">
+                        <div class="row oddColor" id="achieves_09">
                             <span class="row_label">9</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_09" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_09" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row evenBlue" id="achieves_10">
+                        <div class="row evenColor" id="achieves_10">
                             <span class="row_label">10</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_10" readonly></textarea>
@@ -659,19 +685,19 @@
                 ---   main: vision   ---
                 ------------------------>
                 <div id="vision">
-                    <div class="smr_even" id="vision_smr" onclick="accordionAction()">
+                    <div class="smr_05" id="vision_smr" onclick="accordionAction()">
                         <span class="smr_btn" id="vision_btn"></span>
                         <span class="smr_txt" id="vision_txt">組織で目指す方向性（ビジョン）</span>
                     </div>
                     <div class="rows" id="vision_cnt">
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">内容</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="vision_99" readonly></textarea>
                                 <button class="edit_btn" id="edit_btn_99" onclick="editAction(event)" disabled>編集</button>
                             </div>
                         </div>
-                        <div class="row_tag evenRed">
+                        <div class="row_tag evenColor">
                             <span class="row_label">タグ</span>
                             <div class="row_tag_content">
                                 <div class="tags">
@@ -700,6 +726,8 @@
             </div>
 
             <div class="next">
+                <button class="back_btn" id="back_btn" onclick="view_transition(event)">前へ</button>
+                <span class="back_tips" id="back_tips"></span>
                 <button class="next_btn" id="next_btn" onclick="view_transition(event)">次へ</button>
                 <span class="next_tips" id="next_tips"></span>
             </div>
@@ -730,7 +758,6 @@
             const transition_02 = document.getElementById("transition_02");
             const transition_03 = document.getElementById("transition_03");
             let visionCount = 1;
-
             let cntOpen = 0;
 
             ///////////////////
@@ -809,8 +836,7 @@
                 document.getElementById("achieve_08").innerHTML = sessionStorage.getItem("achieve_08");
                 document.getElementById("achieve_09").innerHTML = sessionStorage.getItem("achieve_09");
                 document.getElementById("achieve_10").innerHTML = sessionStorage.getItem("achieve_10");
-
-                document.getElementById("vision_99").innerHTML = sessionStorage.getItem("vision");
+                document.getElementById("vision_99").innerHTML = sessionStorage.getItem("vision_99");
                 document.getElementById("tag_01").innerHTML = sessionStorage.getItem("tag_01");
                 document.getElementById("tag_02").innerHTML = sessionStorage.getItem("tag_02");
                 document.getElementById("tag_03").innerHTML = sessionStorage.getItem("tag_03");
@@ -884,18 +910,23 @@
                     txts_content_02.style.height = String(80 * txts_cnt_02 + 40)+"px";
                     cntOpen += 1
                 } else {
-                    txts_btn_01.classList.add("is_active");
-                    txts_content_01.classList.add("is_active");
+                    txts_btn_01.classList.remove("is_active");
+                    txts_content_01.classList.remove("is_active");
                     txts_content_01.style.height = "0px";
-                    txts_btn_02.classList.add("is_active");
-                    txts_content_02.classList.add("is_active");
+                    txts_btn_02.classList.remove("is_active");
+                    txts_content_02.classList.remove("is_active");
                     txts_content_02.style.height = "0px";
                     cntOpen += 1
                 }
             };
 
             function view_transition(event) {
-                window.location.href = "index.html";
+                let action = event.target.id.slice(-10);
+                if (action === "next_btn") {
+                        window.location.href = "index.html";
+                    } else {
+                        window.location.href = "view_02.html";
+                }
             };
 
             hamburger_icon.addEventListener("click", () => {
@@ -908,9 +939,9 @@
                 };
             });
             
-            question_icon.addEventListener("click", () => {
-                window.location.href = "qa.html";
-            });
+            // question_icon.addEventListener("click", () => {
+            //     window.location.href = "qa.html";
+            // });
 
             transition_01.addEventListener("click", function() {
                 window.location.href = "index.html";
