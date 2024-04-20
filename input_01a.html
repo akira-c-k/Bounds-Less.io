@@ -12,6 +12,18 @@
                 background-color: rgb(255,255,255);
             }
 
+            table {
+                position: fixed;
+                top: 15%;
+                left: 20%;
+                width: 60%;
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+            table,th,td{
+                border: none;
+            }
+
             /*--------------
             ---   body   ---
             --------------*/
@@ -26,6 +38,58 @@
                 display: flex;
                 flex-direction: column;
                 font-family: 'Times New Roman', serif;
+            }
+
+            /*---------------
+            ---   pulse   ---
+            ---------------*/
+            @keyframes pulse {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: .25;
+                    transform: scale(.75);
+                }
+            }
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+            .pulse_container {
+                width: 120px;
+                display: flex;
+                margin: 0 auto;
+                justify-content: space-between;
+                align-items: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .pulse_bubble {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: rgba(85,170,255,1);
+            }
+            .pulse_bubble_00 {
+                animation: pulse .4s ease 0s infinite alternate;
+            }
+            .pulse_bubble_01 {
+                animation: pulse .4s ease .2s infinite alternate;
+            }
+            .pulse_bubble_02 {
+                animation: pulse .4s ease .4s infinite alternate;
             }
 
             /*----------------
@@ -111,7 +175,7 @@
                 left: 0;
                 width: 5px;
                 height: 100%;
-                content: "";
+                content: '';
                 -webkit-transition: all .3s;
                 transition: all .3s;
                 background: rgba(0,0,0,1);
@@ -137,322 +201,202 @@
                 background-color: rgb(255,255,255);
             }
 
-            /*-----------------------
-            ---   main: support   ---
-            -----------------------*/
-            main .support {
+            /*-------------------
+            ---   main: msg   ---
+            -------------------*/
+            main .msg {
                 position: fixed;
                 top: 12%;
                 left: 20%;
-                display: flex;
-                flex-direction: row;
-                justify-content: center;
-                align-items: center;
-            }
-            main .msg {
-                display: block;
-                margin-right: 20px;
-            }
-            main .all_btn {
-                width: 120px;
-                height: 20px;
-                font-size: 10px;
-                border: 2px solid rgba(0,0,0,1);
-                border-radius: 0;
-                background: rgba(255,255,255,1);
-                -webkit-transform-style: preserve-3d;
-                transform-style: preserve-3d;
-                cursor: pointer;
-            }
-            main .all_btn:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 5px;
-                height: 100%;
-                content: "";
-                -webkit-transition: all .3s;
-                transition: all .3s;
-                background: rgba(0,0,0,1);
-            }
-            main .all_btn:hover {
-                color: rgba(255,255,255,1);
-                background: rgba(0,0,0,1);
-            }
-            main .all_btn:hover:before {
-                background: rgba(255,255,255,1);
             }
 
-            /*-------------------------
-            ---   main: accordion   ---
-            -------------------------*/
-            main .tbl {
-                position: fixed;
-                top: 15%;
-                left: 20%;
-                width: 60%;
-                height: 600px;
-                overflow: scroll;
+            /*-------------------
+            ---   main: col   ---
+            -------------------*/
+            main .hcol_1 {
+                width: 18%;
             }
-            main .smr_02 {
-                background-color: rgba(170,255,170,1);
-                color: rgba(0,0,0,1);
-                height: 40px;
-                justify-content: center;
-            }
-            main .smr_05 {
-                background-color: rgba(85,170,85,1);
-                color: rgba(0,0,0,1);
-                height: 40px;
-                justify-content: center;
-            }
-            main .smr_btn {
-                display: inline-block;
-                position: relative;
-                top: -40%;
-                left: 1%;
-                &:before, &:after {
-                    content: "";
-                    background-color: rgba(0,0,0,1);
-                    border-radius: 10px;
-                    width: 18px;
-                    height: 4px;
-                    position: absolute;
-                    top: 7px;
-                    left: 0;
-                }
-                &:before {  
-                    transition: height 2.0s;
-                    width: 4px;
-                    height: 18px;
-                    top: 0;
-                    left: 7px;
-                }
-                &.is_active {
-                    &:before {
-                        transition: height 2.0s;
-                        width: 4px;
-                        height: 0px;
-                        top: 0;
-                        left: 7px;
-                    }
-                }
-            }
-            main .smr_txt {
-                display: inline-block;
-                margin-top: 10px;
-                margin-left: 40px;
-            }
-            main .rows {
-                /*--- transition setting ---*/
-                transition: height 2s;
-                height: 0px;
-                overflow: hidden;
-                /*--- other setting ---*/
-                width: 100%;
-                color: rgba(0,0,0,1);
+            main .hcol_2 {
+                width: 38%;
+                margin: 0 auto;
                 display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-            main .rows .is_active {
-                /*--- transition setting ---*/
-                height: 180px;
-                transition: height 2s;
-                overflow: hidden;
-            }
-            main .oddColor {
-                background-color: rgba(240,240,240,0.15);
-            }
-            main .evenColor {
-                background-color: rgba(240,240,240,0.85);
-            }
-            main .row {
-                width: 100%;
-                height: 80x;
-                padding: 0px;
-                display: flex;
-                justify-content: space-between;
+                flex-direction: row;
                 align-items: center;
+                justify-content: center;
             }
-            main .row_label {
-                width: 10%;
-                display: inline-block;
+            main .hcol_3 {
+                width: 8%;
                 text-align: center;
             }
-            main .row_content {
-                width: 90%;
-                height: 80px;
-                display: flex;
-                flex-direction: row;
+            main .col_1 {
+                width: 18%;
+                text-align: center;
             }
-            main .row_input {
-                resize: none;
-                width: 80%;
-                height: 75%;
-                margin: auto 3px;
-                border-radius: 2px;
-                border: solid 0.5px rgba(170,170,170,0.85);
-                text-align: left;
+            main .col_2 {
+                width: 38%;
             }
-            main .edit_btn {
-                width: 60px;
-                height: 30px;
-                font-size: 12px;
-                margin: auto 40px;
-                border: 2px solid rgba(0,0,0,1);
-                border-radius: 0;
-                background: rgba(255,255,255,1);
-                -webkit-transform-style: preserve-3d;
-                transform-style: preserve-3d;
-                cursor: pointer;
-            }
-            main .edit_btn:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 5px;
-                height: 100%;
-                content: "";
-                -webkit-transition: all .3s;
-                transition: all .3s;
-                background: rgba(0,0,0,1);
-            }
-            main .edit_btn:hover {
-                color: rgba(255,255,255,1);
-                background: rgba(0,0,0,1);
-            }
-            main .edit_btn:hover:before {
-                background: rgba(255,255,255,1);
+            main .col_3 {
+                width: 8%;
             }
 
             /*-------------------
-            ---   main: add   ---
+            ---   main: row   ---
             -------------------*/
-            main .add {
-                height: 40px;
-                background-color: rgba(255,255,255,1);
+            main .heading {
+                background-color: rgba(85,85,85,0.15);
             }
-            main .add_btn {
-                width: 120px;
-                height: 30px;
-                font-size: 12px;
-                margin: auto;
-                border: 2px solid rgba(0,0,0,1);
-                border-radius: 0;
-                background: rgba(255,255,255,1);
-                -webkit-transform-style: preserve-3d;
-                transform-style: preserve-3d;
-                cursor: pointer;
-            }
-            main .add_btn:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 5px;
-                height: 100%;
-                content: "";
-                -webkit-transition: all .3s;
-                transition: all .3s;
-                background: rgba(0,0,0,1);
-            }
-            main .add_btn:hover {
+            main .row0 {
+                background-color: rgba(85,85,255,0.85);
                 color: rgba(255,255,255,1);
-                background: rgba(0,0,0,1);
             }
-            main .add_btn:hover:before {
-                background: rgba(255,255,255,1);
+            main .row1 {
+                height: 60px;
+                background-color: rgba(15,15,170,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row2 {
+                height: 60px;
+                background-color: rgba(85,85,255,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row3 {
+                height: 60px;
+                background-color: rgba(15,15,170,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row4 {
+                height: 60px;
+                background-color: rgba(85,85,255,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row5 {
+                height: 60px;
+                background-color: rgba(15,15,170,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row6 {
+                background-color: rgba(255,85,85,0.85);
+                color: rgba(255,255,255,1);
+            }
+            main .row7 {
+                height: 60px;
+                background-color: rgba(170,15,15,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row8 {
+                height: 60px;
+                background-color: rgba(255,85,85,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row9 {
+                height: 60px;
+                background-color: rgba(170,15,15,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row10 {
+                height: 60px;
+                background-color: rgba(255,85,85,0.15);
+                color: rgba(0,0,0,1);
+            }
+            main .row11 {
+                height: 60px;
+                background-color: rgba(85,85,85,0.85);
+                color: rgba(255,255,255,1);
             }
 
-            /*-------------------
-            ---   main: tag   ---
-            -------------------*/
-            main .row_tag {
-                width: 100%;
-                height: 40px;
-                padding: 0px;
+            /*---------------------------
+            ---   main: upper/lower   ---
+            ---------------------------*/
+            main .upper_side {
+                width: 360px;
+                margin-top: 2px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            main .lower_side {
+                width: 360px;
                 display: flex;
                 justify-content: space-between;
-                align-items: center;
-            }
-            main .row_tag_content {
-                width: 90%;
-                height: 40px;
-                display: flex;
-                flex-direction: row;
-            }
-            main .tags {
-                width: 100%;
-                height: 100%;
-                margin: auto 6px;
-            }
-            main .tag {
-                resize: none;
-                width: 30%;
-                height: 65%;
                 margin-top: 4px;
-                margin-left: 4px;
-                border-radius: 2px;
-                border: solid 0.5px rgba(170,170,170,0.85);
-                font-size: 16px;
-                text-align: left;
-
+                margin-left: auto;
+                margin-right: auto;
+                font-size: 10px;
+                color: rgba(85,85,85,1);
             }
 
-            /*---------------------
-            ---   main: modal   ---
-            ---------------------*/
-            main .modalArea {
-                display: none;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                width: 1000px;
-                height: 650px;
-                transform: translate(-50%, -50%);
-                background-color: rgba(0,0,0,0.7);
-                border: 1px solid rgba(0,0,0,0.7);
-                flex-direction: column;
-                z-index: 2000;
+            /*--------------------------
+            ---   main: uniqueness   ---
+            --------------------------*/
+            main .rng {
+                width: 360px;
+                -webkit-appearance: none;
+                appearance: none;
             }
-            main .modalTextArea {
-                display: block;
-                height: 60%;
-                width: 60%;
-                margin: auto;
-                border: solid 1.0px rgba(0,0,0,0.85);
-                border-radius: 2px;
-                z-index: 2000;
+            main .rng:focus {
+                outline: none;
             }
-            main .modalBtn {
-                display: block;
-                width: 120px;
-                height: 30px;
-                border: 2px solid rgba(0,0,0,1);
-                border-radius: 0;
-                background: rgba(255,255,255,1);
-                -webkit-transform-style: preserve-3d;
-                transform-style: preserve-3d;
-                margin: auto;
+            main .rng::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 1px;
                 cursor: pointer;
+                box-shadow: none;
+                background: rgb(0,0,0);
+                border-radius: 0px;
+                border: 0px solid rgb(0,0,0);
             }
-            main .modalBtn:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 5px;
-                height: 100%;
-                content: '';
-                -webkit-transition: all .3s;
-                transition: all .3s;
-                background: rgba(0,0,0,1);
+            main .rng::-moz-range-track {
+                width: 100%;
+                height: 1px;
+                cursor: pointer;
+                box-shadow: none;
+                background: rgb(0,0,0);
+                border-radius: 0px;
+                border: 0px solid rgb(0,0,0);
             }
-            main .modalBtn:hover {
-                color: rgba(255,255,255,1);
-                background: rgba(0,0,0,1);
+            main .rng::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                box-shadow: none;
+                border: 0px solid rgb(80,80,80);
+                box-shadow: 0px 10px 10px rgba(80,80,80,0.25);
+                height: 18px;
+                width: 8px;
+                border-radius: 22px;
+                background: rgb(80,80,80);
+                cursor: pointer;
+                margin-top: -10px;
             }
-            main .modalBtn:hover:before {
-                background: rgba(255,255,255,1);
+            main .rng::-moz-range-thumb{
+                    box-shadow: none;
+                    border: 0px solid rgb(0,0,0);
+                    box-shadow: 0px 10px 10px rgba(0,0,0,0.25);
+                    height: 18px;
+                    width: 8px;
+                    border-radius: 22px;
+                    background: rgba(0,0,0,1);
+                    cursor: pointer;
+                    -webkit-appearance: none;
+                    appearance: none; /* Standard property for compatibility */
+                    margin-top: -20px;
+            }
+            main .rng::-moz-focus-outer {
+                border: 0;
+            }
+            main .val {
+                position: relative;
+                display: block;
+                width: 24px;
+                height: 24px;
+                background: transparent;
+                border-radius: 50%;
+                text-align: center;
+                font-weight: bold;
+                padding-top: 4px;
+                box-sizing: border-box;
+                border: 1px solid rgb(0,0,0);
+                color: rgb(0,0,0);
+                font-size: 12px;
+                margin: 0 auto;
             }
 
             /*-------------------
@@ -514,7 +458,7 @@
                 left: 0;
                 width: 5px;
                 height: 100%;
-                content: "";
+                content: '';
                 -webkit-transition: all .3s;
                 transition: all .3s;
                 background: rgba(0,0,0,1);
@@ -525,6 +469,18 @@
             }
             main .next_btn:hover:before {
                 background: rgba(255,255,255,1);
+            }
+            main .next_tips {
+                visibility: hidden;
+                position: fixed;
+                top: 90.25%;
+                margin-left: 42%;
+                display: block;
+            }
+            main .next_btn:hover +.next_tips {
+                visibility: visible;
+                opacity: 1;
+                color: rgba(255,0,0,0.85);
             }
 
             /*----------------
@@ -566,6 +522,19 @@
     </head>
 
     <body>
+        <!---------------
+        ---   pulse   ---
+        ---------------->
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner_box">
+                <div class="pulse_container">  
+                    <div class="pulse_bubble pulse_bubble_00"></div>
+                    <div class="pulse_bubble pulse_bubble_01"></div>
+                    <div class="pulse_bubble pulse_bubble_02"></div>
+                </div>
+            </div>
+        </div>
+
         <!----------------
         ---   header   ---
         ----------------->
@@ -588,147 +557,244 @@
         ---   main   ---
         --------------->
         <main>
-            <div class="support">
-                <div class="msg" id="msg"></div>
-                <button class="all_btn" id="all_btn" onclick="openAccordion()">全て開く／閉じる</button>
-            </div>
-
-            <div class="tbl">
-                <!-----------------------
-                ---   main: achieve   ---
-                ------------------------>
-                <div id="achieve">
-                    <div class="smr_02" id="achieve_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="achieve_btn"></span>
-                        <span class="smr_txt" id="achieve_txt">業務内外における成果</span>
-                    </div>
-                    <div class="rows" id="achieve_cnt">
-                        <div class="row oddColor" id="achieves_01">
-                            <span class="row_label">1</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_01" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_01" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+            <div class="msg" id="msg"></div>
+            <table>
+                <!----------------------------
+                ---   main: col => start   ---
+                ----------------------------->
+                <tr class="heading">
+                    <th class="hcol_1"></th>
+                    <th class="hcol_2">ポータブルスキル</th>
+                    <th class="hcol_3"><span id="val_row0"></span>点</th>
+                </tr>
+                <!--------------------------
+                ---   main: col => end   ---
+                --------------------------->
+                <!-----------------------------
+                ---   main: row0 => start   ---
+                ------------------------------>
+                <tr class="row0">
+                    <th class="col_1">仕事の仕方</th>
+                    <th class="col_2"></th>
+                    <th class="col_3"></th>
+                </tr>
+                <!---------------------------
+                ---   main: row0 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row1 => start   ---
+                ------------------------------>
+                <tr class="row1">
+                    <td class="col_1">
+                        <span>現状の把握</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row1" min="1" max="7" value="1" oninput="updateScore()">
                         </div>
-                        <div class="row evenColor" id="achieves_02">
-                            <span class="row_label">2</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_02" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_02" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
                         </div>
-                        <div class="row oddColor" id="achieves_03">
-                            <span class="row_label">3</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_03" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_03" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row1"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row1 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row2 => start   ---
+                ------------------------------>
+                <tr class="row2">
+                    <td class="col_1">
+                        <span>課題の設定</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row2" min="1" max="7" value="1" oninput="updateScore()">
                         </div>
-                        <div class="row evenColor" id="achieves_04">
-                            <span class="row_label">4</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_04" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_04" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
                         </div>
-                        <div class="row oddColor" id="achieves_05">
-                            <span class="row_label">5</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_05" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_05" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row2"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row2 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row3 => start   ---
+                ------------------------------>
+                <tr class="row3">
+                    <td class="col_1">  
+                        <span>計画の立案</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row3" min="1" max="7" value="1" oninput="updateScore()">
                         </div>
-                        <div class="row evenColor" id="achieves_06">
-                            <span class="row_label">6</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_06" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_06" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
                         </div>
-                        <div class="row oddColor" id="achieves_07">
-                            <span class="row_label">7</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_07" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_07" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row3"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row3 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row4 => start   ---
+                ------------------------------>
+                <tr class="row4">
+                    <td class="col_1">
+                        <span>課題の遂行</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row4" min="1" max="7" value="1" oninput="updateScore()">
                         </div>
-                        <div class="row evenColor" id="achieves_08">
-                            <span class="row_label">8</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_08" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_08" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
                         </div>
-                        <div class="row oddColor" id="achieves_09">
-                            <span class="row_label">9</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_09" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_09" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row4"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row4 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row5 => start   ---
+                ------------------------------>
+                <tr class="row5">
+                    <td class="col_1">
+                        <span>状況への対応</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row5" min="1" max="7" value="1" oninput="updateScore()">
                         </div>
-                        <div class="row evenColor" id="achieves_10">
-                            <span class="row_label">10</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_10" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_10" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
                         </div>
-                        <div class="row add">
-                            <button class="add_btn" id="add_btn" onclick="addAction(event)" disabled>入力欄の追加</button>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row5"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row5 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row6 => start   ---
+                ------------------------------>
+                <tr class="row6">
+                    <th class="col_1">人との関わり方</th>
+                    <th class="col_2"></th>
+                    <th class="col_3"></th>
+                </tr>
+                <!---------------------------
+                ---   main: row6 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row7 => start   ---
+                ------------------------------>
+                <tr class="row7">
+                    <td class="col_1">
+                        <span>社内対応</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row7" min="1" max="7" value="1" oninput="updateScore()">
                         </div>
-                    </div>
-                </div>
-                <!-----------------------
-                ---   main: achieve   ---
-                ------------------------>
-                <!-----------------------
-                ---   main: vision   ---
-                ------------------------>
-                <div id="vision">
-                    <div class="smr_05" id="vision_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="vision_btn"></span>
-                        <span class="smr_txt" id="vision_txt">組織で目指す方向性（ビジョン）</span>
-                    </div>
-                    <div class="rows" id="vision_cnt">
-                        <div class="row oddColor">
-                            <span class="row_label">内容</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="vision_99" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_99" onclick="editAction(event)" disabled>編集</button>
-                            </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
                         </div>
-                        <div class="row_tag evenColor">
-                            <span class="row_label">タグ</span>
-                            <div class="row_tag_content">
-                                <div class="tags">
-                                    <textarea class="tag" id="tag_01" readonly placeholder=" #"></textarea>
-                                    <textarea class="tag" id="tag_02" readonly placeholder=" #"></textarea>
-                                    <textarea class="tag" id="tag_03" readonly placeholder=" #"></textarea>
-                                </div>
-                                <!-- <button class="save_btn" id="save_btn" onclick="saveAction(event)" disabled>保存</button> -->
-                            </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row7"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row7 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row8 => start   ---
+                ------------------------------>
+                <tr class="row8">
+                    <td class="col_1">
+                        <span>社外対応</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row8" min="1" max="7" value="1" oninput="updateScore()">
                         </div>
-                    </div>
-            </div>
-                <!-----------------------
-                ---   main: vision   ---
-                ------------------------>
-                <!---------------------
-                ---   main: modal   ---
-                ---------------------->
-                <div class="modalArea" id="modalArea">
-                    <textarea class="modalTextArea" id="modalTextArea"></textarea>
-                    <button class="modalBtn" id="modalBtn" onclick="closeAction(event)">保存して閉じる</button>
-                </div>    
-                <!---------------------
-                ---   main: modal   ---
-                ---------------------->
-            </div>
-
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row8"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row8 => end   ---
+                ---------------------------->
+                <!-----------------------------
+                ---   main: row9 => start   ---
+                ------------------------------>
+                <tr class="row9">
+                    <td class="col_1">
+                        <span>上司対応</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row9" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row9"></span>
+                    </td>
+                </tr>
+                <!---------------------------
+                ---   main: row9 => end   ---
+                ---------------------------->
+                <!------------------------------
+                ---   main: row10 => start   ---
+                ------------------------------->
+                <tr class="row10">
+                    <td class="col_1">
+                        <span>部下マネジメント</span>
+                    </td>
+                    <td class="col_2">
+                        <div class="upper_side">
+                            <input type="range" class="rng" id="rng_row10" min="1" max="7" value="1" oninput="updateScore()">
+                        </div>
+                        <div class="lower_side">
+                            <span>1</span><span>7</span>
+                        </div>
+                    </td>
+                    <td class="col_3">
+                        <span class="val" id="val_row10"></span>
+                    </td>
+                </tr>
+                <!----------------------------
+                ---   main: row10 => end   ---
+                ----------------------------->
+            </table>
             <div class="next">
                 <button class="back_btn" id="back_btn" onclick="view_transition(event)">前へ</button>
                 <span class="back_tips" id="back_tips"></span>
-                <button class="next_btn" id="next_btn" onclick="view_transition(event)">次へ</button>
+                <button class="next_btn" id="next_btn" onclick="view_transition(event)" disabled>次へ</button>
                 <span class="next_tips" id="next_tips"></span>
             </div>
         </main>
@@ -757,176 +823,198 @@
             const transition_01 = document.getElementById("transition_01");
             const transition_02 = document.getElementById("transition_02");
             const transition_03 = document.getElementById("transition_03");
-            let visionCount = 1;
-            let cntOpen = 0;
+
+            let val_row0 = document.getElementById("val_row0");
+            let val_row1 = document.getElementById("val_row1");
+            let rng_row1 = document.getElementById("rng_row1");
+            let val_row2 = document.getElementById("val_row2");
+            let rng_row2 = document.getElementById("rng_row2");
+            let val_row3 = document.getElementById("val_row3");
+            let rng_row3 = document.getElementById("rng_row3");
+            let val_row4 = document.getElementById("val_row4");
+            let rng_row4 = document.getElementById("rng_row4");
+            let val_row5 = document.getElementById("val_row5");
+            let rng_row5 = document.getElementById("rng_row5");
+            let val_row6 = document.getElementById("val_row6");
+            let val_row7 = document.getElementById("val_row7");
+            let rng_row7 = document.getElementById("rng_row7");
+            let val_row8 = document.getElementById("val_row8");
+            let rng_row8 = document.getElementById("rng_row8");
+            let val_row9 = document.getElementById("val_row9");
+            let rng_row9 = document.getElementById("rng_row9");
+            let val_row10 = document.getElementById("val_row10");
+            let rng_row10 = document.getElementById("rng_row10");
 
             ///////////////////
             //   functions   //
             ///////////////////
-            document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("msg").innerHTML = viewname + "さんの業務内外での成果、組織で目指す方向性（ビジョン）";
-                if (sessionStorage.getItem("achieve_01") != "") {
-                    document.getElementById("achieves_01").style.display = "flex"
-                    achieveCount = 1
-                } else {
-                    document.getElementById("achieves_01").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_02") != "") {
-                    document.getElementById("achieves_02").style.display = "flex"
-                    achieveCount = 2
-                } else {
-                    document.getElementById("achieves_02").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_03") != "") {
-                    document.getElementById("achieves_03").style.display = "flex"
-                    achieveCount = 3
-                } else {
-                    document.getElementById("achieves_03").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_04") != "") {
-                    document.getElementById("achieves_04").style.display = "flex"
-                    achieveCount = 4
-                } else {
-                    document.getElementById("achieves_04").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_05") != "") {
-                    document.getElementById("achieves_05").style.display = "flex"
-                    achieveCount = 5
-                } else {
-                    document.getElementById("achieves_05").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_06") != "") {
-                    document.getElementById("achieves_06").style.display = "flex"
-                    achieveCount = 6
-                } else {
-                    document.getElementById("achieves_06").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_07") != "") {
-                    document.getElementById("achieves_07").style.display = "flex"
-                    achieveCount = 7
-                } else {
-                    document.getElementById("achieves_07").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_08") != "") {
-                    document.getElementById("achieves_08").style.display = "flex"
-                    achieveCount = 8
-                } else {
-                    document.getElementById("achieves_08").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_09") != "") {
-                    document.getElementById("achieves_09").style.display = "flex"
-                    achieveCount = 9
-                } else {
-                    document.getElementById("achieves_09").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_10") != "") {
-                    document.getElementById("achieves_10").style.display = "flex"
-                    achieveCount = 10
-                } else {
-                    document.getElementById("achieves_10").style.display = "none"
-                };
+            function showLoading() {
+                document.getElementById("loading").style.display = "block";
+            };
+            function hideLoading() {
+                document.getElementById("loading").style.display = "none";
+            };
 
-                document.getElementById("achieve_01").innerHTML = sessionStorage.getItem("achieve_01");
-                document.getElementById("achieve_02").innerHTML = sessionStorage.getItem("achieve_02");
-                document.getElementById("achieve_03").innerHTML = sessionStorage.getItem("achieve_03");
-                document.getElementById("achieve_04").innerHTML = sessionStorage.getItem("achieve_04");
-                document.getElementById("achieve_05").innerHTML = sessionStorage.getItem("achieve_05");
-                document.getElementById("achieve_06").innerHTML = sessionStorage.getItem("achieve_06");
-                document.getElementById("achieve_07").innerHTML = sessionStorage.getItem("achieve_07");
-                document.getElementById("achieve_08").innerHTML = sessionStorage.getItem("achieve_08");
-                document.getElementById("achieve_09").innerHTML = sessionStorage.getItem("achieve_09");
-                document.getElementById("achieve_10").innerHTML = sessionStorage.getItem("achieve_10");
-                document.getElementById("vision_99").innerHTML = sessionStorage.getItem("vision_99");
-                document.getElementById("tag_01").innerHTML = sessionStorage.getItem("tag_01");
-                document.getElementById("tag_02").innerHTML = sessionStorage.getItem("tag_02");
-                document.getElementById("tag_03").innerHTML = sessionStorage.getItem("tag_03");
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("msg").innerHTML = name + "さんのポータブルスキル配分";
+                portableskill_understand_uniqueness = Number(sessionStorage.getItem("portableskill_understand_uniqueness"));
+                portableskill_issue_uniqueness = Number(sessionStorage.getItem("portableskill_issue_uniqueness"));
+                portableskill_plan_uniqueness = Number(sessionStorage.getItem("portableskill_plan_uniqueness"));
+                portableskill_do_uniqueness = Number(sessionStorage.getItem("portableskill_do_uniqueness"));
+                portableskill_response_uniqueness = Number(sessionStorage.getItem("portableskill_response_uniqueness"));
+                portableskill_in_uniqueness = Number(sessionStorage.getItem("portableskill_in_uniqueness"));
+                portableskill_out_uniqueness = Number(sessionStorage.getItem("portableskill_out_uniqueness"));
+                portableskill_senior_uniqueness = Number(sessionStorage.getItem("portableskill_senior_uniqueness"));
+                portableskill_junior_uniqueness = Number(sessionStorage.getItem("portableskill_junior_uniqueness"));
+                val_row1.textContent = portableskill_understand_uniqueness;
+                document.getElementById("rng_row1").setAttribute("value", portableskill_understand_uniqueness);
+                val_row2.textContent = portableskill_issue_uniqueness;
+                document.getElementById("rng_row2").setAttribute("value", portableskill_issue_uniqueness);
+                val_row3.textContent = portableskill_plan_uniqueness;
+                document.getElementById("rng_row3").setAttribute("value", portableskill_plan_uniqueness);
+                val_row4.textContent = portableskill_do_uniqueness;
+                document.getElementById("rng_row4").setAttribute("value", portableskill_do_uniqueness);
+                val_row5.textContent = portableskill_response_uniqueness;
+                document.getElementById("rng_row5").setAttribute("value", portableskill_response_uniqueness);
+                val_row7.textContent = portableskill_in_uniqueness;
+                document.getElementById("rng_row7").setAttribute("value", portableskill_in_uniqueness);
+                val_row8.textContent = portableskill_out_uniqueness;
+                document.getElementById("rng_row8").setAttribute("value", portableskill_out_uniqueness);
+                val_row9.textContent = portableskill_senior_uniqueness;
+                document.getElementById("rng_row9").setAttribute("value", portableskill_senior_uniqueness);
+                val_row10.textContent = portableskill_junior_uniqueness;
+                document.getElementById("rng_row10").setAttribute("value", portableskill_junior_uniqueness);
+                let portableskill_sum =
+                    Number(val_row1.textContent) +
+                    Number(val_row2.textContent) +
+                    Number(val_row3.textContent) +
+                    Number(val_row4.textContent) +
+                    Number(val_row5.textContent) +
+                    Number(val_row7.textContent) +
+                    Number(val_row8.textContent) +
+                    Number(val_row9.textContent) +
+                    Number(val_row10.textContent)
+                val_row0.textContent = portableskill_sum
+                if (portableskill_sum != 29) {
+                    next_btn.disabled = true;
+                    next_tips.innerHTML = "持ち味は合計で29点にしてください";
+                } else {
+                    next_btn.disabled = false;
+                    next_tips.innerHTML = "";
+                };
             });
 
-            function accordionAction() {
-                let cnt = document.getElementById(event.target.id.slice(0,-4) + "_cnt");
-                let btn = document.getElementById(event.target.id.slice(0,-4) + "_btn");
-
-                if (event.target.id.slice(0,-4) === "achieve") {
-                    heights = String(80 * achieveCount + 40);
-                } else if (event.target.id.slice(0,-4) === "vision") {
-                    heights = String(80 * visionCount + 40);
-                };
-
-                if (cnt.classList.contains("is_active")) {
-                    cnt.classList.remove("is_active");
-                    btn.classList.remove("is_active");
-                    cnt.style.height = "0px";
+            function updateScore() {
+                portableskill_understand_uniqueness = Number(document.getElementById("rng_row1").value);
+                portableskill_issue_uniqueness = Number(document.getElementById("rng_row2").value);
+                portableskill_plan_uniqueness = Number(document.getElementById("rng_row3").value);
+                portableskill_do_uniqueness = Number(document.getElementById("rng_row4").value);
+                portableskill_response_uniqueness = Number(document.getElementById("rng_row5").value);
+                portableskill_in_uniqueness = Number(document.getElementById("rng_row7").value);
+                portableskill_out_uniqueness = Number(document.getElementById("rng_row8").value);
+                portableskill_senior_uniqueness = Number(document.getElementById("rng_row9").value);
+                portableskill_junior_uniqueness = Number(document.getElementById("rng_row10").value);
+                val_row1.textContent = portableskill_understand_uniqueness;
+                document.getElementById("rng_row1").setAttribute("value", portableskill_understand_uniqueness);
+                val_row2.textContent = portableskill_issue_uniqueness;
+                document.getElementById("rng_row2").setAttribute("value", portableskill_issue_uniqueness);
+                val_row3.textContent = portableskill_plan_uniqueness;
+                document.getElementById("rng_row3").setAttribute("value", portableskill_plan_uniqueness);
+                val_row4.textContent = portableskill_do_uniqueness;
+                document.getElementById("rng_row4").setAttribute("value", portableskill_do_uniqueness);
+                val_row5.textContent = portableskill_response_uniqueness;
+                document.getElementById("rng_row5").setAttribute("value", portableskill_response_uniqueness);
+                val_row7.textContent = portableskill_in_uniqueness;
+                document.getElementById("rng_row7").setAttribute("value", portableskill_in_uniqueness);
+                val_row8.textContent = portableskill_out_uniqueness;
+                document.getElementById("rng_row8").setAttribute("value", portableskill_out_uniqueness);
+                val_row9.textContent = portableskill_senior_uniqueness;
+                document.getElementById("rng_row9").setAttribute("value", portableskill_senior_uniqueness);
+                val_row10.textContent = portableskill_junior_uniqueness;
+                document.getElementById("rng_row10").setAttribute("value", portableskill_junior_uniqueness);
+                let portableskill_sum =
+                    Number(val_row1.textContent) +
+                    Number(val_row2.textContent) +
+                    Number(val_row3.textContent) +
+                    Number(val_row4.textContent) +
+                    Number(val_row5.textContent) +
+                    Number(val_row7.textContent) +
+                    Number(val_row8.textContent) +
+                    Number(val_row9.textContent) +
+                    Number(val_row10.textContent)
+                val_row0.textContent = portableskill_sum
+                if (portableskill_sum != 29) {
+                    next_btn.disabled = true;
+                    next_tips.innerHTML = "持ち味は合計で29点にしてください";
                 } else {
-                    cnt.classList.add("is_active");
-                    btn.classList.add("is_active");
-                    cnt.style.height = heights + "px";
+                    next_btn.disabled = false;
+                    next_tips.innerHTML = "";
                 };
-            };
-
-            function addAction(event) {
-                achieveCount += 1
-                if (achieveCount <= 9 ) {
-                    document.getElementById("achieves_0" + String(achieveCount)).style.display = "flex"
-                } else {
-                    document.getElementById("achieves_" + String(achieveCount)).style.display = "flex"
-                };
-                heights = String(80 * achieveCount + 40);
-                document.getElementById("achieve_cnt").style.height = heights + "px";
-            }
-
-            function editAction(event) {
-                if (event.target.id.slice(-2) === "99") {
-                    editTarget = document.getElementById("vision_99");
-                } else {
-                    editTarget = document.getElementById("achieve_" + event.target.id.slice(-2));
-                };
-                let modalArea = document.getElementById("modalArea");
-                let modalTextArea = document.getElementById("modalTextArea");
-                modalArea.style.display = "flex";
-                modalTextArea.value = editTarget.value
-            };
-
-            function closeAction(event) {
-                let modalArea = document.getElementById("modalArea");
-                let modalTextArea = document.getElementById("modalTextArea");
-                modalArea.style.display = "none";
-                editTarget.innerHTML = modalTextArea.value
-            };
-
-            function openAccordion() {
-                let txts_btn_01 = document.getElementById("achieve_btn");
-                let txts_content_01 = document.getElementById("achieve_cnt");
-                let txts_cnt_01 = achieveCount;
-                let txts_btn_02 = document.getElementById("vision_btn");
-                let txts_content_02 = document.getElementById("vision_cnt");
-                let txts_cnt_02 = visionCount;
-
-                if (cntOpen % 2 === 0) {
-                    txts_btn_01.classList.add("is_active");
-                    txts_content_01.classList.add("is_active");
-                    txts_content_01.style.height = String(80 * txts_cnt_01 + 40)+"px";
-                    txts_btn_02.classList.add("is_active");
-                    txts_content_02.classList.add("is_active");
-                    txts_content_02.style.height = String(80 * txts_cnt_02 + 40)+"px";
-                    cntOpen += 1
-                } else {
-                    txts_btn_01.classList.remove("is_active");
-                    txts_content_01.classList.remove("is_active");
-                    txts_content_01.style.height = "0px";
-                    txts_btn_02.classList.remove("is_active");
-                    txts_content_02.classList.remove("is_active");
-                    txts_content_02.style.height = "0px";
-                    cntOpen += 1
-                }
             };
 
             function view_transition(event) {
                 let action = event.target.id.slice(-10);
-                if (action === "next_btn") {
-                        window.location.href = "index.html";
+                let now = new Date();
+                let year = now.getFullYear();
+                let month = ("0" + (now.getMonth() + 1)).slice(-2);
+                let day = ("0" + now.getDate()).slice(-2);
+                let hours = ("0" + now.getHours()).slice(-2);
+                let minutes = ("0" + now.getMinutes()).slice(-2);
+                let seconds = ("0" + now.getSeconds()).slice(-2);
+                let timestamp = year + month + day + hours + minutes + seconds;
+                console.log(event.target.id.slice(-2));
+                let data = {
+                    "task": "save_01a",
+                    "timestamp": timestamp,
+                    "userid": userid,
+                    "name": name,
+                    "tmp_portableskill_understand_uniqueness": Number(document.getElementById("rng_row1").value),
+                    "tmp_portableskill_issue_uniqueness": Number(document.getElementById("rng_row2").value),
+                    "tmp_portableskill_plan_uniqueness": Number(document.getElementById("rng_row3").value),
+                    "tmp_portableskill_do_uniqueness": Number(document.getElementById("rng_row4").value),
+                    "tmp_portableskill_response_uniqueness": Number(document.getElementById("rng_row5").value),
+                    "tmp_portableskill_in_uniqueness": Number(document.getElementById("rng_row7").value),
+                    "tmp_portableskill_out_uniqueness": Number(document.getElementById("rng_row8").value),
+                    "tmp_portableskill_senior_uniqueness": Number(document.getElementById("rng_row9").value),
+                    "tmp_portableskill_junior_uniqueness": Number(document.getElementById("rng_row10").value)
+                };
+                console.log({
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+                showLoading();
+                fetch(api_gateway, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log("Success!!");
+                    sessionStorage.setItem("portableskill_understand_uniqueness", Number(document.getElementById("rng_row1").value));
+                    sessionStorage.setItem("portableskill_issue_uniqueness", Number(document.getElementById("rng_row2").value));
+                    sessionStorage.setItem("portableskill_plan_uniqueness", Number(document.getElementById("rng_row3").value));
+                    sessionStorage.setItem("portableskill_do_uniqueness", Number(document.getElementById("rng_row4").value));
+                    sessionStorage.setItem("portableskill_response_uniqueness", Number(document.getElementById("rng_row5").value));
+                    sessionStorage.setItem("portableskill_in_uniqueness", Number(document.getElementById("rng_row7").value));
+                    sessionStorage.setItem("portableskill_out_uniqueness", Number(document.getElementById("rng_row8").value));
+                    sessionStorage.setItem("portableskill_senior_uniqueness", Number(document.getElementById("rng_row9").value));
+                    sessionStorage.setItem("portableskill_junior_uniqueness", Number(document.getElementById("rng_row10").value));
+                    hideLoading();
+                    if (action === "next_btn") {
+                        window.location.href = "input_01b.html";
                     } else {
-                        window.location.href = "view_02.html";
-                }
+                        window.location.href = "index.html";
+                    }
+                })
+                .catch(error => {
+                    console.error("API Error to api_gateway:", error);
+                });
             };
 
             hamburger_icon.addEventListener("click", () => {

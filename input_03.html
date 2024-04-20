@@ -28,6 +28,58 @@
                 font-family: 'Times New Roman', serif;
             }
 
+            /*---------------
+            ---   pulse   ---
+            ---------------*/
+            @keyframes pulse {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: .25;
+                    transform: scale(.75);
+                }
+            }
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+            .pulse_container {
+                width: 120px;
+                display: flex;
+                margin: 0 auto;
+                justify-content: space-between;
+                align-items: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .pulse_bubble {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: rgba(85,170,255,1);
+            }
+            .pulse_bubble_00 {
+                animation: pulse .4s ease 0s infinite alternate;
+            }
+            .pulse_bubble_01 {
+                animation: pulse .4s ease .2s infinite alternate;
+            }
+            .pulse_bubble_02 {
+                animation: pulse .4s ease .4s infinite alternate;
+            }
+
             /*----------------
             ---   header   ---
             -----------------*/
@@ -566,6 +618,19 @@
     </head>
 
     <body>
+        <!---------------
+        ---   pulse   ---
+        ---------------->
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner_box">
+                <div class="pulse_container">  
+                    <div class="pulse_bubble pulse_bubble_00"></div>
+                    <div class="pulse_bubble pulse_bubble_01"></div>
+                    <div class="pulse_bubble pulse_bubble_02"></div>
+                </div>
+            </div>
+        </div>
+
         <!----------------
         ---   header   ---
         ----------------->
@@ -607,74 +672,74 @@
                             <span class="row_label">1</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_01" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_01" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_01" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row evenColor" id="achieves_02">
                             <span class="row_label">2</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_02" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_02" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_02" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row oddColor" id="achieves_03">
                             <span class="row_label">3</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_03" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_03" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_03" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row evenColor" id="achieves_04">
                             <span class="row_label">4</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_04" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_04" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_04" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row oddColor" id="achieves_05">
                             <span class="row_label">5</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_05" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_05" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_05" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row evenColor" id="achieves_06">
                             <span class="row_label">6</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_06" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_06" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_06" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row oddColor" id="achieves_07">
                             <span class="row_label">7</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_07" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_07" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_07" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row evenColor" id="achieves_08">
                             <span class="row_label">8</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_08" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_08" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_08" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row oddColor" id="achieves_09">
                             <span class="row_label">9</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_09" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_09" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_09" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row evenColor" id="achieves_10">
                             <span class="row_label">10</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="achieve_10" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_10" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_10" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row add">
-                            <button class="add_btn" id="add_btn" onclick="addAction(event)" disabled>入力欄の追加</button>
+                            <button class="add_btn" id="add_btn" onclick="addAction(event)">入力欄の追加</button>
                         </div>
                     </div>
                 </div>
@@ -694,18 +759,18 @@
                             <span class="row_label">内容</span>
                             <div class="row_content">
                                 <textarea class="row_input" id="vision_99" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_99" onclick="editAction(event)" disabled>編集</button>
+                                <button class="edit_btn" id="edit_btn_99" onclick="editAction(event)">編集</button>
                             </div>
                         </div>
                         <div class="row_tag evenColor">
                             <span class="row_label">タグ</span>
                             <div class="row_tag_content">
                                 <div class="tags">
-                                    <textarea class="tag" id="tag_01" readonly placeholder=" #"></textarea>
-                                    <textarea class="tag" id="tag_02" readonly placeholder=" #"></textarea>
-                                    <textarea class="tag" id="tag_03" readonly placeholder=" #"></textarea>
+                                    <textarea class="tag" id="tag_01" placeholder=" #"></textarea>
+                                    <textarea class="tag" id="tag_02" placeholder=" #"></textarea>
+                                    <textarea class="tag" id="tag_03" placeholder=" #"></textarea>
                                 </div>
-                                <!-- <button class="save_btn" id="save_btn" onclick="saveAction(event)" disabled>保存</button> -->
+                                <!-- <button class="save_btn" id="save_btn" onclick="saveAction(event)">保存</button> -->
                             </div>
                         </div>
                     </div>
@@ -745,8 +810,6 @@
             const api_gateway = "https://atusbl52m9.execute-api.us-east-1.amazonaws.com/boundsless";
             const userid = sessionStorage.getItem("userid");
             const name = sessionStorage.getItem("name");
-            const viewid = sessionStorage.getItem("viewid");
-            const viewname = sessionStorage.getItem("viewname");
             const question_icon = document.getElementById("question_icon");
             const question_modal_container = document.getElementById("question_modal_container");
             const question_close = document.getElementById("question_close");
@@ -758,13 +821,36 @@
             const transition_02 = document.getElementById("transition_02");
             const transition_03 = document.getElementById("transition_03");
             let visionCount = 1;
+            let achieveCount = 0;
+
             let cntOpen = 0;
 
             ///////////////////
             //   functions   //
             ///////////////////
+            function showLoading() {
+                document.getElementById("loading").style.display = "block";
+            };
+            function hideLoading() {
+                document.getElementById("loading").style.display = "none";
+            };
+
             document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("msg").innerHTML = viewname + "さんの業務内外での成果、組織で目指す方向性（ビジョン）";
+                document.getElementById("msg").innerHTML = name + "さんの業務内外での成果、組織で目指す方向性（ビジョン）";
+                document.getElementById("achieve_01").innerHTML = sessionStorage.getItem("achieve_01");
+                document.getElementById("achieve_02").innerHTML = sessionStorage.getItem("achieve_02");
+                document.getElementById("achieve_03").innerHTML = sessionStorage.getItem("achieve_03");
+                document.getElementById("achieve_04").innerHTML = sessionStorage.getItem("achieve_04");
+                document.getElementById("achieve_05").innerHTML = sessionStorage.getItem("achieve_05");
+                document.getElementById("achieve_06").innerHTML = sessionStorage.getItem("achieve_06");
+                document.getElementById("achieve_07").innerHTML = sessionStorage.getItem("achieve_07");
+                document.getElementById("achieve_08").innerHTML = sessionStorage.getItem("achieve_08");
+                document.getElementById("achieve_09").innerHTML = sessionStorage.getItem("achieve_09");
+                document.getElementById("achieve_10").innerHTML = sessionStorage.getItem("achieve_10");
+                document.getElementById("vision_99").innerHTML = sessionStorage.getItem("vision_99");
+                document.getElementById("tag_01").value = sessionStorage.getItem("tag_01");
+                document.getElementById("tag_02").value = sessionStorage.getItem("tag_02");
+                document.getElementById("tag_03").value = sessionStorage.getItem("tag_03");
                 if (sessionStorage.getItem("achieve_01") != "") {
                     document.getElementById("achieves_01").style.display = "flex"
                     achieveCount = 1
@@ -825,21 +911,6 @@
                 } else {
                     document.getElementById("achieves_10").style.display = "none"
                 };
-
-                document.getElementById("achieve_01").innerHTML = sessionStorage.getItem("achieve_01");
-                document.getElementById("achieve_02").innerHTML = sessionStorage.getItem("achieve_02");
-                document.getElementById("achieve_03").innerHTML = sessionStorage.getItem("achieve_03");
-                document.getElementById("achieve_04").innerHTML = sessionStorage.getItem("achieve_04");
-                document.getElementById("achieve_05").innerHTML = sessionStorage.getItem("achieve_05");
-                document.getElementById("achieve_06").innerHTML = sessionStorage.getItem("achieve_06");
-                document.getElementById("achieve_07").innerHTML = sessionStorage.getItem("achieve_07");
-                document.getElementById("achieve_08").innerHTML = sessionStorage.getItem("achieve_08");
-                document.getElementById("achieve_09").innerHTML = sessionStorage.getItem("achieve_09");
-                document.getElementById("achieve_10").innerHTML = sessionStorage.getItem("achieve_10");
-                document.getElementById("vision_99").innerHTML = sessionStorage.getItem("vision_99");
-                document.getElementById("tag_01").innerHTML = sessionStorage.getItem("tag_01");
-                document.getElementById("tag_02").innerHTML = sessionStorage.getItem("tag_02");
-                document.getElementById("tag_03").innerHTML = sessionStorage.getItem("tag_03");
             });
 
             function accordionAction() {
@@ -865,7 +936,7 @@
 
             function addAction(event) {
                 achieveCount += 1
-                if (achieveCount <= 9 ) {
+                if (achieveCount <= 9) {
                     document.getElementById("achieves_0" + String(achieveCount)).style.display = "flex"
                 } else {
                     document.getElementById("achieves_" + String(achieveCount)).style.display = "flex"
@@ -922,11 +993,77 @@
 
             function view_transition(event) {
                 let action = event.target.id.slice(-10);
-                if (action === "next_btn") {
+                let now = new Date();
+                let year = now.getFullYear();
+                let month = ("0" + (now.getMonth() + 1)).slice(-2);
+                let day = ("0" + now.getDate()).slice(-2);
+                let hours = ("0" + now.getHours()).slice(-2);
+                let minutes = ("0" + now.getMinutes()).slice(-2);
+                let seconds = ("0" + now.getSeconds()).slice(-2);
+                let timestamp = year + month + day + hours + minutes + seconds;
+
+                let data = {
+                    "task": "save_03",
+                    "timestamp": timestamp,
+                    "userid": userid,
+                    "name": name,
+                    "tmp_achieve_01": document.getElementById("achieve_01").innerHTML,
+                    "tmp_achieve_02": document.getElementById("achieve_02").innerHTML,
+                    "tmp_achieve_03": document.getElementById("achieve_03").innerHTML,
+                    "tmp_achieve_04": document.getElementById("achieve_04").innerHTML,
+                    "tmp_achieve_05": document.getElementById("achieve_05").innerHTML,
+                    "tmp_achieve_06": document.getElementById("achieve_06").innerHTML,
+                    "tmp_achieve_07": document.getElementById("achieve_07").innerHTML,
+                    "tmp_achieve_08": document.getElementById("achieve_08").innerHTML,
+                    "tmp_achieve_09": document.getElementById("achieve_09").innerHTML,
+                    "tmp_achieve_10": document.getElementById("achieve_10").innerHTML,
+                    "tmp_vision": document.getElementById("vision_99").value,
+                    "tmp_tag_01": document.getElementById("tag_01").value,
+                    "tmp_tag_02": document.getElementById("tag_02").value,
+                    "tmp_tag_03": document.getElementById("tag_03").value
+                };
+                console.log({
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+                showLoading();
+                fetch(api_gateway, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log("Success!!");
+                    sessionStorage.setItem("achieve_01" ,document.getElementById("achieve_01").innerHTML);
+                    sessionStorage.setItem("achieve_02" ,document.getElementById("achieve_02").innerHTML);
+                    sessionStorage.setItem("achieve_03" ,document.getElementById("achieve_03").innerHTML);
+                    sessionStorage.setItem("achieve_04" ,document.getElementById("achieve_04").innerHTML);
+                    sessionStorage.setItem("achieve_05" ,document.getElementById("achieve_05").innerHTML);
+                    sessionStorage.setItem("achieve_06" ,document.getElementById("achieve_06").innerHTML);
+                    sessionStorage.setItem("achieve_07" ,document.getElementById("achieve_07").innerHTML);
+                    sessionStorage.setItem("achieve_08" ,document.getElementById("achieve_08").innerHTML);
+                    sessionStorage.setItem("achieve_09" ,document.getElementById("achieve_09").innerHTML);
+                    sessionStorage.setItem("achieve_10" ,document.getElementById("achieve_10").innerHTML);
+                    sessionStorage.setItem("vision_99" ,document.getElementById("vision_99").innerHTML);
+                    sessionStorage.setItem("tag_01" ,document.getElementById("tag_01").value);
+                    sessionStorage.setItem("tag_02" ,document.getElementById("tag_02").value);
+                    sessionStorage.setItem("tag_03" ,document.getElementById("tag_03").value);
+                    hideLoading();
+                    if (action === "next_btn") {
                         window.location.href = "index.html";
                     } else {
-                        window.location.href = "view_02.html";
-                }
+                        window.location.href = "input_02.html";
+                    }
+                })
+                .catch(error => {
+                    console.error("API Error to api_gateway:", error);
+                });
             };
 
             hamburger_icon.addEventListener("click", () => {

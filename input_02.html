@@ -28,6 +28,58 @@
                 font-family: 'Times New Roman', serif;
             }
 
+            /*---------------
+            ---   pulse   ---
+            ---------------*/
+            @keyframes pulse {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: .25;
+                    transform: scale(.75);
+                }
+            }
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+            .pulse_container {
+                width: 120px;
+                display: flex;
+                margin: 0 auto;
+                justify-content: space-between;
+                align-items: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .pulse_bubble {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: rgba(85,170,255,1);
+            }
+            .pulse_bubble_00 {
+                animation: pulse .4s ease 0s infinite alternate;
+            }
+            .pulse_bubble_01 {
+                animation: pulse .4s ease .2s infinite alternate;
+            }
+            .pulse_bubble_02 {
+                animation: pulse .4s ease .4s infinite alternate;
+            }
+
             /*----------------
             ---   header   ---
             -----------------*/
@@ -143,7 +195,7 @@
             main .support {
                 position: fixed;
                 top: 12%;
-                left: 20%;
+                left: 10%;
                 display: flex;
                 flex-direction: row;
                 justify-content: center;
@@ -189,13 +241,31 @@
             main .tbl {
                 position: fixed;
                 top: 15%;
-                left: 20%;
-                width: 60%;
+                left: 10%;
+                width: 80%;
                 height: 600px;
                 overflow: scroll;
             }
+            main .smr_01 {
+                background-color: rgba(210,255,210,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
             main .smr_02 {
                 background-color: rgba(170,255,170,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_03 {
+                background-color: rgba(130,255,130,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_04 {
+                background-color: rgba(45,170,45,1);
                 color: rgba(0,0,0,1);
                 height: 40px;
                 justify-content: center;
@@ -206,7 +276,37 @@
                 height: 40px;
                 justify-content: center;
             }
-            main .smr_btn {
+            main .smr_06 {
+                background-color: rgba(125,170,125,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_07 {
+                background-color: rgba(15,105,15,1);
+                color: rgba(255,255,255,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_08 {
+                background-color: rgba(15,85,15,1);
+                color: rgba(255,255,255,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_09 {
+                background-color: rgba(15,65,15,1);
+                color: rgba(255,255,255,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_10 {
+                background-color: rgba(15,45,15,1);
+                color: rgba(255,255,255,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_btn_b {
                 display: inline-block;
                 position: relative;
                 top: -40%;
@@ -214,6 +314,38 @@
                 &:before, &:after {
                     content: "";
                     background-color: rgba(0,0,0,1);
+                    border-radius: 10px;
+                    width: 18px;
+                    height: 4px;
+                    position: absolute;
+                    top: 7px;
+                    left: 0;
+                }
+                &:before {  
+                    transition: height 2.0s;
+                    width: 4px;
+                    height: 18px;
+                    top: 0;
+                    left: 7px;
+                }
+                &.is_active {
+                    &:before {
+                        transition: height 2.0s;
+                        width: 4px;
+                        height: 0px;
+                        top: 0;
+                        left: 7px;
+                    }
+                }
+            }
+            main .smr_btn_w {
+                display: inline-block;
+                position: relative;
+                top: -40%;
+                left: 1%;
+                &:before, &:after {
+                    content: "";
+                    background-color: rgba(255,255,255,1);
                     border-radius: 10px;
                     width: 18px;
                     height: 4px;
@@ -249,7 +381,6 @@
                 height: 0px;
                 overflow: hidden;
                 /*--- other setting ---*/
-                width: 100%;
                 color: rgba(0,0,0,1);
                 display: flex;
                 flex-direction: column;
@@ -257,202 +388,39 @@
             }
             main .rows .is_active {
                 /*--- transition setting ---*/
-                height: 180px;
                 transition: height 2s;
+                height: 180px;
                 overflow: hidden;
             }
             main .oddColor {
+                width: 100%;
+                height: 30px;
                 background-color: rgba(240,240,240,0.15);
             }
             main .evenColor {
+                width: 100%;
+                height: 30px;
                 background-color: rgba(240,240,240,0.85);
             }
             main .row {
-                width: 100%;
-                height: 80x;
                 padding: 0px;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
             }
             main .row_label {
-                width: 10%;
                 display: inline-block;
-                text-align: center;
-            }
-            main .row_content {
-                width: 90%;
-                height: 80px;
-                display: flex;
-                flex-direction: row;
+                text-align: left;
+                padding-left: 40px;
             }
             main .row_input {
-                resize: none;
-                width: 80%;
-                height: 75%;
-                margin: auto 3px;
-                border-radius: 2px;
-                border: solid 0.5px rgba(170,170,170,0.85);
-                text-align: left;
+                width: 30px;
+                border-radius: 5px;
+                text-align: center;
             }
-            main .edit_btn {
-                width: 60px;
-                height: 30px;
-                font-size: 12px;
-                margin: auto 40px;
-                border: 2px solid rgba(0,0,0,1);
-                border-radius: 0;
-                background: rgba(255,255,255,1);
-                -webkit-transform-style: preserve-3d;
-                transform-style: preserve-3d;
-                cursor: pointer;
-            }
-            main .edit_btn:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 5px;
-                height: 100%;
-                content: "";
-                -webkit-transition: all .3s;
-                transition: all .3s;
-                background: rgba(0,0,0,1);
-            }
-            main .edit_btn:hover {
-                color: rgba(255,255,255,1);
-                background: rgba(0,0,0,1);
-            }
-            main .edit_btn:hover:before {
-                background: rgba(255,255,255,1);
-            }
-
-            /*-------------------
-            ---   main: add   ---
-            -------------------*/
-            main .add {
-                height: 40px;
-                background-color: rgba(255,255,255,1);
-            }
-            main .add_btn {
-                width: 120px;
-                height: 30px;
-                font-size: 12px;
-                margin: auto;
-                border: 2px solid rgba(0,0,0,1);
-                border-radius: 0;
-                background: rgba(255,255,255,1);
-                -webkit-transform-style: preserve-3d;
-                transform-style: preserve-3d;
-                cursor: pointer;
-            }
-            main .add_btn:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 5px;
-                height: 100%;
-                content: "";
-                -webkit-transition: all .3s;
-                transition: all .3s;
-                background: rgba(0,0,0,1);
-            }
-            main .add_btn:hover {
-                color: rgba(255,255,255,1);
-                background: rgba(0,0,0,1);
-            }
-            main .add_btn:hover:before {
-                background: rgba(255,255,255,1);
-            }
-
-            /*-------------------
-            ---   main: tag   ---
-            -------------------*/
-            main .row_tag {
-                width: 100%;
-                height: 40px;
-                padding: 0px;
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-            }
-            main .row_tag_content {
-                width: 90%;
-                height: 40px;
-                display: flex;
-                flex-direction: row;
-            }
-            main .tags {
-                width: 100%;
-                height: 100%;
-                margin: auto 6px;
-            }
-            main .tag {
-                resize: none;
-                width: 30%;
-                height: 65%;
-                margin-top: 4px;
-                margin-left: 4px;
-                border-radius: 2px;
-                border: solid 0.5px rgba(170,170,170,0.85);
-                font-size: 16px;
-                text-align: left;
-
-            }
-
-            /*---------------------
-            ---   main: modal   ---
-            ---------------------*/
-            main .modalArea {
-                display: none;
-                position: fixed;
-                top: 50%;
-                left: 50%;
-                width: 1000px;
-                height: 650px;
-                transform: translate(-50%, -50%);
-                background-color: rgba(0,0,0,0.7);
-                border: 1px solid rgba(0,0,0,0.7);
-                flex-direction: column;
-                z-index: 2000;
-            }
-            main .modalTextArea {
-                display: block;
-                height: 60%;
-                width: 60%;
-                margin: auto;
-                border: solid 1.0px rgba(0,0,0,0.85);
-                border-radius: 2px;
-                z-index: 2000;
-            }
-            main .modalBtn {
-                display: block;
-                width: 120px;
-                height: 30px;
-                border: 2px solid rgba(0,0,0,1);
-                border-radius: 0;
-                background: rgba(255,255,255,1);
-                -webkit-transform-style: preserve-3d;
-                transform-style: preserve-3d;
-                margin: auto;
-                cursor: pointer;
-            }
-            main .modalBtn:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 5px;
-                height: 100%;
-                content: '';
-                -webkit-transition: all .3s;
-                transition: all .3s;
-                background: rgba(0,0,0,1);
-            }
-            main .modalBtn:hover {
-                color: rgba(255,255,255,1);
-                background: rgba(0,0,0,1);
-            }
-            main .modalBtn:hover:before {
-                background: rgba(255,255,255,1);
+            main .row_appendix {
+                display: inline-block;
+                margin-right: 30px;
             }
 
             /*-------------------
@@ -566,6 +534,19 @@
     </head>
 
     <body>
+        <!---------------
+        ---   pulse   ---
+        ---------------->
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner_box">
+                <div class="pulse_container">  
+                    <div class="pulse_bubble pulse_bubble_00"></div>
+                    <div class="pulse_bubble pulse_bubble_01"></div>
+                    <div class="pulse_bubble pulse_bubble_02"></div>
+                </div>
+            </div>
+        </div>
+
         <!----------------
         ---   header   ---
         ----------------->
@@ -594,135 +575,755 @@
             </div>
 
             <div class="tbl">
-                <!-----------------------
-                ---   main: achieve   ---
-                ------------------------>
-                <div id="achieve">
-                    <div class="smr_02" id="achieve_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="achieve_btn"></span>
-                        <span class="smr_txt" id="achieve_txt">業務内外における成果</span>
+                <!---------------------
+                ---   main: sales   ---
+                ---------------------->
+                <div id="sales">
+                    <div class="smr_01" id="sales_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="sales_btn"></span>
+                        <span class="smr_txt" id="sales_txt">営業</span>
                     </div>
-                    <div class="rows" id="achieve_cnt">
-                        <div class="row oddColor" id="achieves_01">
-                            <span class="row_label">1</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_01" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_01" onclick="editAction(event)" disabled>編集</button>
+                    <div class="rows" id="sales_cnt">
+                        <div class="row oddColor">
+                            <span class="row_label">法人営業</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_enterprise_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenColor" id="achieves_02">
-                            <span class="row_label">2</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_02" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_02" onclick="editAction(event)" disabled>編集</button>
+                        <div class="row evenColor">
+                            <span class="row_label">個人営業</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_person_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddColor" id="achieves_03">
-                            <span class="row_label">3</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_03" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_03" onclick="editAction(event)" disabled>編集</button>
+                        <div class="row oddColor">
+                            <span class="row_label">MR</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_mr_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenColor" id="achieves_04">
-                            <span class="row_label">4</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_04" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_04" onclick="editAction(event)" disabled>編集</button>
+                        <div class="row evenColor">
+                            <span class="row_label">海外営業</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_abroad_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddColor" id="achieves_05">
-                            <span class="row_label">5</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_05" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_05" onclick="editAction(event)" disabled>編集</button>
+                        <div class="row oddColor">
+                            <span class="row_label">代理店管理</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_agent_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenColor" id="achieves_06">
-                            <span class="row_label">6</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_06" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_06" onclick="editAction(event)" disabled>編集</button>
+                        <div class="row evenColor">
+                            <span class="row_label">FP（ファイナンシャルプランナー）</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_fp_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddColor" id="achieves_07">
-                            <span class="row_label">7</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_07" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_07" onclick="editAction(event)" disabled>編集</button>
+                        <div class="row oddColor">
+                            <span class="row_label">技術営業・セールスエンジニア</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_se_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenColor" id="achieves_08">
-                            <span class="row_label">8</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_08" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_08" onclick="editAction(event)" disabled>編集</button>
+                        <div class="row evenColor">
+                            <span class="row_label">インバウンド（ユーザーサポート等）</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_inbound_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddColor" id="achieves_09">
-                            <span class="row_label">9</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_09" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_09" onclick="editAction(event)" disabled>編集</button>
+                        <div class="row oddColor">
+                            <span class="row_label">アウトバウンド（セールス等）</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_outbound_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenColor" id="achieves_10">
-                            <span class="row_label">10</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="achieve_10" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_10" onclick="editAction(event)" disabled>編集</button>
+                        <div class="row evenColor">
+                            <span class="row_label">マネージャー（センター管理・マネジメント）</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_manager_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row add">
-                            <button class="add_btn" id="add_btn" onclick="addAction(event)" disabled>入力欄の追加</button>
+                        <div class="row oddColor">
+                            <span class="row_label">スーパーバイザー</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_sales_supervisor_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---------------------
+                ---   main: sales   ---
+                ---------------------->
+                <!-----------------------
+                ---   main: service   ---
+                ------------------------>
+                <div id="service">
+                    <div class="smr_02" id="service_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="service_btn"></span>
+                        <span class="smr_txt" id="service_txt">販売・サービス</span>
+                    </div>
+                    <div class="rows" id="service_cnt">
+                        <div class="row oddColor">
+                            <span class="row_label">店舗開発</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_service_storedeveloper_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">バイヤー・マーチャンダイザー</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_service_buyer_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!-----------------------
-                ---   main: achieve   ---
+                ---   main: service   ---
                 ------------------------>
-                <!-----------------------
-                ---   main: vision   ---
-                ------------------------>
-                <div id="vision">
-                    <div class="smr_05" id="vision_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="vision_btn"></span>
-                        <span class="smr_txt" id="vision_txt">組織で目指す方向性（ビジョン）</span>
+                <!--------------------
+                ---   main: plan   ---
+                --------------------->
+                <div id="plan">
+                    <div class="smr_03" id="plan_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="plan_btn"></span>
+                        <span class="smr_txt" id="plan_txt">経営企画</span>
                     </div>
-                    <div class="rows" id="vision_cnt">
+                    <div class="rows" id="plan_cnt">
                         <div class="row oddColor">
-                            <span class="row_label">内容</span>
-                            <div class="row_content">
-                                <textarea class="row_input" id="vision_99" readonly></textarea>
-                                <button class="edit_btn" id="edit_btn_99" onclick="editAction(event)" disabled>編集</button>
+                            <span class="row_label">管理会計</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_plan_manageaccount_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row_tag evenColor">
-                            <span class="row_label">タグ</span>
-                            <div class="row_tag_content">
-                                <div class="tags">
-                                    <textarea class="tag" id="tag_01" readonly placeholder=" #"></textarea>
-                                    <textarea class="tag" id="tag_02" readonly placeholder=" #"></textarea>
-                                    <textarea class="tag" id="tag_03" readonly placeholder=" #"></textarea>
-                                </div>
-                                <!-- <button class="save_btn" id="save_btn" onclick="saveAction(event)" disabled>保存</button> -->
+                        <div class="row evenColor">
+                            <span class="row_label">予算作成・予実管理</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_plan_budget_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">経営分析・年次計画の立案</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_plan_analytics_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">子会社・関連会社管理</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_plan_subsidiary_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">M&A・合併・提携の推進</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_plan_ma_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">事業戦略・中期経営計画の策定</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_plan_strategy_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">新規事業立案・実行</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_plan_business_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">競合分析・市場調査等のリサーチ</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_plan_research_year" value="">
+                                <span class="row_appendix">年以内</span>
                             </div>
                         </div>
                     </div>
-            </div>
+                </div>
+                <!--------------------
+                ---   main: plan   ---
+                --------------------->
                 <!-----------------------
-                ---   main: vision   ---
+                ---   main: finance   ---
                 ------------------------>
-                <!---------------------
-                ---   main: modal   ---
-                ---------------------->
-                <div class="modalArea" id="modalArea">
-                    <textarea class="modalTextArea" id="modalTextArea"></textarea>
-                    <button class="modalBtn" id="modalBtn" onclick="closeAction(event)">保存して閉じる</button>
-                </div>    
-                <!---------------------
-                ---   main: modal   ---
-                ---------------------->
+                <div id="finance">
+                    <div class="smr_04" id="finance_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="finance_btn"></span>
+                        <span class="smr_txt" id="finance_txt">財務</span>
+                    </div>
+                    <div class="rows" id="finance_cnt">
+                        <div class="row oddColor">
+                            <span class="row_label">資金計画・運用・管理</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_finance_plan_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">出納管理</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_finance_accounting_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">キャッシュ・フロー計算書作成実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_finance_cf_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">与信管理業務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_finance_loan_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-----------------------
+                ---   main: finance   ---
+                ------------------------>
+                <!--------------------------
+                ---   main: accounting   ---
+                --------------------------->
+                <div id="accounting">
+                    <div class="smr_05" id="accounting_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="accounting_btn"></span>
+                        <span class="smr_txt" id="accounting_txt">経理</span>
+                    </div>
+                    <div class="rows" id="accounting_cnt">
+                        <div class="row oddColor">
+                            <span class="row_label">税務対応</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_accounting_tax_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">決算関連実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_accounting_settlement_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">連結決算実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_accounting_conslidated_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">P/L作成実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_accounting_pl_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">B/S作成実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_accounting_bs_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">有価証券報告書等作成実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_accounting_securiteisreport_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">税務申告書作成実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_accounting_taxreport_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">原価計算実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_accounting_costing_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">伝票処理（請求書・固定資産伝票等）</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_accounting_document_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--------------------------
+                ---   main: accounting   ---
+                --------------------------->
+                <!------------------
+                ---   main: ow   ---
+                ------------------->
+                <div id="ow">
+                    <div class="smr_06" id="ow_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="ow_btn"></span>
+                        <span class="smr_txt" id="ow_txt">人事・総務・労務</span>
+                    </div>
+                    <div class="rows" id="ow_cnt">
+                        <div class="row oddColor">
+                            <span class="row_label">人員計画の立案</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ow_plan_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">人事制度の立案</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ow_system_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">新卒採用実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ow_fresh_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">中途採用実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ow_mid_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">社員教育・研修</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ow_train_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">給与計算</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ow_salary_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">労務管理</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ow_labor_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">取締役会・株主総会運営</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ow_exective_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">総務関連実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ow_ga_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------------------
+                ---   main: ow   ---
+                ------------------->
+                <!------------------
+                ---   main: ip   ---
+                ------------------->
+                <div id="ip">
+                    <div class="smr_07" id="ip_smr" onclick="accordionAction()">
+                        <span class="smr_btn_w" id="ip_btn"></span>
+                        <span class="smr_txt" id="ip_txt">知財・特許</span>
+                    </div>
+                    <div class="rows" id="ip_cnt">
+                        <div class="row oddColor">
+                            <span class="row_label">国内特許関連実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ip_innerpatent_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">国外特許関連実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ip_outerpatent_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">商標・著作権関連実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ip_trademark_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------------------
+                ---   main: ip   ---
+                ------------------->
+                <!-------------------
+                ---   main: law   ---
+                -------------------->
+                <div id="law">
+                    <div class="smr_08" id="law_smr" onclick="accordionAction()">
+                        <span class="smr_btn_w" id="law_btn"></span>
+                        <span class="smr_txt" id="law_txt">法務</span>
+                    </div>
+                    <div class="rows" id="law_cnt">
+                        <div class="row oddColor">
+                            <span class="row_label">総会・会社法・株式関連業務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_law_stock_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">契約関連業務（交渉・折衝）</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_law_contractnegotiate_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">契約関連業務（文案作成・チェック）</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_law_contractcheck_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">M&A・合併・提携 関連業務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_law_ma_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">コンプライアンス・SR推進・内部監査</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_law_compriance_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">係争・訴訟対応与計算</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_law_issue_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">許認可、免許等取得実務（ISO、Pマーク 等）</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_law_apprival_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-------------------
+                ---   main: law   ---
+                -------------------->
+                <!-------------------------
+                ---   main: marketing   ---
+                -------------------------->
+                <div id="marketing">
+                    <div class="smr_09" id="marketing_smr" onclick="accordionAction()">
+                        <span class="smr_btn_w" id="marketing_btn"></span>
+                        <span class="smr_txt" id="marketing_txt">広告・マーケティング</span>
+                    </div>
+                    <div class="rows" id="marketing_cnt">
+                        <div class="row oddColor">
+                            <span class="row_label">営業戦略立案</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_strategy_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">調査・分析関連実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_research_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">商品企画関連実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_plan_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">販促企画関連実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_promo_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">物流企画・ロジスティクス関連実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_logistic_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">メディア選定</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_media_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">クリエイティブ管理</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_creative_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">宣伝計画</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_ad_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">広報実務</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_pr_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">宣伝・広報予算管理</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_budget_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">ＩＲ</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_marketing_ir_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-------------------------
+                ---   main: marketing   ---
+                -------------------------->
+                <!------------------
+                ---   main: ex   ---
+                ------------------->
+                <div id="ex">
+                    <div class="smr_10" id="ex_smr" onclick="accordionAction()">
+                        <span class="smr_btn_w" id="ex_btn"></span>
+                        <span class="smr_txt" id="ex_txt">ドメイン知識</span>
+                    </div>
+                    <div class="rows" id="ex_cnt">
+                        <div class="row oddColor">
+                            <span class="row_label">メンバーマネジメント</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_membermanagement_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">プロジェクト管理</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_projectmanagement_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">コンサルタント</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_cosultant_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">プリセールス</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_presales_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">要件定義</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_definition_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">基本設計</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_basedesign_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">詳細設計</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_detaildesign_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">開発・実装</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_develop_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">テスト</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_test_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">研究開発</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_rd_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">プロダクト開発</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_product_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">ローカライズ</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_localize_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">テスティング</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_testing_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">ネットワーク設計・構築</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_networkdesign_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">ネットワーク運用・保守</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_nertworkmanagement_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">サーバー設計・構築</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_serverdesign_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">サーバー運用・保守</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_servermanagement_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">データベース設計・構築</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_dbdesign_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">データベース運用・保守</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_dbmanagement_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">システム運用・保守</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_systemmanagement_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">テクニカルサポート</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_technicalsupport_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row evenColor">
+                            <span class="row_label">導入、トレーニング</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_training_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                        <div class="row oddColor">
+                            <span class="row_label">データ解析</span>
+                            <div>
+                                <input type="text" class="row_input" id="function_ex_dataanalytics_year" value="">
+                                <span class="row_appendix">年以内</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!------------------
+                ---   main: ex   ---
+                ------------------->
             </div>
 
             <div class="next">
@@ -745,8 +1346,6 @@
             const api_gateway = "https://atusbl52m9.execute-api.us-east-1.amazonaws.com/boundsless";
             const userid = sessionStorage.getItem("userid");
             const name = sessionStorage.getItem("name");
-            const viewid = sessionStorage.getItem("viewid");
-            const viewname = sessionStorage.getItem("viewname");
             const question_icon = document.getElementById("question_icon");
             const question_modal_container = document.getElementById("question_modal_container");
             const question_close = document.getElementById("question_close");
@@ -757,99 +1356,134 @@
             const transition_01 = document.getElementById("transition_01");
             const transition_02 = document.getElementById("transition_02");
             const transition_03 = document.getElementById("transition_03");
-            let visionCount = 1;
+
             let cntOpen = 0;
 
             ///////////////////
             //   functions   //
             ///////////////////
-            document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("msg").innerHTML = viewname + "さんの業務内外での成果、組織で目指す方向性（ビジョン）";
-                if (sessionStorage.getItem("achieve_01") != "") {
-                    document.getElementById("achieves_01").style.display = "flex"
-                    achieveCount = 1
-                } else {
-                    document.getElementById("achieves_01").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_02") != "") {
-                    document.getElementById("achieves_02").style.display = "flex"
-                    achieveCount = 2
-                } else {
-                    document.getElementById("achieves_02").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_03") != "") {
-                    document.getElementById("achieves_03").style.display = "flex"
-                    achieveCount = 3
-                } else {
-                    document.getElementById("achieves_03").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_04") != "") {
-                    document.getElementById("achieves_04").style.display = "flex"
-                    achieveCount = 4
-                } else {
-                    document.getElementById("achieves_04").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_05") != "") {
-                    document.getElementById("achieves_05").style.display = "flex"
-                    achieveCount = 5
-                } else {
-                    document.getElementById("achieves_05").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_06") != "") {
-                    document.getElementById("achieves_06").style.display = "flex"
-                    achieveCount = 6
-                } else {
-                    document.getElementById("achieves_06").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_07") != "") {
-                    document.getElementById("achieves_07").style.display = "flex"
-                    achieveCount = 7
-                } else {
-                    document.getElementById("achieves_07").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_08") != "") {
-                    document.getElementById("achieves_08").style.display = "flex"
-                    achieveCount = 8
-                } else {
-                    document.getElementById("achieves_08").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_09") != "") {
-                    document.getElementById("achieves_09").style.display = "flex"
-                    achieveCount = 9
-                } else {
-                    document.getElementById("achieves_09").style.display = "none"
-                };
-                if (sessionStorage.getItem("achieve_10") != "") {
-                    document.getElementById("achieves_10").style.display = "flex"
-                    achieveCount = 10
-                } else {
-                    document.getElementById("achieves_10").style.display = "none"
-                };
+            function showLoading() {
+                document.getElementById("loading").style.display = "block";
+            };
+            function hideLoading() {
+                document.getElementById("loading").style.display = "none";
+            };
 
-                document.getElementById("achieve_01").innerHTML = sessionStorage.getItem("achieve_01");
-                document.getElementById("achieve_02").innerHTML = sessionStorage.getItem("achieve_02");
-                document.getElementById("achieve_03").innerHTML = sessionStorage.getItem("achieve_03");
-                document.getElementById("achieve_04").innerHTML = sessionStorage.getItem("achieve_04");
-                document.getElementById("achieve_05").innerHTML = sessionStorage.getItem("achieve_05");
-                document.getElementById("achieve_06").innerHTML = sessionStorage.getItem("achieve_06");
-                document.getElementById("achieve_07").innerHTML = sessionStorage.getItem("achieve_07");
-                document.getElementById("achieve_08").innerHTML = sessionStorage.getItem("achieve_08");
-                document.getElementById("achieve_09").innerHTML = sessionStorage.getItem("achieve_09");
-                document.getElementById("achieve_10").innerHTML = sessionStorage.getItem("achieve_10");
-                document.getElementById("vision_99").innerHTML = sessionStorage.getItem("vision_99");
-                document.getElementById("tag_01").innerHTML = sessionStorage.getItem("tag_01");
-                document.getElementById("tag_02").innerHTML = sessionStorage.getItem("tag_02");
-                document.getElementById("tag_03").innerHTML = sessionStorage.getItem("tag_03");
+            document.addEventListener("DOMContentLoaded", function() {
+                document.getElementById("msg").innerHTML = name + "さんの職能";
+                document.getElementById("function_sales_enterprise_year").setAttribute("value", sessionStorage.getItem("function_sales_enterprise_year"));
+                document.getElementById("function_sales_person_year").setAttribute("value", sessionStorage.getItem("function_sales_person_year"));
+                document.getElementById("function_sales_mr_year").setAttribute("value", sessionStorage.getItem("function_sales_mr_year"));
+                document.getElementById("function_sales_abroad_year").setAttribute("value", sessionStorage.getItem("function_sales_abroad_year"));
+                document.getElementById("function_sales_agent_year").setAttribute("value", sessionStorage.getItem("function_sales_agent_year"));
+                document.getElementById("function_sales_fp_year").setAttribute("value", sessionStorage.getItem("function_sales_fp_year"));
+                document.getElementById("function_sales_se_year").setAttribute("value", sessionStorage.getItem("function_sales_se_year"));
+                document.getElementById("function_sales_inbound_year").setAttribute("value", sessionStorage.getItem("function_sales_inbound_year"));
+                document.getElementById("function_sales_outbound_year").setAttribute("value", sessionStorage.getItem("function_sales_outbound_year"));
+                document.getElementById("function_sales_manager_year").setAttribute("value", sessionStorage.getItem("function_sales_manager_year"));
+                document.getElementById("function_sales_supervisor_year").setAttribute("value", sessionStorage.getItem("function_sales_supervisor_year"));
+                document.getElementById("function_service_storedeveloper_year").setAttribute("value", sessionStorage.getItem("function_service_storedeveloper_year"));
+                document.getElementById("function_service_buyer_year").setAttribute("value", sessionStorage.getItem("function_service_buyer_year"));
+                document.getElementById("function_plan_manageaccount_year").setAttribute("value", sessionStorage.getItem("function_plan_manageaccount_year"));
+                document.getElementById("function_plan_budget_year").setAttribute("value", sessionStorage.getItem("function_plan_budget_year"));
+                document.getElementById("function_plan_analytics_year").setAttribute("value", sessionStorage.getItem("function_plan_analytics_year"));
+                document.getElementById("function_plan_subsidiary_year").setAttribute("value", sessionStorage.getItem("function_plan_subsidiary_year"));
+                document.getElementById("function_plan_ma_year").setAttribute("value", sessionStorage.getItem("function_plan_ma_year"));
+                document.getElementById("function_plan_strategy_year").setAttribute("value", sessionStorage.getItem("function_plan_strategy_year"));
+                document.getElementById("function_plan_business_year").setAttribute("value", sessionStorage.getItem("function_plan_business_year"));
+                document.getElementById("function_plan_research_year").setAttribute("value", sessionStorage.getItem("function_plan_research_year"));
+                document.getElementById("function_finance_plan_year").setAttribute("value", sessionStorage.getItem("function_finance_plan_year"));
+                document.getElementById("function_finance_accounting_year").setAttribute("value", sessionStorage.getItem("function_finance_accounting_year"));
+                document.getElementById("function_finance_cf_year").setAttribute("value", sessionStorage.getItem("function_finance_cf_year"));
+                document.getElementById("function_finance_loan_year").setAttribute("value", sessionStorage.getItem("function_finance_loan_year"));
+                document.getElementById("function_accounting_tax_year").setAttribute("value", sessionStorage.getItem("function_accounting_tax_year"));
+                document.getElementById("function_accounting_settlement_year").setAttribute("value", sessionStorage.getItem("function_accounting_settlement_year"));
+                document.getElementById("function_accounting_conslidated_year").setAttribute("value", sessionStorage.getItem("function_accounting_conslidated_year"));
+                document.getElementById("function_accounting_pl_year").setAttribute("value", sessionStorage.getItem("function_accounting_pl_year"));
+                document.getElementById("function_accounting_bs_year").setAttribute("value", sessionStorage.getItem("function_accounting_bs_year"));
+                document.getElementById("function_accounting_securiteisreport_year").setAttribute("value", sessionStorage.getItem("function_accounting_securiteisreport_year"));
+                document.getElementById("function_accounting_taxreport_year").setAttribute("value", sessionStorage.getItem("function_accounting_taxreport_year"));
+                document.getElementById("function_accounting_costing_year").setAttribute("value", sessionStorage.getItem("function_accounting_costing_year"));
+                document.getElementById("function_accounting_document_year").setAttribute("value", sessionStorage.getItem("function_accounting_document_year"));
+                document.getElementById("function_ow_plan_year").setAttribute("value", sessionStorage.getItem("function_ow_plan_year"));
+                document.getElementById("function_ow_system_year").setAttribute("value", sessionStorage.getItem("function_ow_system_year"));
+                document.getElementById("function_ow_fresh_year").setAttribute("value", sessionStorage.getItem("function_ow_fresh_year"));
+                document.getElementById("function_ow_mid_year").setAttribute("value", sessionStorage.getItem("function_ow_mid_year"));
+                document.getElementById("function_ow_train_year").setAttribute("value", sessionStorage.getItem("function_ow_train_year"));
+                document.getElementById("function_ow_salary_year").setAttribute("value", sessionStorage.getItem("function_ow_salary_year"));
+                document.getElementById("function_ow_labor_year").setAttribute("value", sessionStorage.getItem("function_ow_labor_year"));
+                document.getElementById("function_ow_exective_year").setAttribute("value", sessionStorage.getItem("function_ow_exective_year"));
+                document.getElementById("function_ow_ga_year").setAttribute("value", sessionStorage.getItem("function_ow_ga_year"));
+                document.getElementById("function_ip_innerpatent_year").setAttribute("value", sessionStorage.getItem("function_ip_innerpatent_year"));
+                document.getElementById("function_ip_outerpatent_year").setAttribute("value", sessionStorage.getItem("function_ip_outerpatent_year"));
+                document.getElementById("function_ip_trademark_year").setAttribute("value", sessionStorage.getItem("function_ip_trademark_year"));
+                document.getElementById("function_law_stock_year").setAttribute("value", sessionStorage.getItem("function_law_stock_year"));
+                document.getElementById("function_law_contractnegotiate_year").setAttribute("value", sessionStorage.getItem("function_law_contractnegotiate_year"));
+                document.getElementById("function_law_contractcheck_year").setAttribute("value", sessionStorage.getItem("function_law_contractcheck_year"));
+                document.getElementById("function_law_ma_year").setAttribute("value", sessionStorage.getItem("function_law_ma_year"));
+                document.getElementById("function_law_compriance_year").setAttribute("value", sessionStorage.getItem("function_law_compriance_year"));
+                document.getElementById("function_law_issue_year").setAttribute("value", sessionStorage.getItem("function_law_issue_year"));
+                document.getElementById("function_law_apprival_year").setAttribute("value", sessionStorage.getItem("function_law_apprival_year"));
+                document.getElementById("function_marketing_strategy_year").setAttribute("value", sessionStorage.getItem("function_marketing_strategy_year"));
+                document.getElementById("function_marketing_research_year").setAttribute("value", sessionStorage.getItem("function_marketing_research_year"));
+                document.getElementById("function_marketing_plan_year").setAttribute("value", sessionStorage.getItem("function_marketing_plan_year"));
+                document.getElementById("function_marketing_promo_year").setAttribute("value", sessionStorage.getItem("function_marketing_promo_year"));
+                document.getElementById("function_marketing_logistic_year").setAttribute("value", sessionStorage.getItem("function_marketing_logistic_year"));
+                document.getElementById("function_marketing_media_year").setAttribute("value", sessionStorage.getItem("function_marketing_media_year"));
+                document.getElementById("function_marketing_creative_year").setAttribute("value", sessionStorage.getItem("function_marketing_creative_year"));
+                document.getElementById("function_marketing_ad_year").setAttribute("value", sessionStorage.getItem("function_marketing_ad_year"));
+                document.getElementById("function_marketing_pr_year").setAttribute("value", sessionStorage.getItem("function_marketing_pr_year"));
+                document.getElementById("function_marketing_budget_year").setAttribute("value", sessionStorage.getItem("function_marketing_budget_year"));
+                document.getElementById("function_marketing_ir_year").setAttribute("value", sessionStorage.getItem("function_marketing_ir_year"));
+                document.getElementById("function_ex_membermanagement_year").setAttribute("value", sessionStorage.getItem("function_ex_membermanagement_year"));
+                document.getElementById("function_ex_projectmanagement_year").setAttribute("value", sessionStorage.getItem("function_ex_projectmanagement_year"));
+                document.getElementById("function_ex_cosultant_year").setAttribute("value", sessionStorage.getItem("function_ex_cosultant_year"));
+                document.getElementById("function_ex_presales_year").setAttribute("value", sessionStorage.getItem("function_ex_presales_year"));
+                document.getElementById("function_ex_definition_year").setAttribute("value", sessionStorage.getItem("function_ex_definition_year"));
+                document.getElementById("function_ex_basedesign_year").setAttribute("value", sessionStorage.getItem("function_ex_basedesign_year"));
+                document.getElementById("function_ex_detaildesign_year").setAttribute("value", sessionStorage.getItem("function_ex_detaildesign_year"));
+                document.getElementById("function_ex_develop_year").setAttribute("value", sessionStorage.getItem("function_ex_develop_year"));
+                document.getElementById("function_ex_test_year").setAttribute("value", sessionStorage.getItem("function_ex_test_year"));
+                document.getElementById("function_ex_rd_year").setAttribute("value", sessionStorage.getItem("function_ex_rd_year"));
+                document.getElementById("function_ex_product_year").setAttribute("value", sessionStorage.getItem("function_ex_product_year"));
+                document.getElementById("function_ex_localize_year").setAttribute("value", sessionStorage.getItem("function_ex_localize_year"));
+                document.getElementById("function_ex_testing_year").setAttribute("value", sessionStorage.getItem("function_ex_testing_year"));
+                document.getElementById("function_ex_networkdesign_year").setAttribute("value", sessionStorage.getItem("function_ex_networkdesign_year"));
+                document.getElementById("function_ex_nertworkmanagement_year").setAttribute("value", sessionStorage.getItem("function_ex_nertworkmanagement_year"));
+                document.getElementById("function_ex_serverdesign_year").setAttribute("value", sessionStorage.getItem("function_ex_serverdesign_year"));
+                document.getElementById("function_ex_servermanagement_year").setAttribute("value", sessionStorage.getItem("function_ex_servermanagement_year"));
+                document.getElementById("function_ex_dbdesign_year").setAttribute("value", sessionStorage.getItem("function_ex_dbdesign_year"));
+                document.getElementById("function_ex_dbmanagement_year").setAttribute("value", sessionStorage.getItem("function_ex_dbmanagement_year"));
+                document.getElementById("function_ex_systemmanagement_year").setAttribute("value", sessionStorage.getItem("function_ex_systemmanagement_year"));
+                document.getElementById("function_ex_technicalsupport_year").setAttribute("value", sessionStorage.getItem("function_ex_technicalsupport_year"));
+                document.getElementById("function_ex_training_year").setAttribute("value", sessionStorage.getItem("function_ex_training_year"));
+                document.getElementById("function_ex_dataanalytics_year").setAttribute("value", sessionStorage.getItem("function_ex_dataanalytics_year"));
             });
 
             function accordionAction() {
                 let cnt = document.getElementById(event.target.id.slice(0,-4) + "_cnt");
                 let btn = document.getElementById(event.target.id.slice(0,-4) + "_btn");
 
-                if (event.target.id.slice(0,-4) === "achieve") {
-                    heights = String(80 * achieveCount + 40);
-                } else if (event.target.id.slice(0,-4) === "vision") {
-                    heights = String(80 * visionCount + 40);
+                if (event.target.id.slice(0,-4) === "sales") {
+                    count = 11;
+                } else if (event.target.id.slice(0,-4) === "service") {
+                    count = 2;
+                } else if (event.target.id.slice(0,-4) === "plan") {
+                    count = 8;
+                } else if (event.target.id.slice(0,-4) === "finance") {
+                    count = 4;
+                } else if (event.target.id.slice(0,-4) === "accounting") {
+                    count = 9;
+                } else if (event.target.id.slice(0,-4) === "ow") {
+                    count = 9;
+                } else if (event.target.id.slice(0,-4) === "ip") {
+                    count = 3;
+                } else if (event.target.id.slice(0,-4) === "law") {
+                    count = 7;
+                } else if (event.target.id.slice(0,-4) === "marketing") {
+                    count = 11;
+                } else if (event.target.id.slice(0,-4) === "ex") {
+                    count = 23;
                 };
 
                 if (cnt.classList.contains("is_active")) {
@@ -859,74 +1493,328 @@
                 } else {
                     cnt.classList.add("is_active");
                     btn.classList.add("is_active");
-                    cnt.style.height = heights + "px";
+                    cnt.style.height = String(30*count)+"px";
                 };
-            };
-
-            function addAction(event) {
-                achieveCount += 1
-                if (achieveCount <= 9 ) {
-                    document.getElementById("achieves_0" + String(achieveCount)).style.display = "flex"
-                } else {
-                    document.getElementById("achieves_" + String(achieveCount)).style.display = "flex"
-                };
-                heights = String(80 * achieveCount + 40);
-                document.getElementById("achieve_cnt").style.height = heights + "px";
-            }
-
-            function editAction(event) {
-                if (event.target.id.slice(-2) === "99") {
-                    editTarget = document.getElementById("vision_99");
-                } else {
-                    editTarget = document.getElementById("achieve_" + event.target.id.slice(-2));
-                };
-                let modalArea = document.getElementById("modalArea");
-                let modalTextArea = document.getElementById("modalTextArea");
-                modalArea.style.display = "flex";
-                modalTextArea.value = editTarget.value
-            };
-
-            function closeAction(event) {
-                let modalArea = document.getElementById("modalArea");
-                let modalTextArea = document.getElementById("modalTextArea");
-                modalArea.style.display = "none";
-                editTarget.innerHTML = modalTextArea.value
             };
 
             function openAccordion() {
-                let txts_btn_01 = document.getElementById("achieve_btn");
-                let txts_content_01 = document.getElementById("achieve_cnt");
-                let txts_cnt_01 = achieveCount;
-                let txts_btn_02 = document.getElementById("vision_btn");
-                let txts_content_02 = document.getElementById("vision_cnt");
-                let txts_cnt_02 = visionCount;
+                let funcs_btn_01 = document.getElementById("sales_btn");
+                let funcs_content_01 = document.getElementById("sales_cnt");
+                let funcs_cnt_01 = 11;
+                let funcs_btn_02 = document.getElementById("service_btn");
+                let funcs_content_02 = document.getElementById("service_cnt");
+                let funcs_cnt_02 = 2;
+                let funcs_btn_03 = document.getElementById("plan_btn");
+                let funcs_content_03 = document.getElementById("plan_cnt");
+                let funcs_cnt_03 = 8;
+                let funcs_btn_04 = document.getElementById("finance_btn");
+                let funcs_content_04 = document.getElementById("finance_cnt");
+                let funcs_cnt_04 = 4;
+                let funcs_btn_05 = document.getElementById("accounting_btn");
+                let funcs_content_05 = document.getElementById("accounting_cnt");
+                let funcs_cnt_05 = 9;
+                let funcs_btn_06 = document.getElementById("ow_btn");
+                let funcs_content_06 = document.getElementById("ow_cnt");
+                let funcs_cnt_06 = 9;
+                let funcs_btn_07 = document.getElementById("ip_btn");
+                let funcs_content_07 = document.getElementById("ip_cnt");
+                let funcs_cnt_07 = 3;
+                let funcs_btn_08 = document.getElementById("law_btn");
+                let funcs_content_08 = document.getElementById("law_cnt");
+                let funcs_cnt_08 = 7;
+                let funcs_btn_09 = document.getElementById("marketing_btn");
+                let funcs_content_09 = document.getElementById("marketing_cnt");
+                let funcs_cnt_09 = 11;
+                let funcs_btn_10 = document.getElementById("ex_btn");
+                let funcs_content_10 = document.getElementById("ex_cnt");
+                let funcs_cnt_10 = 23;
 
                 if (cntOpen % 2 === 0) {
-                    txts_btn_01.classList.add("is_active");
-                    txts_content_01.classList.add("is_active");
-                    txts_content_01.style.height = String(80 * txts_cnt_01 + 40)+"px";
-                    txts_btn_02.classList.add("is_active");
-                    txts_content_02.classList.add("is_active");
-                    txts_content_02.style.height = String(80 * txts_cnt_02 + 40)+"px";
+                    funcs_btn_01.classList.add("is_active");
+                    funcs_content_01.classList.add("is_active");
+                    funcs_content_01.style.height = String(30*funcs_cnt_01)+"px";
+                    funcs_btn_02.classList.add("is_active");
+                    funcs_content_02.classList.add("is_active");
+                    funcs_content_02.style.height = String(30*funcs_cnt_02)+"px";
+                    funcs_btn_03.classList.add("is_active");
+                    funcs_content_03.classList.add("is_active");
+                    funcs_content_03.style.height = String(30*funcs_cnt_03)+"px";
+                    funcs_btn_04.classList.add("is_active");
+                    funcs_content_04.classList.add("is_active");
+                    funcs_content_04.style.height = String(30*funcs_cnt_04)+"px";
+                    funcs_btn_05.classList.add("is_active");
+                    funcs_content_05.classList.add("is_active");
+                    funcs_content_05.style.height = String(30*funcs_cnt_05)+"px";
+                    funcs_btn_06.classList.add("is_active");
+                    funcs_content_06.classList.add("is_active");
+                    funcs_content_06.style.height = String(30*funcs_cnt_06)+"px";
+                    funcs_btn_07.classList.add("is_active");
+                    funcs_content_07.classList.add("is_active");
+                    funcs_content_07.style.height = String(30*funcs_cnt_07)+"px";
+                    funcs_btn_08.classList.add("is_active");
+                    funcs_content_08.classList.add("is_active");
+                    funcs_content_08.style.height = String(30*funcs_cnt_08)+"px";
+                    funcs_btn_09.classList.add("is_active");
+                    funcs_content_09.classList.add("is_active");
+                    funcs_content_09.style.height = String(30*funcs_cnt_09)+"px";
+                    funcs_btn_10.classList.add("is_active");
+                    funcs_content_10.classList.add("is_active");
+                    funcs_content_10.style.height = String(30*funcs_cnt_10)+"px";
                     cntOpen += 1
                 } else {
-                    txts_btn_01.classList.remove("is_active");
-                    txts_content_01.classList.remove("is_active");
-                    txts_content_01.style.height = "0px";
-                    txts_btn_02.classList.remove("is_active");
-                    txts_content_02.classList.remove("is_active");
-                    txts_content_02.style.height = "0px";
+                    funcs_btn_01.classList.remove("is_active");
+                    funcs_content_01.classList.remove("is_active");
+                    funcs_content_01.style.height = "0px";
+                    funcs_btn_02.classList.remove("is_active");
+                    funcs_content_02.classList.remove("is_active");
+                    funcs_content_02.style.height = "0px";
+                    funcs_btn_03.classList.remove("is_active");
+                    funcs_content_03.classList.remove("is_active");
+                    funcs_content_03.style.height = "0px";
+                    funcs_btn_04.classList.remove("is_active");
+                    funcs_content_04.classList.remove("is_active");
+                    funcs_content_04.style.height = "0px";
+                    funcs_btn_05.classList.remove("is_active");
+                    funcs_content_05.classList.remove("is_active");
+                    funcs_content_05.style.height = "0px";
+                    funcs_btn_06.classList.remove("is_active");
+                    funcs_content_06.classList.remove("is_active");
+                    funcs_content_06.style.height = "0px";
+                    funcs_btn_07.classList.remove("is_active");
+                    funcs_content_07.classList.remove("is_active");
+                    funcs_content_07.style.height = "0px";
+                    funcs_btn_08.classList.remove("is_active");
+                    funcs_content_08.classList.remove("is_active");
+                    funcs_content_08.style.height = "0px";
+                    funcs_btn_09.classList.remove("is_active");
+                    funcs_content_09.classList.remove("is_active");
+                    funcs_content_09.style.height = "0px";
+                    funcs_btn_10.classList.remove("is_active");
+                    funcs_content_10.classList.remove("is_active");
+                    funcs_content_10.style.height = "0px";
                     cntOpen += 1
                 }
             };
 
             function view_transition(event) {
                 let action = event.target.id.slice(-10);
-                if (action === "next_btn") {
-                        window.location.href = "index.html";
+                let now = new Date();
+                let year = now.getFullYear();
+                let month = ("0" + (now.getMonth() + 1)).slice(-2);
+                let day = ("0" + now.getDate()).slice(-2);
+                let hours = ("0" + now.getHours()).slice(-2);
+                let minutes = ("0" + now.getMinutes()).slice(-2);
+                let seconds = ("0" + now.getSeconds()).slice(-2);
+                let timestamp = year + month + day + hours + minutes + seconds;
+
+                let data = {
+                    "task": "save_02",
+                    "timestamp": timestamp,
+                    "userid": userid,
+                    "name": name,
+                    "tmp_function_sales_enterprise_year": document.getElementById("function_sales_enterprise_year").value,
+                    "tmp_function_sales_person_year": document.getElementById("function_sales_person_year").value,
+                    "tmp_function_sales_mr_year": document.getElementById("function_sales_mr_year").value,
+                    "tmp_function_sales_abroad_year": document.getElementById("function_sales_abroad_year").value,
+                    "tmp_function_sales_agent_year": document.getElementById("function_sales_agent_year").value,
+                    "tmp_function_sales_fp_year": document.getElementById("function_sales_fp_year").value,
+                    "tmp_function_sales_se_year": document.getElementById("function_sales_se_year").value,
+                    "tmp_function_sales_inbound_year": document.getElementById("function_sales_inbound_year").value,
+                    "tmp_function_sales_outbound_year": document.getElementById("function_sales_outbound_year").value,
+                    "tmp_function_sales_manager_year": document.getElementById("function_sales_manager_year").value,
+                    "tmp_function_sales_supervisor_year": document.getElementById("function_sales_supervisor_year").value,
+                    "tmp_function_service_storedeveloper_year": document.getElementById("function_service_storedeveloper_year").value,
+                    "tmp_function_service_buyer_year": document.getElementById("function_service_buyer_year").value,
+                    "tmp_function_plan_manageaccount_year": document.getElementById("function_plan_manageaccount_year").value,
+                    "tmp_function_plan_budget_year": document.getElementById("function_plan_budget_year").value,
+                    "tmp_function_plan_analytics_year": document.getElementById("function_plan_analytics_year").value,
+                    "tmp_function_plan_subsidiary_year": document.getElementById("function_plan_subsidiary_year").value,
+                    "tmp_function_plan_ma_year": document.getElementById("function_plan_ma_year").value,
+                    "tmp_function_plan_strategy_year": document.getElementById("function_plan_strategy_year").value,
+                    "tmp_function_plan_business_year": document.getElementById("function_plan_business_year").value,
+                    "tmp_function_plan_research_year": document.getElementById("function_plan_research_year").value,
+                    "tmp_function_finance_plan_year": document.getElementById("function_finance_plan_year").value,
+                    "tmp_function_finance_accounting_year": document.getElementById("function_finance_accounting_year").value,
+                    "tmp_function_finance_cf_year": document.getElementById("function_finance_cf_year").value,
+                    "tmp_function_finance_loan_year": document.getElementById("function_finance_loan_year").value,
+                    "tmp_function_accounting_tax_year": document.getElementById("function_accounting_tax_year").value,
+                    "tmp_function_accounting_settlement_year": document.getElementById("function_accounting_settlement_year").value,
+                    "tmp_function_accounting_conslidated_year": document.getElementById("function_accounting_conslidated_year").value,
+                    "tmp_function_accounting_pl_year": document.getElementById("function_accounting_pl_year").value,
+                    "tmp_function_accounting_bs_year": document.getElementById("function_accounting_bs_year").value,
+                    "tmp_function_accounting_securiteisreport_year": document.getElementById("function_accounting_securiteisreport_year").value,
+                    "tmp_function_accounting_taxreport_year": document.getElementById("function_accounting_taxreport_year").value,
+                    "tmp_function_accounting_costing_year": document.getElementById("function_accounting_costing_year").value,
+                    "tmp_function_accounting_document_year": document.getElementById("function_accounting_document_year").value,
+                    "tmp_function_ow_plan_year": document.getElementById("function_ow_plan_year").value,
+                    "tmp_function_ow_system_year": document.getElementById("function_ow_system_year").value,
+                    "tmp_function_ow_fresh_year": document.getElementById("function_ow_fresh_year").value,
+                    "tmp_function_ow_mid_year": document.getElementById("function_ow_mid_year").value,
+                    "tmp_function_ow_train_year": document.getElementById("function_ow_train_year").value,
+                    "tmp_function_ow_salary_year": document.getElementById("function_ow_salary_year").value,
+                    "tmp_function_ow_labor_year": document.getElementById("function_ow_labor_year").value,
+                    "tmp_function_ow_exective_year": document.getElementById("function_ow_exective_year").value,
+                    "tmp_function_ow_ga_year": document.getElementById("function_ow_ga_year").value,
+                    "tmp_function_ip_innerpatent_year": document.getElementById("function_ip_innerpatent_year").value,
+                    "tmp_function_ip_outerpatent_year": document.getElementById("function_ip_outerpatent_year").value,
+                    "tmp_function_ip_trademark_year": document.getElementById("function_ip_trademark_year").value,
+                    "tmp_function_law_stock_year": document.getElementById("function_law_stock_year").value,
+                    "tmp_function_law_contractnegotiate_year": document.getElementById("function_law_contractnegotiate_year").value,
+                    "tmp_function_law_contractcheck_year": document.getElementById("function_law_contractcheck_year").value,
+                    "tmp_function_law_ma_year": document.getElementById("function_law_ma_year").value,
+                    "tmp_function_law_compriance_year": document.getElementById("function_law_compriance_year").value,
+                    "tmp_function_law_issue_year": document.getElementById("function_law_issue_year").value,
+                    "tmp_function_law_apprival_year": document.getElementById("function_law_apprival_year").value,
+                    "tmp_function_marketing_strategy_year": document.getElementById("function_marketing_strategy_year").value,
+                    "tmp_function_marketing_research_year": document.getElementById("function_marketing_research_year").value,
+                    "tmp_function_marketing_plan_year": document.getElementById("function_marketing_plan_year").value,
+                    "tmp_function_marketing_promo_year": document.getElementById("function_marketing_promo_year").value,
+                    "tmp_function_marketing_logistic_year": document.getElementById("function_marketing_logistic_year").value,
+                    "tmp_function_marketing_media_year": document.getElementById("function_marketing_media_year").value,
+                    "tmp_function_marketing_creative_year": document.getElementById("function_marketing_creative_year").value,
+                    "tmp_function_marketing_ad_year": document.getElementById("function_marketing_ad_year").value,
+                    "tmp_function_marketing_pr_year": document.getElementById("function_marketing_pr_year").value,
+                    "tmp_function_marketing_budget_year": document.getElementById("function_marketing_budget_year").value,
+                    "tmp_function_marketing_ir_year": document.getElementById("function_marketing_ir_year").value,
+                    "tmp_function_ex_membermanagement_year": document.getElementById("function_ex_membermanagement_year").value,
+                    "tmp_function_ex_projectmanagement_year": document.getElementById("function_ex_projectmanagement_year").value,
+                    "tmp_function_ex_cosultant_year": document.getElementById("function_ex_cosultant_year").value,
+                    "tmp_function_ex_presales_year": document.getElementById("function_ex_presales_year").value,
+                    "tmp_function_ex_definition_year": document.getElementById("function_ex_definition_year").value,
+                    "tmp_function_ex_basedesign_year": document.getElementById("function_ex_basedesign_year").value,
+                    "tmp_function_ex_detaildesign_year": document.getElementById("function_ex_detaildesign_year").value,
+                    "tmp_function_ex_develop_year": document.getElementById("function_ex_develop_year").value,
+                    "tmp_function_ex_test_year": document.getElementById("function_ex_test_year").value,
+                    "tmp_function_ex_rd_year": document.getElementById("function_ex_rd_year").value,
+                    "tmp_function_ex_product_year": document.getElementById("function_ex_product_year").value,
+                    "tmp_function_ex_localize_year": document.getElementById("function_ex_localize_year").value,
+                    "tmp_function_ex_testing_year": document.getElementById("function_ex_testing_year").value,
+                    "tmp_function_ex_networkdesign_year": document.getElementById("function_ex_networkdesign_year").value,
+                    "tmp_function_ex_nertworkmanagement_year": document.getElementById("function_ex_nertworkmanagement_year").value,
+                    "tmp_function_ex_serverdesign_year": document.getElementById("function_ex_serverdesign_year").value,
+                    "tmp_function_ex_servermanagement_year": document.getElementById("function_ex_servermanagement_year").value,
+                    "tmp_function_ex_dbdesign_year": document.getElementById("function_ex_dbdesign_year").value,
+                    "tmp_function_ex_dbmanagement_year": document.getElementById("function_ex_dbmanagement_year").value,
+                    "tmp_function_ex_systemmanagement_year": document.getElementById("function_ex_systemmanagement_year").value,
+                    "tmp_function_ex_technicalsupport_year": document.getElementById("function_ex_technicalsupport_year").value,
+                    "tmp_function_ex_training_year": document.getElementById("function_ex_training_year").value,
+                    "tmp_function_ex_dataanalytics_year": document.getElementById("function_ex_dataanalytics_year").value,
+                };
+                console.log({
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                });
+                showLoading();
+                fetch(api_gateway, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(data),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log("Success!!");
+                    sessionStorage.setItem("function_sales_enterprise_year", document.getElementById("function_sales_enterprise_year").value);
+                    sessionStorage.setItem("function_sales_person_year", document.getElementById("function_sales_person_year").value);
+                    sessionStorage.setItem("function_sales_mr_year", document.getElementById("function_sales_mr_year").value);
+                    sessionStorage.setItem("function_sales_abroad_year", document.getElementById("function_sales_abroad_year").value);
+                    sessionStorage.setItem("function_sales_agent_year", document.getElementById("function_sales_agent_year").value);
+                    sessionStorage.setItem("function_sales_fp_year", document.getElementById("function_sales_fp_year").value);
+                    sessionStorage.setItem("function_sales_se_year", document.getElementById("function_sales_se_year").value);
+                    sessionStorage.setItem("function_sales_inbound_year", document.getElementById("function_sales_inbound_year").value);
+                    sessionStorage.setItem("function_sales_outbound_year", document.getElementById("function_sales_outbound_year").value);
+                    sessionStorage.setItem("function_sales_manager_year", document.getElementById("function_sales_manager_year").value);
+                    sessionStorage.setItem("function_sales_supervisor_year", document.getElementById("function_sales_supervisor_year").value);
+                    sessionStorage.setItem("function_service_storedeveloper_year", document.getElementById("function_service_storedeveloper_year").value);
+                    sessionStorage.setItem("function_service_buyer_year", document.getElementById("function_service_buyer_year").value);
+                    sessionStorage.setItem("function_plan_manageaccount_year", document.getElementById("function_plan_manageaccount_year").value);
+                    sessionStorage.setItem("function_plan_budget_year", document.getElementById("function_plan_budget_year").value);
+                    sessionStorage.setItem("function_plan_analytics_year", document.getElementById("function_plan_analytics_year").value);
+                    sessionStorage.setItem("function_plan_subsidiary_year", document.getElementById("function_plan_subsidiary_year").value);
+                    sessionStorage.setItem("function_plan_ma_year", document.getElementById("function_plan_ma_year").value);
+                    sessionStorage.setItem("function_plan_strategy_year", document.getElementById("function_plan_strategy_year").value);
+                    sessionStorage.setItem("function_plan_business_year", document.getElementById("function_plan_business_year").value);
+                    sessionStorage.setItem("function_plan_research_year", document.getElementById("function_plan_research_year").value);
+                    sessionStorage.setItem("function_finance_plan_year", document.getElementById("function_finance_plan_year").value);
+                    sessionStorage.setItem("function_finance_accounting_year", document.getElementById("function_finance_accounting_year").value);
+                    sessionStorage.setItem("function_finance_cf_year", document.getElementById("function_finance_cf_year").value);
+                    sessionStorage.setItem("function_finance_loan_year", document.getElementById("function_finance_loan_year").value);
+                    sessionStorage.setItem("function_accounting_tax_year", document.getElementById("function_accounting_tax_year").value);
+                    sessionStorage.setItem("function_accounting_settlement_year", document.getElementById("function_accounting_settlement_year").value);
+                    sessionStorage.setItem("function_accounting_conslidated_year", document.getElementById("function_accounting_conslidated_year").value);
+                    sessionStorage.setItem("function_accounting_pl_year", document.getElementById("function_accounting_pl_year").value);
+                    sessionStorage.setItem("function_accounting_bs_year", document.getElementById("function_accounting_bs_year").value);
+                    sessionStorage.setItem("function_accounting_securiteisreport_year", document.getElementById("function_accounting_securiteisreport_year").value);
+                    sessionStorage.setItem("function_accounting_taxreport_year", document.getElementById("function_accounting_taxreport_year").value);
+                    sessionStorage.setItem("function_accounting_costing_year", document.getElementById("function_accounting_costing_year").value);
+                    sessionStorage.setItem("function_accounting_document_year", document.getElementById("function_accounting_document_year").value);
+                    sessionStorage.setItem("function_ow_plan_year", document.getElementById("function_ow_plan_year").value);
+                    sessionStorage.setItem("function_ow_system_year", document.getElementById("function_ow_system_year").value);
+                    sessionStorage.setItem("function_ow_fresh_year", document.getElementById("function_ow_fresh_year").value);
+                    sessionStorage.setItem("function_ow_mid_year", document.getElementById("function_ow_mid_year").value);
+                    sessionStorage.setItem("function_ow_train_year", document.getElementById("function_ow_train_year").value);
+                    sessionStorage.setItem("function_ow_salary_year", document.getElementById("function_ow_salary_year").value);
+                    sessionStorage.setItem("function_ow_labor_year", document.getElementById("function_ow_labor_year").value);
+                    sessionStorage.setItem("function_ow_exective_year", document.getElementById("function_ow_exective_year").value);
+                    sessionStorage.setItem("function_ow_ga_year", document.getElementById("function_ow_ga_year").value);
+                    sessionStorage.setItem("function_ip_innerpatent_year", document.getElementById("function_ip_innerpatent_year").value);
+                    sessionStorage.setItem("function_ip_outerpatent_year", document.getElementById("function_ip_outerpatent_year").value);
+                    sessionStorage.setItem("function_ip_trademark_year", document.getElementById("function_ip_trademark_year").value);
+                    sessionStorage.setItem("function_law_stock_year", document.getElementById("function_law_stock_year").value);
+                    sessionStorage.setItem("function_law_contractnegotiate_year", document.getElementById("function_law_contractnegotiate_year").value);
+                    sessionStorage.setItem("function_law_contractcheck_year", document.getElementById("function_law_contractcheck_year").value);
+                    sessionStorage.setItem("function_law_ma_year", document.getElementById("function_law_ma_year").value);
+                    sessionStorage.setItem("function_law_compriance_year", document.getElementById("function_law_compriance_year").value);
+                    sessionStorage.setItem("function_law_issue_year", document.getElementById("function_law_issue_year").value);
+                    sessionStorage.setItem("function_law_apprival_year", document.getElementById("function_law_apprival_year").value);
+                    sessionStorage.setItem("function_marketing_strategy_year", document.getElementById("function_marketing_strategy_year").value);
+                    sessionStorage.setItem("function_marketing_research_year", document.getElementById("function_marketing_research_year").value);
+                    sessionStorage.setItem("function_marketing_plan_year", document.getElementById("function_marketing_plan_year").value);
+                    sessionStorage.setItem("function_marketing_promo_year", document.getElementById("function_marketing_promo_year").value);
+                    sessionStorage.setItem("function_marketing_logistic_year", document.getElementById("function_marketing_logistic_year").value);
+                    sessionStorage.setItem("function_marketing_media_year", document.getElementById("function_marketing_media_year").value);
+                    sessionStorage.setItem("function_marketing_creative_year", document.getElementById("function_marketing_creative_year").value);
+                    sessionStorage.setItem("function_marketing_ad_year", document.getElementById("function_marketing_ad_year").value);
+                    sessionStorage.setItem("function_marketing_pr_year", document.getElementById("function_marketing_pr_year").value);
+                    sessionStorage.setItem("function_marketing_budget_year", document.getElementById("function_marketing_budget_year").value);
+                    sessionStorage.setItem("function_marketing_ir_year", document.getElementById("function_marketing_ir_year").value);
+                    sessionStorage.setItem("function_ex_membermanagement_year", document.getElementById("function_ex_membermanagement_year").value);
+                    sessionStorage.setItem("function_ex_projectmanagement_year", document.getElementById("function_ex_projectmanagement_year").value);
+                    sessionStorage.setItem("function_ex_cosultant_year", document.getElementById("function_ex_cosultant_year").value);
+                    sessionStorage.setItem("function_ex_presales_year", document.getElementById("function_ex_presales_year").value);
+                    sessionStorage.setItem("function_ex_definition_year", document.getElementById("function_ex_definition_year").value);
+                    sessionStorage.setItem("function_ex_basedesign_year", document.getElementById("function_ex_basedesign_year").value);
+                    sessionStorage.setItem("function_ex_detaildesign_year", document.getElementById("function_ex_detaildesign_year").value);
+                    sessionStorage.setItem("function_ex_develop_year", document.getElementById("function_ex_develop_year").value);
+                    sessionStorage.setItem("function_ex_test_year", document.getElementById("function_ex_test_year").value);
+                    sessionStorage.setItem("function_ex_rd_year", document.getElementById("function_ex_rd_year").value);
+                    sessionStorage.setItem("function_ex_product_year", document.getElementById("function_ex_product_year").value);
+                    sessionStorage.setItem("function_ex_localize_year", document.getElementById("function_ex_localize_year").value);
+                    sessionStorage.setItem("function_ex_testing_year", document.getElementById("function_ex_testing_year").value);
+                    sessionStorage.setItem("function_ex_networkdesign_year", document.getElementById("function_ex_networkdesign_year").value);
+                    sessionStorage.setItem("function_ex_nertworkmanagement_year", document.getElementById("function_ex_nertworkmanagement_year").value);
+                    sessionStorage.setItem("function_ex_serverdesign_year", document.getElementById("function_ex_serverdesign_year").value);
+                    sessionStorage.setItem("function_ex_servermanagement_year", document.getElementById("function_ex_servermanagement_year").value);
+                    sessionStorage.setItem("function_ex_dbdesign_year", document.getElementById("function_ex_dbdesign_year").value);
+                    sessionStorage.setItem("function_ex_dbmanagement_year", document.getElementById("function_ex_dbmanagement_year").value);
+                    sessionStorage.setItem("function_ex_systemmanagement_year", document.getElementById("function_ex_systemmanagement_year").value);
+                    sessionStorage.setItem("function_ex_technicalsupport_year", document.getElementById("function_ex_technicalsupport_year").value);
+                    sessionStorage.setItem("function_ex_training_year", document.getElementById("function_ex_training_year").value);
+                    sessionStorage.setItem("function_ex_dataanalytics_year", document.getElementById("function_ex_dataanalytics_year").value);
+                    hideLoading();
+                    if (action === "next_btn") {
+                        window.location.href = "input_03.html";
                     } else {
-                        window.location.href = "view_02.html";
-                }
+                        window.location.href = "input_01b.html";
+                    }
+                })
+                .catch(error => {
+                    console.error("API Error to api_gateway:", error);
+                });
             };
 
             hamburger_icon.addEventListener("click", () => {
