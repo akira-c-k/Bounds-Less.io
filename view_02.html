@@ -194,19 +194,99 @@
                 height: 600px;
                 overflow: scroll;
             }
-            main .smr_odd {
-                background-color: rgba(85,85,255,0.85);
+            main .smr_01 {
+                background-color: rgba(210,255,210,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_02 {
+                background-color: rgba(170,255,170,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_03 {
+                background-color: rgba(130,255,130,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_04 {
+                background-color: rgba(45,170,45,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_05 {
+                background-color: rgba(85,170,85,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_06 {
+                background-color: rgba(125,170,125,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_07 {
+                background-color: rgba(15,105,15,1);
                 color: rgba(255,255,255,1);
                 height: 40px;
                 justify-content: center;
             }
-            main .smr_even {
-                background-color: rgba(255,85,85,0.85);
+            main .smr_08 {
+                background-color: rgba(15,85,15,1);
                 color: rgba(255,255,255,1);
                 height: 40px;
                 justify-content: center;
             }
-            main .smr_btn {
+            main .smr_09 {
+                background-color: rgba(15,65,15,1);
+                color: rgba(255,255,255,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_10 {
+                background-color: rgba(15,45,15,1);
+                color: rgba(255,255,255,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_btn_b {
+                display: inline-block;
+                position: relative;
+                top: -40%;
+                left: 1%;
+                &:before, &:after {
+                    content: "";
+                    background-color: rgba(0,0,0,1);
+                    border-radius: 10px;
+                    width: 18px;
+                    height: 4px;
+                    position: absolute;
+                    top: 7px;
+                    left: 0;
+                }
+                &:before {  
+                    transition: height 2.0s;
+                    width: 4px;
+                    height: 18px;
+                    top: 0;
+                    left: 7px;
+                }
+                &.is_active {
+                    &:before {
+                        transition: height 2.0s;
+                        width: 4px;
+                        height: 0px;
+                        top: 0;
+                        left: 7px;
+                    }
+                }
+            }
+            main .smr_btn_w {
                 display: inline-block;
                 position: relative;
                 top: -40%;
@@ -260,25 +340,15 @@
                 height: 180px;
                 overflow: hidden;
             }
-            main .oddBlue {
+            main .oddColor {
                 width: 100%;
                 height: 30px;
-                background-color: rgba(85,85,255,0.15);
+                background-color: rgba(240,240,240,0.15);
             }
-            main .evenBlue {
+            main .evenColor {
                 width: 100%;
                 height: 30px;
-                background-color: rgba(15,15,170,0.15);
-            }
-            main .oddRed {
-                width: 100%;
-                height: 30px;
-                background-color: rgba(255,85,85,0.15);
-            }
-            main .evenRed {
-                width: 100%;
-                height: 30px;
-                background-color: rgba(170,15,15,0.15);
+                background-color: rgba(240,240,240,0.85);
             }
             main .row {
                 padding: 0px;
@@ -310,9 +380,41 @@
                 justify-content: center;
                 align-items: center;
             }
+            main .back_btn {
+                position: fixed;
+                top: 90%;
+                margin-right: 15%;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .back_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .back_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .back_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
             main .next_btn {
                 position: fixed;
                 top: 90%;
+                margin-left: 15%;
                 width: 120px;
                 height: 30px;
                 border: 2px solid rgba(0,0,0,1);
@@ -391,8 +493,8 @@
                 <div class="modal_container" id="modal_container">
                     <div class="modal" id="modal">
                         <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
-                        <button class="transition_02 transition" id="transition_02" value="02">経験年数の更新</button>
-                        <button class="transition_03 transition" id="transition_03" value="03">成果・ビジョンの更新</button>
+                        <button class="transition_02 transition" id="transition_02" value="02" disabled>検索</button>
+                        <button class="transition_03 transition" id="transition_03" value="03" disabled>チャット</button>
                     </div>
                 </div>
             </div>
@@ -412,82 +514,82 @@
                 ---   main: sales   ---
                 ---------------------->
                 <div id="sales">
-                    <div class="smr_odd" id="sales_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="sales_btn"></span>
+                    <div class="smr_01" id="sales_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="sales_btn"></span>
                         <span class="smr_txt" id="sales_txt">営業</span>
                     </div>
                     <div class="rows" id="sales_cnt">
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">法人営業</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_enterprise_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">個人営業</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_person_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">MR</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_mr_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">海外営業</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_abroad_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">代理店管理</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_agent_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">FP（ファイナンシャルプランナー）</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_fp_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">技術営業・セールスエンジニア</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_se_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">インバウンド（ユーザーサポート等）</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_inbound_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">アウトバウンド（セールス等）</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_outbound_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">マネージャー（センター管理・マネジメント）</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_manager_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">スーパーバイザー</span>
                             <div>
                                 <input type="text" class="row_input" id="function_sales_supervisor_year" value="" disabled>
@@ -503,19 +605,19 @@
                 ---   main: service   ---
                 ------------------------>
                 <div id="service">
-                    <div class="smr_even" id="service_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="service_btn"></span>
+                    <div class="smr_02" id="service_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="service_btn"></span>
                         <span class="smr_txt" id="service_txt">販売・サービス</span>
                     </div>
                     <div class="rows" id="service_cnt">
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">店舗開発</span>
                             <div>
                                 <input type="text" class="row_input" id="function_service_storedeveloper_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">バイヤー・マーチャンダイザー</span>
                             <div>
                                 <input type="text" class="row_input" id="function_service_buyer_year" value="" disabled>
@@ -531,61 +633,61 @@
                 ---   main: plan   ---
                 --------------------->
                 <div id="plan">
-                    <div class="smr_odd" id="plan_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="plan_btn"></span>
+                    <div class="smr_03" id="plan_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="plan_btn"></span>
                         <span class="smr_txt" id="plan_txt">経営企画</span>
                     </div>
                     <div class="rows" id="plan_cnt">
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">管理会計</span>
                             <div>
                                 <input type="text" class="row_input" id="function_plan_manageaccount_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">予算作成・予実管理</span>
                             <div>
                                 <input type="text" class="row_input" id="function_plan_budget_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">経営分析・年次計画の立案</span>
                             <div>
                                 <input type="text" class="row_input" id="function_plan_analytics_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">子会社・関連会社管理</span>
                             <div>
                                 <input type="text" class="row_input" id="function_plan_subsidiary_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">M&A・合併・提携の推進</span>
                             <div>
                                 <input type="text" class="row_input" id="function_plan_ma_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">事業戦略・中期経営計画の策定</span>
                             <div>
                                 <input type="text" class="row_input" id="function_plan_strategy_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">新規事業立案・実行</span>
                             <div>
                                 <input type="text" class="row_input" id="function_plan_business_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">競合分析・市場調査等のリサーチ</span>
                             <div>
                                 <input type="text" class="row_input" id="function_plan_research_year" value="" disabled>
@@ -601,33 +703,33 @@
                 ---   main: finance   ---
                 ------------------------>
                 <div id="finance">
-                    <div class="smr_even" id="finance_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="finance_btn"></span>
+                    <div class="smr_04" id="finance_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="finance_btn"></span>
                         <span class="smr_txt" id="finance_txt">財務</span>
                     </div>
                     <div class="rows" id="finance_cnt">
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">資金計画・運用・管理</span>
                             <div>
                                 <input type="text" class="row_input" id="function_finance_plan_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">出納管理</span>
                             <div>
                                 <input type="text" class="row_input" id="function_finance_accounting_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">キャッシュ・フロー計算書作成実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_finance_cf_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">与信管理業務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_finance_loan_year" value="" disabled>
@@ -643,68 +745,68 @@
                 ---   main: accounting   ---
                 --------------------------->
                 <div id="accounting">
-                    <div class="smr_odd" id="accounting_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="accounting_btn"></span>
+                    <div class="smr_05" id="accounting_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="accounting_btn"></span>
                         <span class="smr_txt" id="accounting_txt">経理</span>
                     </div>
                     <div class="rows" id="accounting_cnt">
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">税務対応</span>
                             <div>
                                 <input type="text" class="row_input" id="function_accounting_tax_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">決算関連実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_accounting_settlement_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">連結決算実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_accounting_conslidated_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">P/L作成実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_accounting_pl_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">B/S作成実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_accounting_bs_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">有価証券報告書等作成実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_accounting_securiteisreport_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">税務申告書作成実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_accounting_taxreport_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">原価計算実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_accounting_costing_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">伝票処理（請求書・固定資産伝票等）</span>
                             <div>
                                 <input type="text" class="row_input" id="function_accounting_document_year" value="" disabled>
@@ -720,68 +822,68 @@
                 ---   main: ow   ---
                 ------------------->
                 <div id="ow">
-                    <div class="smr_even" id="ow_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="ow_btn"></span>
+                    <div class="smr_06" id="ow_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="ow_btn"></span>
                         <span class="smr_txt" id="ow_txt">人事・総務・労務</span>
                     </div>
                     <div class="rows" id="ow_cnt">
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">人員計画の立案</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ow_plan_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">人事制度の立案</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ow_system_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">新卒採用実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ow_fresh_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">中途採用実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ow_mid_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">社員教育・研修</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ow_train_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">給与計算</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ow_salary_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">労務管理</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ow_labor_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">取締役会・株主総会運営</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ow_exective_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">総務関連実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ow_ga_year" value="" disabled>
@@ -797,26 +899,26 @@
                 ---   main: ip   ---
                 ------------------->
                 <div id="ip">
-                    <div class="smr_odd" id="ip_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="ip_btn"></span>
+                    <div class="smr_07" id="ip_smr" onclick="accordionAction()">
+                        <span class="smr_btn_w" id="ip_btn"></span>
                         <span class="smr_txt" id="ip_txt">知財・特許</span>
                     </div>
                     <div class="rows" id="ip_cnt">
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">国内特許関連実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ip_innerpatent_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">国外特許関連実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ip_outerpatent_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">商標・著作権関連実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ip_trademark_year" value="" disabled>
@@ -832,54 +934,54 @@
                 ---   main: law   ---
                 -------------------->
                 <div id="law">
-                    <div class="smr_even" id="law_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="law_btn"></span>
+                    <div class="smr_08" id="law_smr" onclick="accordionAction()">
+                        <span class="smr_btn_w" id="law_btn"></span>
                         <span class="smr_txt" id="law_txt">法務</span>
                     </div>
                     <div class="rows" id="law_cnt">
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">総会・会社法・株式関連業務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_law_stock_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">契約関連業務（交渉・折衝）</span>
                             <div>
                                 <input type="text" class="row_input" id="function_law_contractnegotiate_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">契約関連業務（文案作成・チェック）</span>
                             <div>
                                 <input type="text" class="row_input" id="function_law_contractcheck_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">M&A・合併・提携 関連業務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_law_ma_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">コンプライアンス・SR推進・内部監査</span>
                             <div>
                                 <input type="text" class="row_input" id="function_law_compriance_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">係争・訴訟対応与計算</span>
                             <div>
                                 <input type="text" class="row_input" id="function_law_issue_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">許認可、免許等取得実務（ISO、Pマーク 等）</span>
                             <div>
                                 <input type="text" class="row_input" id="function_law_apprival_year" value="" disabled>
@@ -895,82 +997,82 @@
                 ---   main: marketing   ---
                 -------------------------->
                 <div id="marketing">
-                    <div class="smr_odd" id="marketing_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="marketing_btn"></span>
+                    <div class="smr_09" id="marketing_smr" onclick="accordionAction()">
+                        <span class="smr_btn_w" id="marketing_btn"></span>
                         <span class="smr_txt" id="marketing_txt">広告・マーケティング</span>
                     </div>
                     <div class="rows" id="marketing_cnt">
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">営業戦略立案</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_strategy_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">調査・分析関連実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_research_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">商品企画関連実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_plan_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row evenColor">
                             <span class="row_label">販促企画関連実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_promo_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row oddColor">
                             <span class="row_label">物流企画・ロジスティクス関連実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_logistic_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row evenColor">
                             <span class="row_label">メディア選定</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_media_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row oddColor">
                             <span class="row_label">クリエイティブ管理</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_creative_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row evenColor">
                             <span class="row_label">宣伝計画</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_ad_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">広報実務</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_pr_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenBlue">
+                        <div class="row evenColor">
                             <span class="row_label">宣伝・広報予算管理</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_budget_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddBlue">
+                        <div class="row oddColor">
                             <span class="row_label">ＩＲ</span>
                             <div>
                                 <input type="text" class="row_input" id="function_marketing_ir_year" value="" disabled>
@@ -986,166 +1088,166 @@
                 ---   main: ex   ---
                 ------------------->
                 <div id="ex">
-                    <div class="smr_even" id="ex_smr" onclick="accordionAction()">
-                        <span class="smr_btn" id="ex_btn"></span>
-                        <span class="smr_txt" id="ex_txt">専門領域・ドメイン知識</span>
+                    <div class="smr_10" id="ex_smr" onclick="accordionAction()">
+                        <span class="smr_btn_w" id="ex_btn"></span>
+                        <span class="smr_txt" id="ex_txt">ドメイン知識</span>
                     </div>
                     <div class="rows" id="ex_cnt">
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">メンバーマネジメント</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_membermanagement_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">プロジェクト管理</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_projectmanagement_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">コンサルタント</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_cosultant_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">プリセールス</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_presales_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">要件定義</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_definition_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">基本設計</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_basedesign_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">詳細設計</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_detaildesign_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">開発・実装</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_develop_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">テスト</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_test_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">研究開発</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_rd_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">プロダクト開発</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_product_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">ローカライズ</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_localize_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">テスティング</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_testing_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">ネットワーク設計・構築</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_networkdesign_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">ネットワーク運用・保守</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_nertworkmanagement_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">サーバー設計・構築</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_serverdesign_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">サーバー運用・保守</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_servermanagement_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">データベース設計・構築</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_dbdesign_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">データベース運用・保守</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_dbmanagement_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">システム運用・保守</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_systemmanagement_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">テクニカルサポート</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_technicalsupport_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row evenRed">
+                        <div class="row evenColor">
                             <span class="row_label">導入、トレーニング</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_training_year" value="" disabled>
                                 <span class="row_appendix">年以内</span>
                             </div>
                         </div>
-                        <div class="row oddRed">
+                        <div class="row oddColor">
                             <span class="row_label">データ解析</span>
                             <div>
                                 <input type="text" class="row_input" id="function_ex_dataanalytics_year" value="" disabled>
@@ -1160,6 +1262,8 @@
             </div>
 
             <div class="next">
+                <button class="back_btn" id="back_btn" onclick="view_transition(event)">前へ</button>
+                <span class="back_tips" id="back_tips"></span>
                 <button class="next_btn" id="next_btn" onclick="view_transition(event)">次へ</button>
                 <span class="next_tips" id="next_tips"></span>
             </div>
@@ -1284,6 +1388,114 @@
                 document.getElementById("function_ex_technicalsupport_year").setAttribute("value", sessionStorage.getItem("function_ex_technicalsupport_year"));
                 document.getElementById("function_ex_training_year").setAttribute("value", sessionStorage.getItem("function_ex_training_year"));
                 document.getElementById("function_ex_dataanalytics_year").setAttribute("value", sessionStorage.getItem("function_ex_dataanalytics_year"));
+
+                if (Number(sessionStorage.getItem("function_sales_enterprise_year")) +
+                    Number(sessionStorage.getItem("function_sales_person_year")) +
+                    Number(sessionStorage.getItem("function_sales_mr_year")) +
+                    Number(sessionStorage.getItem("function_sales_abroad_year")) +
+                    Number(sessionStorage.getItem("function_sales_agent_year")) +
+                    Number(sessionStorage.getItem("function_sales_fp_year")) +
+                    Number(sessionStorage.getItem("function_sales_se_year")) +
+                    Number(sessionStorage.getItem("function_sales_inbound_year")) +
+                    Number(sessionStorage.getItem("function_sales_outbound_year")) +
+                    Number(sessionStorage.getItem("function_sales_manager_year")) +
+                    Number(sessionStorage.getItem("function_sales_supervisor_year")) === 0) {
+                        document.getElementById("sales").style.display = "none";
+                };
+                if (Number(sessionStorage.getItem("function_service_storedeveloper_year")) +
+                    Number(sessionStorage.getItem("function_service_buyer_year")) === 0) {
+                        document.getElementById("service").style.display = "none";
+                };
+                if (Number(sessionStorage.getItem("function_plan_manageaccount_year")) +
+                    Number(sessionStorage.getItem("function_plan_budget_year")) +
+                    Number(sessionStorage.getItem("function_plan_analytics_year")) +
+                    Number(sessionStorage.getItem("function_plan_subsidiary_year")) +
+                    Number(sessionStorage.getItem("function_plan_ma_year")) +
+                    Number(sessionStorage.getItem("function_plan_strategy_year")) +
+                    Number(sessionStorage.getItem("function_plan_business_year")) +
+                    Number(sessionStorage.getItem("function_plan_research_year")) === 0) {
+                        document.getElementById("plan").style.display = "none";
+                };
+                if (Number(sessionStorage.getItem("function_finance_plan_year")) +
+                    Number(sessionStorage.getItem("function_finance_accounting_year")) +
+                    Number(sessionStorage.getItem("function_finance_cf_year")) +
+                    Number(sessionStorage.getItem("function_finance_loan_year")) === 0) {
+                        document.getElementById("finance").style.display = "none";
+                };
+                if (Number(sessionStorage.getItem("function_accounting_tax_year")) +
+                    Number(sessionStorage.getItem("function_accounting_settlement_year")) +
+                    Number(sessionStorage.getItem("function_accounting_conslidated_year")) +
+                    Number(sessionStorage.getItem("function_accounting_pl_year")) +
+                    Number(sessionStorage.getItem("function_accounting_bs_year")) +
+                    Number(sessionStorage.getItem("function_accounting_securiteisreport_year")) +
+                    Number(sessionStorage.getItem("function_accounting_taxreport_year")) +
+                    Number(sessionStorage.getItem("function_accounting_costing_year")) +
+                    Number(sessionStorage.getItem("function_accounting_document_year")) === 0) {
+                        document.getElementById("accounting").style.display = "none";
+                };
+                if (Number(sessionStorage.getItem("function_ow_plan_year")) +
+                    Number(sessionStorage.getItem("function_ow_system_year")) +
+                    Number(sessionStorage.getItem("function_ow_fresh_year")) +
+                    Number(sessionStorage.getItem("function_ow_mid_year")) +
+                    Number(sessionStorage.getItem("function_ow_train_year")) +
+                    Number(sessionStorage.getItem("function_ow_salary_year")) +
+                    Number(sessionStorage.getItem("function_ow_labor_year")) +
+                    Number(sessionStorage.getItem("function_ow_exective_year")) +
+                    Number(sessionStorage.getItem("function_ow_ga_year")) === 0) {
+                        document.getElementById("ow").style.display = "none";
+                };
+                if (Number(sessionStorage.getItem("function_ip_innerpatent_year")) +
+                    Number(sessionStorage.getItem("function_ip_outerpatent_year")) +
+                    Number(sessionStorage.getItem("function_ip_trademark_year")) === 0) {
+                        document.getElementById("ip").style.display = "none";
+                };
+                if (Number(sessionStorage.getItem("function_law_stock_year")) +
+                    Number(sessionStorage.getItem("function_law_contractnegotiate_year")) +
+                    Number(sessionStorage.getItem("function_law_contractcheck_year")) +
+                    Number(sessionStorage.getItem("function_law_ma_year")) +
+                    Number(sessionStorage.getItem("function_law_compriance_year")) +
+                    Number(sessionStorage.getItem("function_law_issue_year")) +
+                    Number(sessionStorage.getItem("function_law_apprival_year")) === 0) {
+                        document.getElementById("law").style.display = "none";
+                };
+                if (Number(sessionStorage.getItem("function_marketing_strategy_year")) +
+                    Number(sessionStorage.getItem("function_marketing_research_year")) +
+                    Number(sessionStorage.getItem("function_marketing_plan_year")) +
+                    Number(sessionStorage.getItem("function_marketing_promo_year")) +
+                    Number(sessionStorage.getItem("function_marketing_logistic_year")) +
+                    Number(sessionStorage.getItem("function_marketing_media_year")) +
+                    Number(sessionStorage.getItem("function_marketing_creative_year")) +
+                    Number(sessionStorage.getItem("function_marketing_ad_year")) +
+                    Number(sessionStorage.getItem("function_marketing_pr_year")) +
+                    Number(sessionStorage.getItem("function_marketing_budget_year")) +
+                    Number(sessionStorage.getItem("function_marketing_ir_year")) === 0) {
+                        document.getElementById("marketing").style.display = "none";
+                };
+                if (Number(sessionStorage.getItem("function_ex_membermanagement_year")) +
+                    Number(sessionStorage.getItem("function_ex_projectmanagement_year")) +
+                    Number(sessionStorage.getItem("function_ex_cosultant_year")) +
+                    Number(sessionStorage.getItem("function_ex_presales_year")) +
+                    Number(sessionStorage.getItem("function_ex_definition_year")) +
+                    Number(sessionStorage.getItem("function_ex_basedesign_year")) +
+                    Number(sessionStorage.getItem("function_ex_detaildesign_year")) +
+                    Number(sessionStorage.getItem("function_ex_develop_year")) +
+                    Number(sessionStorage.getItem("function_ex_test_year")) +
+                    Number(sessionStorage.getItem("function_ex_rd_year")) +
+                    Number(sessionStorage.getItem("function_ex_product_year")) +
+                    Number(sessionStorage.getItem("function_ex_localize_year")) +
+                    Number(sessionStorage.getItem("function_ex_testing_year")) +
+                    Number(sessionStorage.getItem("function_ex_networkdesign_year")) +
+                    Number(sessionStorage.getItem("function_ex_nertworkmanagement_year")) +
+                    Number(sessionStorage.getItem("function_ex_serverdesign_year")) +
+                    Number(sessionStorage.getItem("function_ex_servermanagement_year")) +
+                    Number(sessionStorage.getItem("function_ex_dbdesign_year")) +
+                    Number(sessionStorage.getItem("function_ex_dbmanagement_year")) +
+                    Number(sessionStorage.getItem("function_ex_systemmanagement_year")) +
+                    Number(sessionStorage.getItem("function_ex_technicalsupport_year")) +
+                    Number(sessionStorage.getItem("function_ex_training_year")) +
+                    Number(sessionStorage.getItem("function_ex_dataanalytics_year")) === 0) {
+                        document.getElementById("ex").style.display = "none";
+                };
             });
 
             function accordionAction() {
@@ -1388,42 +1600,47 @@
                     funcs_content_10.style.height = String(30*funcs_cnt_10)+"px";
                     cntOpen += 1
                 } else {
-                    funcs_btn_01.classList.add("is_active");
-                    funcs_content_01.classList.add("is_active");
+                    funcs_btn_01.classList.remove("is_active");
+                    funcs_content_01.classList.remove("is_active");
                     funcs_content_01.style.height = "0px";
-                    funcs_btn_02.classList.add("is_active");
-                    funcs_content_02.classList.add("is_active");
+                    funcs_btn_02.classList.remove("is_active");
+                    funcs_content_02.classList.remove("is_active");
                     funcs_content_02.style.height = "0px";
-                    funcs_btn_03.classList.add("is_active");
-                    funcs_content_03.classList.add("is_active");
+                    funcs_btn_03.classList.remove("is_active");
+                    funcs_content_03.classList.remove("is_active");
                     funcs_content_03.style.height = "0px";
-                    funcs_btn_04.classList.add("is_active");
-                    funcs_content_04.classList.add("is_active");
+                    funcs_btn_04.classList.remove("is_active");
+                    funcs_content_04.classList.remove("is_active");
                     funcs_content_04.style.height = "0px";
-                    funcs_btn_05.classList.add("is_active");
-                    funcs_content_05.classList.add("is_active");
+                    funcs_btn_05.classList.remove("is_active");
+                    funcs_content_05.classList.remove("is_active");
                     funcs_content_05.style.height = "0px";
-                    funcs_btn_06.classList.add("is_active");
-                    funcs_content_06.classList.add("is_active");
+                    funcs_btn_06.classList.remove("is_active");
+                    funcs_content_06.classList.remove("is_active");
                     funcs_content_06.style.height = "0px";
-                    funcs_btn_07.classList.add("is_active");
-                    funcs_content_07.classList.add("is_active");
+                    funcs_btn_07.classList.remove("is_active");
+                    funcs_content_07.classList.remove("is_active");
                     funcs_content_07.style.height = "0px";
-                    funcs_btn_08.classList.add("is_active");
-                    funcs_content_08.classList.add("is_active");
+                    funcs_btn_08.classList.remove("is_active");
+                    funcs_content_08.classList.remove("is_active");
                     funcs_content_08.style.height = "0px";
-                    funcs_btn_09.classList.add("is_active");
-                    funcs_content_09.classList.add("is_active");
+                    funcs_btn_09.classList.remove("is_active");
+                    funcs_content_09.classList.remove("is_active");
                     funcs_content_09.style.height = "0px";
-                    funcs_btn_10.classList.add("is_active");
-                    funcs_content_10.classList.add("is_active");
+                    funcs_btn_10.classList.remove("is_active");
+                    funcs_content_10.classList.remove("is_active");
                     funcs_content_10.style.height = "0px";
                     cntOpen += 1
                 }
             };
 
             function view_transition(event) {
-                window.location.href = "view_03.html";
+                let action = event.target.id.slice(-10);
+                if (action === "next_btn") {
+                    window.location.href = "view_03.html";
+                } else {
+                    window.location.href = "view_01.html";
+                }
             };
 
             hamburger_icon.addEventListener("click", () => {
@@ -1436,9 +1653,9 @@
                 };
             });
             
-            question_icon.addEventListener("click", () => {
-                window.location.href = "qa.html";
-            });
+            // question_icon.addEventListener("click", () => {
+            //     window.location.href = "qa.html";
+            // });
 
             transition_01.addEventListener("click", function() {
                 window.location.href = "index.html";
