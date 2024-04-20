@@ -321,11 +321,16 @@
                 white-space: nowrap;
                 color: rgba(0,0,0,0.85);
             }
-            main .star_rating[data-rate="5"]:after{ width: 100%; }
-            main .star_rating[data-rate="4"]:after{ width: 80%; }
-            main .star_rating[data-rate="3"]:after{ width: 60%; }
-            main .star_rating[data-rate="2"]:after{ width: 40%; }
-            main .star_rating[data-rate="1"]:after{ width: 20%; }
+            main .star_rating[data-rate="5.0"]:after{ width: 100%; }
+            main .star_rating[data-rate="4.5"]:after{ width: 90%; }
+            main .star_rating[data-rate="4.0"]:after{ width: 80%; }
+            main .star_rating[data-rate="3.5"]:after{ width: 70%; }
+            main .star_rating[data-rate="3.0"]:after{ width: 60%; }
+            main .star_rating[data-rate="2.5"]:after{ width: 50%; }
+            main .star_rating[data-rate="2.0"]:after{ width: 40%; }
+            main .star_rating[data-rate="1.5"]:after{ width: 30%; }
+            main .star_rating[data-rate="1.0"]:after{ width: 20%; }
+            main .star_rating[data-rate="0.5"]:after{ width: 10%; }
 
             /*----------------------------------
             ---   main: firstPortableSkill   ---
@@ -430,8 +435,8 @@
                 <tr class="heading">
                     <th class="hcol_1">名前</th>
                     <th class="hcol_2">ビジョン類似度</th>
-                    <th class="hcol_3">持ち味</th>
-                    <th class="hcol_4">主な業務経験</th>
+                    <th class="hcol_3">主なポータブルスキル</th>
+                    <th class="hcol_4">主な職能</th>
                 </tr>
                 <!-----------------------------
                 ---   main: row0 => start   ---
@@ -567,9 +572,9 @@
             let viewid_00 = sessionStorage.getItem("viewid_00");
             let viewid_01 = sessionStorage.getItem("viewid_01");
             let viewid_02 = sessionStorage.getItem("viewid_02");
-            let similarity_label_00 = Number(sessionStorage.getItem("similarity_label_00"));
-            let similarity_label_01 = Number(sessionStorage.getItem("similarity_label_01"));
-            let similarity_label_02 = Number(sessionStorage.getItem("similarity_label_02"));
+            let similarity_label_00 = Number(sessionStorage.getItem("similarity_label_00"))/2;
+            let similarity_label_01 = Number(sessionStorage.getItem("similarity_label_01"))/2;
+            let similarity_label_02 = Number(sessionStorage.getItem("similarity_label_02"))/2;
             firstPortableSkill_00 = sessionStorage.getItem("firstPortableSkill_00");
             firstPortableSkill_01 = sessionStorage.getItem("firstPortableSkill_01");
             firstPortableSkill_02 = sessionStorage.getItem("firstPortableSkill_02");
@@ -771,7 +776,7 @@
                 firstFunction_00_en = "function_law";
             } else if (firstFunction_00 === "広報・マーケティング") {
                 firstFunction_00_en = "function_marketing";
-            } else if (firstFunction_00 === "専門領域・ドメイン知識") {
+            } else if (firstFunction_00 === "ドメイン知識") {
                 firstFunction_00_en = "function_ex";
             };
             if (firstFunction_01 === "営業") {
@@ -792,7 +797,7 @@
                 firstFunction_01_en = "function_law";
             } else if (firstFunction_01 === "広報・マーケティング") {
                 firstFunction_01_en = "function_marketing";
-            } else if (firstFunction_01 === "専門領域・ドメイン知識") {
+            } else if (firstFunction_01 === "ドメイン知識") {
                 firstFunction_01_en = "function_ex";
             };
             if (firstFunction_02 === "営業") {
@@ -813,7 +818,7 @@
                 firstFunction_02_en = "function_law";
             } else if (firstFunction_02 === "広報・マーケティング") {
                 firstFunction_02_en = "function_marketing";
-            } else if (firstFunction_02 === "専門領域・ドメイン知識") {
+            } else if (firstFunction_02 === "ドメイン知識") {
                 firstFunction_02_en = "function_ex";
             };
 
@@ -1052,13 +1057,13 @@
                 sessionStorage.setItem("achieve_08", getData.achieve_08);
                 sessionStorage.setItem("achieve_09", getData.achieve_09);
                 sessionStorage.setItem("achieve_10", getData.achieve_10);
-                sessionStorage.setItem("vision", getData.vision);
+                sessionStorage.setItem("vision_99", getData.vision);
                 sessionStorage.setItem("tag_01", getData.tag_01);
                 sessionStorage.setItem("tag_02", getData.tag_02);
                 sessionStorage.setItem("tag_03", getData.tag_03);
                 console.log("Success!!");
                 hideLoading();
-                window.location.href = "view_01.html";
+                window.open("view_01.html", "_blank");
             })
             .catch(error => {
                 console.error("API Error to api_gateway:", error);
@@ -1216,7 +1221,7 @@
                 sessionStorage.setItem("achieve_08", getData.achieve_08);
                 sessionStorage.setItem("achieve_09", getData.achieve_09);
                 sessionStorage.setItem("achieve_10", getData.achieve_10);
-                sessionStorage.setItem("vision", getData.vision);
+                sessionStorage.setItem("vision_99", getData.vision);
                 sessionStorage.setItem("tag_01", getData.tag_01);
                 sessionStorage.setItem("tag_02", getData.tag_02);
                 sessionStorage.setItem("tag_03", getData.tag_03);
