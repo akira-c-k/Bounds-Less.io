@@ -146,6 +146,7 @@
                 left: 15%;
                 width: 70%;
                 height: 6%;
+                font-size: 16px;
                 display: flex;
                 justify-content: center;
                 background-color: rgba(170,170,170,0.15);
@@ -171,7 +172,7 @@
             -------------------*/
             main .col {
                 width: 33.3%;
-                height: 300px;
+                height: 350px;
             }
 
             /*-------------------
@@ -179,14 +180,16 @@
             -------------------*/
             main .row1 {
                 width: 100%;
-                height: 80%;
+                height: 60%;
                 display: flex;
                 justify-content: center;
             }
             main .row2 {
                 width: 100%;
-                height: 20%;
+                height: 40%;
                 display: flex;
+                flex-direction: column;
+                align-items: center;
                 justify-content: center;
             }
 
@@ -198,8 +201,23 @@
                 max-width: 100%;
             }
             main .img_appendix {
-                font-size: 18px;
+                height: 50%;
+                display: block;
+                text-align: center;
+                font-size: 20px;
             }
+            main .img_detail {
+                width: 80%;
+                height: 50%;
+                text-align: center;
+                font-size: 14px;
+                /* color: rgba(255,255,255,1); */
+                color: rgba(0,0,0,1);
+                display: block;
+            }
+            /* main .img_appendix:hover + .img_detail {
+                color: rgba(0,0,0,1);
+            } */
 
             /*-------------------
             ---   main: btn   ---
@@ -210,10 +228,41 @@
                 justify-content: center;
                 align-items: center;
             }
+            main .back_btn {
+                position: fixed;
+                top: 90%;
+                margin-right: 15%;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .back_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .back_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .back_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
             main .next_btn {
                 position: fixed;
                 top: 90%;
-                left: 46%;
+                margin-left: 15%;
                 width: 120px;
                 height: 30px;
                 border: 2px solid rgba(0,0,0,1);
@@ -292,8 +341,8 @@
                 <div class="modal_container" id="modal_container">
                     <div class="modal" id="modal">
                         <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
-                        <button class="transition_02 transition" id="transition_02" value="02">経験年数の更新</button>
-                        <button class="transition_03 transition" id="transition_03" value="03">成果・ビジョンの更新</button>
+                        <button class="transition_02 transition" id="transition_02" value="02" disabled>検索</button>
+                        <button class="transition_03 transition" id="transition_03" value="03" disabled>チャット</button>
                     </div>
                 </div>
             </div>
@@ -313,6 +362,7 @@
                     </div>
                     <div class="row2">
                         <p class="img_appendix" id="firstPortableSkill"></p>
+                        <p class="img_detail" id="firstPortableSkill_level"></p>
                     </div>
                 </div>
                 <div class="col">
@@ -321,6 +371,7 @@
                     </div>
                     <div class="row2">
                         <p class="img_appendix" id="secondPortableSkill"></p>
+                        <p class="img_detail" id="secondPortableSkill_level"></p>
                     </div>
                 </div>
                 <div class="col">
@@ -329,11 +380,15 @@
                     </div>
                     <div class="row2">
                         <p class="img_appendix" id="thirdPortableSkill"></p>
+                        <p class="img_detail" id="thirdPortableSkill_level"></p>
                     </div>
                 </div>                
             </div>
             <div class="next">
+                <button class="back_btn" id="back_btn" onclick="view_transition(event)">前へ</button>
+                <span class="back_tips" id="back_tips"></span>
                 <button class="next_btn" id="next_btn" onclick="view_transition(event)">次へ</button>
+                <span class="next_tips" id="next_tips"></span>
             </div>
         </main>
 
@@ -377,12 +432,347 @@
                 document.getElementById("secondPortableSkill").innerHTML = secondPortableSkill;
                 document.getElementById("thirdPortableSkill").innerHTML = thirdPortableSkill;
                 document.getElementById("firstPortableSkill_en").setAttribute("src", "media/" + firstPortableSkill_en + ".svg");
+                if (firstPortableSkill === "現状の把握") {
+                    if (Number(sessionStorage.getItem("portableskill_understand_level")) === 1) {
+                        firstPortableSkill_level = "担当業務に必要な情報を収集している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 2) {
+                        firstPortableSkill_level = "チームレベルの業務に必要な情報を収集・分析している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 3) {
+                        firstPortableSkill_level = "所属する部署に関連する業務に必要な情報を収集・分析している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 4) {
+                        firstPortableSkill_level = "他部署や顧客等の情報を収集し、自社に与える影響を多角的に分析している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 5) {
+                        firstPortableSkill_level = "業界全体の情報を収集し、自社に与える影響を多角的に分析している"
+                    };
+                } else if (firstPortableSkill === "課題の設定") {
+                    if (Number(sessionStorage.getItem("portableskill_issue_level")) === 1) {
+                        firstPortableSkill_level = "自ら課題を設定することはない"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 2) {
+                        firstPortableSkill_level = "決まった対応策で対応可能な問題を扱っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 3) {
+                        firstPortableSkill_level = "既存の解決策の中から最適な方法を選択することで対応可能な問題を扱っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 4) {
+                        firstPortableSkill_level = "既存の解決策を応用することで対応可能な問題を扱っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 5) {
+                        firstPortableSkill_level = "前例がなく、自ら仮説を立てて解決策を導き出すような問題を扱っている"
+                    };
+                } else if (firstPortableSkill === "計画の立案") {
+                    if (Number(sessionStorage.getItem("portableskill_plan_level")) === 1) {
+                        firstPortableSkill_level = "担当業務の計画を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 2) {
+                        firstPortableSkill_level = "チームレベルの計画・施策を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 3) {
+                        firstPortableSkill_level = "所属する部署の計画・施策を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 4) {
+                        firstPortableSkill_level = "他部署にも影響を与えるような計画・戦略を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 5) {
+                        firstPortableSkill_level = "会社全体の計画・戦略を立案している"
+                    };
+                } else if (firstPortableSkill === "課題の遂行") {
+                    if (Number(sessionStorage.getItem("portableskill_do_level")) === 1) {
+                        firstPortableSkill_level = "指示を受け、既存の方法を用いて進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 2) {
+                        firstPortableSkill_level = "おおまかな指示を受け、既存の方法から最適な方法を選択して進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 3) {
+                        firstPortableSkill_level = "既存の方法を自分なりに改善して進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 4) {
+                        firstPortableSkill_level = "既存の方法を活用しつつ、一部について新しい方法を考案して進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 5) {
+                        firstPortableSkill_level = "既存の方法がない場合には、必要に応じて新しい方法を考案して進めている"
+                    };
+                } else if (firstPortableSkill === "状況への対応") {
+                    if (Number(sessionStorage.getItem("portableskill_response_level")) === 1) {
+                        firstPortableSkill_level = "先輩や上司に指示を仰いで対応している"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 2) {
+                        firstPortableSkill_level = "既存の方法やマニュアルに従って対応している"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 3) {
+                        firstPortableSkill_level = "自らの担当業務において、既存の方法やマニュアルを変更して対応している"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 4) {
+                        firstPortableSkill_level = "自部門のリスクを考慮して、既存の方法やマニュアルを超えた対応をしている"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 5) {
+                        firstPortableSkill_level = "経営上のリスクを考慮して、既存の方法やマニュアルを超えた対応をしている"
+                    };
+                } else if (firstPortableSkill === "社内対応") {
+                    if (Number(sessionStorage.getItem("portableskill_in_level")) === 1) {
+                        firstPortableSkill_level = "所属する部署の人に、業務連絡や担当業務の説明を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 2) {
+                        firstPortableSkill_level = "所属する部署の人と、合意を得るための交渉や折衝を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 3) {
+                        firstPortableSkill_level = "他部署の人に、業務連絡や担当業務の説明を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 4) {
+                        firstPortableSkill_level = "他部署の人と、合意を得るための交渉や折衝を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 5) {
+                        firstPortableSkill_level = "他部署の人と、新たな価値を生み出すためのコミュニケーションを行っている"
+                    };
+                } else if (firstPortableSkill === "社外対応") {
+                    if (Number(sessionStorage.getItem("portableskill_out_level")) === 1) {
+                        firstPortableSkill_level = "社外の人とコミュニケーションをとることはない"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 2) {
+                        firstPortableSkill_level = "情報交換・情報収集等を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 3) {
+                        firstPortableSkill_level = "業務を遂行するための連絡や調整を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 4) {
+                        firstPortableSkill_level = "合意を得るための交渉や折衝を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 5) {
+                        firstPortableSkill_level = "新たな価値を生み出すためのコミュニケーションを行っている"
+                    };
+                } else if (firstPortableSkill === "上司対応") {
+                    if (Number(sessionStorage.getItem("portableskill_senior_level")) === 1) {
+                        firstPortableSkill_level = "直属の上司に、こまめに、自身の担当業務の報告・連絡・相談を行ったうえで、作業の進め方の指示や、フィードバックを受けている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 2) {
+                        firstPortableSkill_level = "直属の上司に、定期的に、自身の担当業務の進捗報告を行った上で、問題が生じた場合には相談を行い、フィードバックを受けている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 3) {
+                        firstPortableSkill_level = "所属する部署の管理職に、チームの状況を報告するとともに、課題やそれに対する改善策の提案を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 4) {
+                        firstPortableSkill_level = "他部署の管理職にも、所属する部署の状況を報告するとともに、課題やそれに対する改善策の提案を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 5) {
+                        firstPortableSkill_level = "経営層にも、自社の課題やそれに対する改善策を提案している"
+                    };
+                } else if (firstPortableSkill === "部下マネジメント") {
+                    if (Number(sessionStorage.getItem("portableskill_junior_level")) === 1) {
+                        firstPortableSkill_level = "上位者の指示に従って業務に従事する立場であり、他者に助言等を行うことはない"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 2) {
+                        firstPortableSkill_level = "同僚や後輩に、助言を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 3) {
+                        firstPortableSkill_level = "同僚や後輩に、業務の進捗管理を行いながら、指導を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 4) {
+                        firstPortableSkill_level = "部下に、キャリアプランをふまえた指導・育成を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 5) {
+                        firstPortableSkill_level = "部下に、会社のビジョンや経営戦略に基づいて、権限を委譲したり、チャレンジングな仕事を与えたりすることで、指導・育成を図っている"
+                    };
+                };
+                document.getElementById("firstPortableSkill_level").innerHTML = firstPortableSkill_level;
                 document.getElementById("secondPortableSkill_en").setAttribute("src", "media/" + secondPortableSkill_en + ".svg");
+                if (secondPortableSkill === "現状の把握") {
+                    if (Number(sessionStorage.getItem("portableskill_understand_level")) === 1) {
+                        secondPortableSkill_level = "担当業務に必要な情報を収集している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 2) {
+                        secondPortableSkill_level = "チームレベルの業務に必要な情報を収集・分析している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 3) {
+                        secondPortableSkill_level = "所属する部署に関連する業務に必要な情報を収集・分析している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 4) {
+                        secondPortableSkill_level = "他部署や顧客等の情報を収集し、自社に与える影響を多角的に分析している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 5) {
+                        secondPortableSkill_level = "業界全体の情報を収集し、自社に与える影響を多角的に分析している"
+                    };
+                } else if (secondPortableSkill === "課題の設定") {
+                    if (Number(sessionStorage.getItem("portableskill_issue_level")) === 1) {
+                        secondPortableSkill_level = "自ら課題を設定することはない"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 2) {
+                        secondPortableSkill_level = "決まった対応策で対応可能な問題を扱っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 3) {
+                        secondPortableSkill_level = "既存の解決策の中から最適な方法を選択することで対応可能な問題を扱っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 4) {
+                        secondPortableSkill_level = "既存の解決策を応用することで対応可能な問題を扱っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 5) {
+                        secondPortableSkill_level = "前例がなく、自ら仮説を立てて解決策を導き出すような問題を扱っている"
+                    };
+                } else if (secondPortableSkill === "計画の立案") {
+                    if (Number(sessionStorage.getItem("portableskill_plan_level")) === 1) {
+                        secondPortableSkill_level = "担当業務の計画を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 2) {
+                        secondPortableSkill_level = "チームレベルの計画・施策を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 3) {
+                        secondPortableSkill_level = "所属する部署の計画・施策を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 4) {
+                        secondPortableSkill_level = "他部署にも影響を与えるような計画・戦略を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 5) {
+                        secondPortableSkill_level = "会社全体の計画・戦略を立案している"
+                    };
+                } else if (secondPortableSkill === "課題の遂行") {
+                    if (Number(sessionStorage.getItem("portableskill_do_level")) === 1) {
+                        secondPortableSkill_level = "指示を受け、既存の方法を用いて進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 2) {
+                        secondPortableSkill_level = "おおまかな指示を受け、既存の方法から最適な方法を選択して進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 3) {
+                        secondPortableSkill_level = "既存の方法を自分なりに改善して進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 4) {
+                        secondPortableSkill_level = "既存の方法を活用しつつ、一部について新しい方法を考案して進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 5) {
+                        secondPortableSkill_level = "既存の方法がない場合には、必要に応じて新しい方法を考案して進めている"
+                    };
+                } else if (secondPortableSkill === "状況への対応") {
+                    if (Number(sessionStorage.getItem("portableskill_response_level")) === 1) {
+                        secondPortableSkill_level = "先輩や上司に指示を仰いで対応している"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 2) {
+                        secondPortableSkill_level = "既存の方法やマニュアルに従って対応している"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 3) {
+                        secondPortableSkill_level = "自らの担当業務において、既存の方法やマニュアルを変更して対応している"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 4) {
+                        secondPortableSkill_level = "自部門のリスクを考慮して、既存の方法やマニュアルを超えた対応をしている"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 5) {
+                        secondPortableSkill_level = "経営上のリスクを考慮して、既存の方法やマニュアルを超えた対応をしている"
+                    };
+                } else if (secondPortableSkill === "社内対応") {
+                    if (Number(sessionStorage.getItem("portableskill_in_level")) === 1) {
+                        secondPortableSkill_level = "所属する部署の人に、業務連絡や担当業務の説明を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 2) {
+                        secondPortableSkill_level = "所属する部署の人と、合意を得るための交渉や折衝を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 3) {
+                        secondPortableSkill_level = "他部署の人に、業務連絡や担当業務の説明を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 4) {
+                        secondPortableSkill_level = "他部署の人と、合意を得るための交渉や折衝を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 5) {
+                        secondPortableSkill_level = "他部署の人と、新たな価値を生み出すためのコミュニケーションを行っている"
+                    };
+                } else if (secondPortableSkill === "社外対応") {
+                    if (Number(sessionStorage.getItem("portableskill_out_level")) === 1) {
+                        secondPortableSkill_level = "社外の人とコミュニケーションをとることはない"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 2) {
+                        secondPortableSkill_level = "情報交換・情報収集等を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 3) {
+                        secondPortableSkill_level = "業務を遂行するための連絡や調整を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 4) {
+                        secondPortableSkill_level = "合意を得るための交渉や折衝を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 5) {
+                        secondPortableSkill_level = "新たな価値を生み出すためのコミュニケーションを行っている"
+                    };
+                } else if (secondPortableSkill === "上司対応") {
+                    if (Number(sessionStorage.getItem("portableskill_senior_level")) === 1) {
+                        secondPortableSkill_level = "直属の上司に、こまめに、自身の担当業務の報告・連絡・相談を行ったうえで、作業の進め方の指示や、フィードバックを受けている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 2) {
+                        secondPortableSkill_level = "直属の上司に、定期的に、自身の担当業務の進捗報告を行った上で、問題が生じた場合には相談を行い、フィードバックを受けている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 3) {
+                        secondPortableSkill_level = "所属する部署の管理職に、チームの状況を報告するとともに、課題やそれに対する改善策の提案を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 4) {
+                        secondPortableSkill_level = "他部署の管理職にも、所属する部署の状況を報告するとともに、課題やそれに対する改善策の提案を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 5) {
+                        secondPortableSkill_level = "経営層にも、自社の課題やそれに対する改善策を提案している"
+                    };
+                } else if (secondPortableSkill === "部下マネジメント") {
+                    if (Number(sessionStorage.getItem("portableskill_junior_level")) === 1) {
+                        secondPortableSkill_level = "上位者の指示に従って業務に従事する立場であり、他者に助言等を行うことはない"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 2) {
+                        secondPortableSkill_level = "同僚や後輩に、助言を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 3) {
+                        secondPortableSkill_level = "同僚や後輩に、業務の進捗管理を行いながら、指導を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 4) {
+                        secondPortableSkill_level = "部下に、キャリアプランをふまえた指導・育成を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 5) {
+                        secondPortableSkill_level = "部下に、会社のビジョンや経営戦略に基づいて、権限を委譲したり、チャレンジングな仕事を与えたりすることで、指導・育成を図っている"
+                    };
+                };
+                document.getElementById("secondPortableSkill_level").innerHTML = secondPortableSkill_level;
                 document.getElementById("thirdPortableSkill_en").setAttribute("src", "media/" + thirdPortableSkill_en + ".svg");
+                if (thirdPortableSkill === "現状の把握") {
+                    if (Number(sessionStorage.getItem("portableskill_understand_level")) === 1) {
+                        thirdPortableSkill_level = "担当業務に必要な情報を収集している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 2) {
+                        thirdPortableSkill_level = "チームレベルの業務に必要な情報を収集・分析している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 3) {
+                        thirdPortableSkill_level = "所属する部署に関連する業務に必要な情報を収集・分析している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 4) {
+                        thirdPortableSkill_level = "他部署や顧客等の情報を収集し、自社に与える影響を多角的に分析している"
+                    } else if (Number(sessionStorage.getItem("portableskill_understand_level")) === 5) {
+                        thirdPortableSkill_level = "業界全体の情報を収集し、自社に与える影響を多角的に分析している"
+                    };
+                } else if (thirdPortableSkill === "課題の設定") {
+                    if (Number(sessionStorage.getItem("portableskill_issue_level")) === 1) {
+                        thirdPortableSkill_level = "自ら課題を設定することはない"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 2) {
+                        thirdPortableSkill_level = "決まった対応策で対応可能な問題を扱っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 3) {
+                        thirdPortableSkill_level = "既存の解決策の中から最適な方法を選択することで対応可能な問題を扱っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 4) {
+                        thirdPortableSkill_level = "既存の解決策を応用することで対応可能な問題を扱っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_issue_level")) === 5) {
+                        thirdPortableSkill_level = "前例がなく、自ら仮説を立てて解決策を導き出すような問題を扱っている"
+                    };
+                } else if (thirdPortableSkill === "計画の立案") {
+                    if (Number(sessionStorage.getItem("portableskill_plan_level")) === 1) {
+                        thirdPortableSkill_level = "担当業務の計画を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 2) {
+                        thirdPortableSkill_level = "チームレベルの計画・施策を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 3) {
+                        thirdPortableSkill_level = "所属する部署の計画・施策を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 4) {
+                        thirdPortableSkill_level = "他部署にも影響を与えるような計画・戦略を立案している"
+                    } else if (Number(sessionStorage.getItem("portableskill_plan_level")) === 5) {
+                        thirdPortableSkill_level = "会社全体の計画・戦略を立案している"
+                    };
+                } else if (thirdPortableSkill === "課題の遂行") {
+                    if (Number(sessionStorage.getItem("portableskill_do_level")) === 1) {
+                        thirdPortableSkill_level = "指示を受け、既存の方法を用いて進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 2) {
+                        thirdPortableSkill_level = "おおまかな指示を受け、既存の方法から最適な方法を選択して進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 3) {
+                        thirdPortableSkill_level = "既存の方法を自分なりに改善して進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 4) {
+                        thirdPortableSkill_level = "既存の方法を活用しつつ、一部について新しい方法を考案して進めている"
+                    } else if (Number(sessionStorage.getItem("portableskill_do_level")) === 5) {
+                        thirdPortableSkill_level = "既存の方法がない場合には、必要に応じて新しい方法を考案して進めている"
+                    };
+                } else if (thirdPortableSkill === "状況への対応") {
+                    if (Number(sessionStorage.getItem("portableskill_response_level")) === 1) {
+                        thirdPortableSkill_level = "先輩や上司に指示を仰いで対応している"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 2) {
+                        thirdPortableSkill_level = "既存の方法やマニュアルに従って対応している"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 3) {
+                        thirdPortableSkill_level = "自らの担当業務において、既存の方法やマニュアルを変更して対応している"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 4) {
+                        thirdPortableSkill_level = "自部門のリスクを考慮して、既存の方法やマニュアルを超えた対応をしている"
+                    } else if (Number(sessionStorage.getItem("portableskill_response_level")) === 5) {
+                        thirdPortableSkill_level = "経営上のリスクを考慮して、既存の方法やマニュアルを超えた対応をしている"
+                    };
+                } else if (thirdPortableSkill === "社内対応") {
+                    if (Number(sessionStorage.getItem("portableskill_in_level")) === 1) {
+                        thirdPortableSkill_level = "所属する部署の人に、業務連絡や担当業務の説明を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 2) {
+                        thirdPortableSkill_level = "所属する部署の人と、合意を得るための交渉や折衝を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 3) {
+                        thirdPortableSkill_level = "他部署の人に、業務連絡や担当業務の説明を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 4) {
+                        thirdPortableSkill_level = "他部署の人と、合意を得るための交渉や折衝を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_in_level")) === 5) {
+                        thirdPortableSkill_level = "他部署の人と、新たな価値を生み出すためのコミュニケーションを行っている"
+                    };
+                } else if (thirdPortableSkill === "社外対応") {
+                    if (Number(sessionStorage.getItem("portableskill_out_level")) === 1) {
+                        thirdPortableSkill_level = "社外の人とコミュニケーションをとることはない"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 2) {
+                        thirdPortableSkill_level = "情報交換・情報収集等を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 3) {
+                        thirdPortableSkill_level = "業務を遂行するための連絡や調整を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 4) {
+                        thirdPortableSkill_level = "合意を得るための交渉や折衝を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_out_level")) === 5) {
+                        thirdPortableSkill_level = "新たな価値を生み出すためのコミュニケーションを行っている"
+                    };
+                } else if (thirdPortableSkill === "上司対応") {
+                    if (Number(sessionStorage.getItem("portableskill_senior_level")) === 1) {
+                        thirdPortableSkill_level = "直属の上司に、こまめに、自身の担当業務の報告・連絡・相談を行ったうえで、作業の進め方の指示や、フィードバックを受けている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 2) {
+                        thirdPortableSkill_level = "直属の上司に、定期的に、自身の担当業務の進捗報告を行った上で、問題が生じた場合には相談を行い、フィードバックを受けている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 3) {
+                        thirdPortableSkill_level = "所属する部署の管理職に、チームの状況を報告するとともに、課題やそれに対する改善策の提案を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 4) {
+                        thirdPortableSkill_level = "他部署の管理職にも、所属する部署の状況を報告するとともに、課題やそれに対する改善策の提案を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_senior_level")) === 5) {
+                        thirdPortableSkill_level = "経営層にも、自社の課題やそれに対する改善策を提案している"
+                    };
+                } else if (thirdPortableSkill === "部下マネジメント") {
+                    if (Number(sessionStorage.getItem("portableskill_junior_level")) === 1) {
+                        thirdPortableSkill_level = "上位者の指示に従って業務に従事する立場であり、他者に助言等を行うことはない"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 2) {
+                        thirdPortableSkill_level = "同僚や後輩に、助言を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 3) {
+                        thirdPortableSkill_level = "同僚や後輩に、業務の進捗管理を行いながら、指導を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 4) {
+                        thirdPortableSkill_level = "部下に、キャリアプランをふまえた指導・育成を行っている"
+                    } else if (Number(sessionStorage.getItem("portableskill_junior_level")) === 5) {
+                        thirdPortableSkill_level = "部下に、会社のビジョンや経営戦略に基づいて、権限を委譲したり、チャレンジングな仕事を与えたりすることで、指導・育成を図っている"
+                    };
+                };
+                document.getElementById("thirdPortableSkill_level").innerHTML = thirdPortableSkill_level;
             });
 
             function view_transition(event) {
-                window.location.href = "view_02.html";
+                let action = event.target.id.slice(-10);
+                if (action === "next_btn") {
+                        window.location.href = "view_02.html";
+                    } else {
+                        window.location.href = "index.html";
+                }
             };
 
             hamburger_icon.addEventListener("click", () => {
