@@ -923,7 +923,7 @@
             function view_transition(event) {
                 let action = event.target.id.slice(-10);
                 if (action === "next_btn") {
-                        window.location.href = "index.html";
+                        window.open("index.html", "_blank");
                     } else {
                         window.location.href = "view_02.html";
                 }
