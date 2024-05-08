@@ -877,6 +877,7 @@
         });
 
         function view_transition(event) {
+            wo = window.open("reload.html", "_blank")
             let now = new Date();
             let year = now.getFullYear();
             let month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -1063,11 +1064,11 @@
                 sessionStorage.setItem("tag_03", getData.tag_03);
                 console.log("Success!!");
                 hideLoading();
-                window.open("view_01.html", "_blank");
+                wo.location.href = "view_01.html";
             })
             .catch(error => {
                 console.error("API Error to api_gateway:", error);
-            });
+            });            
         };
 
         transition_01.addEventListener("click", () => {
