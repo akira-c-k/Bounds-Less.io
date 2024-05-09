@@ -321,15 +321,15 @@
                 white-space: nowrap;
                 color: rgba(0,0,0,0.85);
             }
-            main .star_rating[data-rate="5.0"]:after{ width: 100%; }
+            main .star_rating[data-rate="5"]:after{ width: 100%; }
             main .star_rating[data-rate="4.5"]:after{ width: 90%; }
-            main .star_rating[data-rate="4.0"]:after{ width: 80%; }
+            main .star_rating[data-rate="4"]:after{ width: 80%; }
             main .star_rating[data-rate="3.5"]:after{ width: 70%; }
-            main .star_rating[data-rate="3.0"]:after{ width: 60%; }
+            main .star_rating[data-rate="3"]:after{ width: 60%; }
             main .star_rating[data-rate="2.5"]:after{ width: 50%; }
-            main .star_rating[data-rate="2.0"]:after{ width: 40%; }
+            main .star_rating[data-rate="2"]:after{ width: 40%; }
             main .star_rating[data-rate="1.5"]:after{ width: 30%; }
-            main .star_rating[data-rate="1.0"]:after{ width: 20%; }
+            main .star_rating[data-rate="1"]:after{ width: 20%; }
             main .star_rating[data-rate="0.5"]:after{ width: 10%; }
 
             /*----------------------------------
@@ -566,15 +566,15 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             // get temprary data from sessionStorage
-            let name_00 = sessionStorage.getItem("name_00");
-            let name_01 = sessionStorage.getItem("name_01");
-            let name_02 = sessionStorage.getItem("name_02");
-            let viewid_00 = sessionStorage.getItem("viewid_00");
-            let viewid_01 = sessionStorage.getItem("viewid_01");
-            let viewid_02 = sessionStorage.getItem("viewid_02");
-            let similarity_label_00 = Number(sessionStorage.getItem("similarity_label_00"))/2;
-            let similarity_label_01 = Number(sessionStorage.getItem("similarity_label_01"))/2;
-            let similarity_label_02 = Number(sessionStorage.getItem("similarity_label_02"))/2;
+            name_00 = sessionStorage.getItem("name_00");
+            name_01 = sessionStorage.getItem("name_01");
+            name_02 = sessionStorage.getItem("name_02");
+            viewid_00 = sessionStorage.getItem("viewid_00");
+            viewid_01 = sessionStorage.getItem("viewid_01");
+            viewid_02 = sessionStorage.getItem("viewid_02");
+            similarity_label_00 = String(Number(sessionStorage.getItem("similarity_label_00"))/2);
+            similarity_label_01 = String(Number(sessionStorage.getItem("similarity_label_01"))/2);
+            similarity_label_02 = String(Number(sessionStorage.getItem("similarity_label_02"))/2);
             firstPortableSkill_00 = sessionStorage.getItem("firstPortableSkill_00");
             firstPortableSkill_01 = sessionStorage.getItem("firstPortableSkill_01");
             firstPortableSkill_02 = sessionStorage.getItem("firstPortableSkill_02");
@@ -755,9 +755,9 @@
             } else if (thirdPortableSkill_02 === "部下マネジメント") {
                 thirdPortableSkill_02_en = "portableskill_junior";
             };
-            let firstFunction_00 = sessionStorage.getItem("firstFunction_00");
-            let firstFunction_01 = sessionStorage.getItem("firstFunction_01");
-            let firstFunction_02 = sessionStorage.getItem("firstFunction_02");
+            firstFunction_00 = sessionStorage.getItem("firstFunction_00");
+            firstFunction_01 = sessionStorage.getItem("firstFunction_01");
+            firstFunction_02 = sessionStorage.getItem("firstFunction_02");
             if (firstFunction_00 === "営業") {
                 firstFunction_00_en = "function_sales";
             } else if (firstFunction_00 === "販売・サービス") {
