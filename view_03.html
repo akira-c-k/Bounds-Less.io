@@ -136,6 +136,9 @@
                 justify-content: center;
                 background-color: rgb(255,255,255);
             }
+            main .none_active:before {
+                display: none;
+            }
 
             /*-----------------------
             ---   main: support   ---
@@ -199,6 +202,7 @@
                 color: rgba(0,0,0,1);
                 height: 40px;
                 justify-content: center;
+                z-index: 1000;
             }
             main .smr_05 {
                 background-color: rgba(85,170,85,1);
@@ -206,37 +210,35 @@
                 height: 40px;
                 justify-content: center;
             }
-            main .smr_btn {
+            .smr_btn {
                 display: inline-block;
                 position: relative;
                 top: -40%;
                 left: 1%;
-                &:before, &:after {
-                    content: "";
-                    background-color: rgba(0,0,0,1);
-                    border-radius: 10px;
-                    width: 18px;
-                    height: 4px;
-                    position: absolute;
-                    top: 7px;
-                    left: 0;
-                }
-                &:before {  
-                    transition: height 2.0s;
-                    width: 4px;
-                    height: 18px;
-                    top: 0;
-                    left: 7px;
-                }
-                &.is_active {
-                    &:before {
-                        transition: height 2.0s;
-                        width: 4px;
-                        height: 0px;
-                        top: 0;
-                        left: 7px;
-                    }
-                }
+            }
+            .smr_btn:before, .smr_btn:after {
+                content: "";
+                background-color: rgba(0,0,0,1);
+                border-radius: 10px;
+                width: 18px;
+                height: 4px;
+                position: absolute;
+                top: 7px;
+                left: 0;
+            }
+            .smr_btn:before {  
+                transition: height 2.0s;
+                width: 4px;
+                height: 18px;
+                top: 0;
+                left: 7px;
+            }
+            .smr_btn.is_active:before {
+                transition: height 2.0s;
+                width: 4px;
+                height: 0px;
+                top: 0;
+                left: 7px;
             }
             main .smr_txt {
                 display: inline-block;
@@ -767,64 +769,77 @@
                 document.getElementById("msg").innerHTML = viewname + "さんの業務内外での成果、組織で目指す方向性（ビジョン）";
                 if (sessionStorage.getItem("achieve_01") != "") {
                     document.getElementById("achieves_01").style.display = "flex"
+                    document.getElementById("edit_btn_01").classList.add("none_active");
                     achieveCount = 1
                 } else {
                     document.getElementById("achieves_01").style.display = "none"
                 };
                 if (sessionStorage.getItem("achieve_02") != "") {
                     document.getElementById("achieves_02").style.display = "flex"
+                    document.getElementById("edit_btn_02").classList.add("none_active");
                     achieveCount = 2
                 } else {
                     document.getElementById("achieves_02").style.display = "none"
                 };
                 if (sessionStorage.getItem("achieve_03") != "") {
                     document.getElementById("achieves_03").style.display = "flex"
+                    document.getElementById("edit_btn_03").classList.add("none_active");
                     achieveCount = 3
                 } else {
                     document.getElementById("achieves_03").style.display = "none"
                 };
                 if (sessionStorage.getItem("achieve_04") != "") {
                     document.getElementById("achieves_04").style.display = "flex"
+                    document.getElementById("edit_btn_04").classList.add("none_active");
                     achieveCount = 4
                 } else {
                     document.getElementById("achieves_04").style.display = "none"
                 };
                 if (sessionStorage.getItem("achieve_05") != "") {
                     document.getElementById("achieves_05").style.display = "flex"
+                    document.getElementById("edit_btn_05").classList.add("none_active");
                     achieveCount = 5
                 } else {
                     document.getElementById("achieves_05").style.display = "none"
                 };
                 if (sessionStorage.getItem("achieve_06") != "") {
                     document.getElementById("achieves_06").style.display = "flex"
+                    document.getElementById("edit_btn_06").classList.add("none_active");
                     achieveCount = 6
                 } else {
                     document.getElementById("achieves_06").style.display = "none"
                 };
                 if (sessionStorage.getItem("achieve_07") != "") {
                     document.getElementById("achieves_07").style.display = "flex"
+                    document.getElementById("edit_btn_07").classList.add("none_active");
                     achieveCount = 7
                 } else {
                     document.getElementById("achieves_07").style.display = "none"
                 };
                 if (sessionStorage.getItem("achieve_08") != "") {
                     document.getElementById("achieves_08").style.display = "flex"
+                    document.getElementById("edit_btn_08").classList.add("none_active");
                     achieveCount = 8
                 } else {
                     document.getElementById("achieves_08").style.display = "none"
                 };
                 if (sessionStorage.getItem("achieve_09") != "") {
                     document.getElementById("achieves_09").style.display = "flex"
+                    document.getElementById("edit_btn_09").classList.add("none_active");
                     achieveCount = 9
                 } else {
                     document.getElementById("achieves_09").style.display = "none"
                 };
                 if (sessionStorage.getItem("achieve_10") != "") {
                     document.getElementById("achieves_10").style.display = "flex"
+                    document.getElementById("edit_btn_10").classList.add("none_active");
                     achieveCount = 10
                 } else {
                     document.getElementById("achieves_10").style.display = "none"
                 };
+
+                document.getElementById("add_btn").classList.add("none_active");
+                document.getElementById("edit_btn_99").classList.add("none_active");
 
                 document.getElementById("achieve_01").innerHTML = sessionStorage.getItem("achieve_01");
                 document.getElementById("achieve_02").innerHTML = sessionStorage.getItem("achieve_02");
@@ -842,20 +857,35 @@
                 document.getElementById("tag_03").innerHTML = sessionStorage.getItem("tag_03");
             });
 
-            function accordionAction() {
+            async function accordionAction() {
                 let cnt = document.getElementById(event.target.id.slice(0,-4) + "_cnt");
                 let btn = document.getElementById(event.target.id.slice(0,-4) + "_btn");
-
+                
                 if (event.target.id.slice(0,-4) === "achieve") {
                     heights = String(80 * achieveCount + 40);
+                    for (let i = 1; i <= Math.min(achieveCount, 10); i++) {
+                        const btnId = i < 10 ? `edit_btn_0${i}` : `edit_btn_${i}`;
+                        document.getElementById(btnId).classList.remove("none_active");
+                    }
+                    document.getElementById("add_btn").classList.remove("none_active");
                 } else if (event.target.id.slice(0,-4) === "vision") {
                     heights = String(80 * visionCount + 40);
+                    document.getElementById("edit_btn_99").classList.remove("none_active");
                 };
 
                 if (cnt.classList.contains("is_active")) {
                     cnt.classList.remove("is_active");
                     btn.classList.remove("is_active");
                     cnt.style.height = "0px";
+                    if (event.target.id.slice(0,-4) === "achieve") {
+                        for (let i = 1; i <= Math.min(achieveCount, 10); i++) {
+                            const btnId = i < 10 ? `edit_btn_0${i}` : `edit_btn_${i}`;
+                            document.getElementById(btnId).classList.add("none_active");
+                        }
+                        document.getElementById("add_btn").classList.add("none_active");
+                    } else if (event.target.id.slice(0,-4) === "vision") {
+                        document.getElementById("edit_btn_99").classList.add("none_active");
+                    };
                 } else {
                     cnt.classList.add("is_active");
                     btn.classList.add("is_active");
@@ -893,7 +923,7 @@
                 editTarget.innerHTML = modalTextArea.value
             };
 
-            function openAccordion() {
+            async function openAccordion() {
                 let txts_btn_01 = document.getElementById("achieve_btn");
                 let txts_content_01 = document.getElementById("achieve_cnt");
                 let txts_cnt_01 = achieveCount;
@@ -908,6 +938,13 @@
                     txts_btn_02.classList.add("is_active");
                     txts_content_02.classList.add("is_active");
                     txts_content_02.style.height = String(80 * txts_cnt_02 + 40)+"px";
+                    await new Promise(resolve => setTimeout(resolve, 1000));
+                    for (let i = 1; i <= Math.min(achieveCount, 10); i++) {
+                        const btnId = i < 10 ? `edit_btn_0${i}` : `edit_btn_${i}`;
+                        document.getElementById(btnId).classList.remove("none_active");
+                    }
+                    document.getElementById("add_btn").classList.remove("none_active");
+                    document.getElementById("edit_btn_99").classList.remove("none_active");
                     cntOpen += 1
                 } else {
                     txts_btn_01.classList.remove("is_active");
@@ -916,6 +953,13 @@
                     txts_btn_02.classList.remove("is_active");
                     txts_content_02.classList.remove("is_active");
                     txts_content_02.style.height = "0px";
+                    // await new Promise(resolve => setTimeout(resolve, 1000));
+                    for (let i = 1; i <= Math.min(achieveCount, 10); i++) {
+                            const btnId = i < 10 ? `edit_btn_0${i}` : `edit_btn_${i}`;
+                            document.getElementById(btnId).classList.add("none_active");
+                        }
+                    document.getElementById("add_btn").classList.add("none_active");
+                    document.getElementById("edit_btn_99").classList.add("none_active");
                     cntOpen += 1
                 }
             };
