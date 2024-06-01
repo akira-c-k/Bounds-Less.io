@@ -254,69 +254,65 @@
                 height: 40px;
                 justify-content: center;
             }
-            main .smr_btn_b {
+            .smr_btn_b {
                 display: inline-block;
                 position: relative;
                 top: -40%;
                 left: 1%;
-                &:before, &:after {
-                    content: "";
-                    background-color: rgba(0,0,0,1);
-                    border-radius: 10px;
-                    width: 18px;
-                    height: 4px;
-                    position: absolute;
-                    top: 7px;
-                    left: 0;
-                }
-                &:before {  
-                    transition: height 2.0s;
-                    width: 4px;
-                    height: 18px;
-                    top: 0;
-                    left: 7px;
-                }
-                &.is_active {
-                    &:before {
-                        transition: height 2.0s;
-                        width: 4px;
-                        height: 0px;
-                        top: 0;
-                        left: 7px;
-                    }
-                }
             }
-            main .smr_btn_w {
+            .smr_btn_b:before, .smr_btn_b:after {
+                content: "";
+                background-color: rgba(0,0,0,1);
+                border-radius: 10px;
+                width: 18px;
+                height: 4px;
+                position: absolute;
+                top: 7px;
+                left: 0;
+            }
+            .smr_btn_b:before {  
+                transition: height 2.0s;
+                width: 4px;
+                height: 18px;
+                top: 0;
+                left: 7px;
+            }
+            .smr_btn_b.is_active:before {
+                transition: height 2.0s;
+                width: 4px;
+                height: 0px;
+                top: 0;
+                left: 7px;
+            }
+            .smr_btn_w {
                 display: inline-block;
                 position: relative;
                 top: -40%;
                 left: 1%;
-                &:before, &:after {
-                    content: "";
-                    background-color: rgba(255,255,255,1);
-                    border-radius: 10px;
-                    width: 18px;
-                    height: 4px;
-                    position: absolute;
-                    top: 7px;
-                    left: 0;
-                }
-                &:before {  
-                    transition: height 2.0s;
-                    width: 4px;
-                    height: 18px;
-                    top: 0;
-                    left: 7px;
-                }
-                &.is_active {
-                    &:before {
-                        transition: height 2.0s;
-                        width: 4px;
-                        height: 0px;
-                        top: 0;
-                        left: 7px;
-                    }
-                }
+            }
+            .smr_btn_w:before, .smr_btn_w:after {
+                content: "";
+                background-color: rgba(255,255,255,1);
+                border-radius: 10px;
+                width: 18px;
+                height: 4px;
+                position: absolute;
+                top: 7px;
+                left: 0;
+            }
+            .smr_btn_w:before {  
+                transition: height 2.0s;
+                width: 4px;
+                height: 18px;
+                top: 0;
+                left: 7px;
+            }
+            .smr_btn_w.is_active:before {
+                transition: height 2.0s;
+                width: 4px;
+                height: 0px;
+                top: 0;
+                left: 7px;
             }
             main .smr_txt {
                 display: inline-block;
