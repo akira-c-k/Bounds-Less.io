@@ -1,0 +1,1224 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <title>Bounds-Less</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /*-------------
+            ---   all   ---
+            -------------*/
+            html {
+                background-color: rgb(255,255,255);
+            }
+
+            /*--------------
+            ---   body   ---
+            --------------*/
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin: 0 auto;
+                padding: 0 auto;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                font-family: 'Times New Roman', serif;
+            }
+
+            /*---------------
+            ---   pulse   ---
+            ---------------*/
+            @keyframes pulse {
+                from {
+                    opacity: 1;
+                    transform: scale(1);
+                }
+                to {
+                    opacity: .25;
+                    transform: scale(.75);
+                }
+            }
+            .loading {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: rgba(255,255,255,0.8);
+                z-index: 1000;
+            }
+            .pulse_container {
+                width: 120px;
+                display: flex;
+                margin: 0 auto;
+                justify-content: space-between;
+                align-items: center;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+            .pulse_bubble {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                background-color: rgba(85,170,255,1);
+            }
+            .pulse_bubble_00 {
+                animation: pulse .4s ease 0s infinite alternate;
+            }
+            .pulse_bubble_01 {
+                animation: pulse .4s ease .2s infinite alternate;
+            }
+            .pulse_bubble_02 {
+                animation: pulse .4s ease .4s infinite alternate;
+            }
+
+            /*----------------
+            ---   header   ---
+            -----------------*/
+            header {
+                position: fixed;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 10%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                background-color: rgb(85,85,85);
+                justify-content: space-between;
+                z-index: 999;
+            }
+            header .logo_img {
+                margin-left: 10px;
+                max-height: 80%;
+            }
+            header .right {
+                display: flex;
+                margin-left: auto;
+            }
+            header .question_icon {                
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                justify-content: center;
+                margin: 0px 10px;
+            }
+            header .hamburger_icon {
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                color: rgb(255,255,255);
+                font-size: 30px;
+                margin: 0px 10px;
+            }
+            header .modal_container {
+                display: none;
+                position: fixed;
+                top: 50px;
+                right: 50px;
+                width: 260px;
+                height: 150px;
+                background: rgba(0, 0, 0, 0.5);
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            }
+            header .modal {
+                display: flex;
+                flex-direction: column;
+                background-color: rgb(255,255,255);
+                width: 220px;
+                height: 120px;
+                padding: 5px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                align-items: center;
+            }
+            header .transition {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 80%;
+                height: 30%;
+                margin: 3%;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            header .transition:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: '';
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*--------------
+            ---   main   ---
+            ---------------*/
+            main {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(255,255,255);
+            }
+
+            /*-----------------------
+            ---   main: support   ---
+            -----------------------*/
+            main .support {
+                position: fixed;
+                top: 12%;
+                left: 20%;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            main .msg {
+                display: block;
+                margin-right: 20px;
+            }
+            main .all_btn {
+                width: 120px;
+                height: 20px;
+                font-size: 10px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .all_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .all_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .all_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*-------------------------
+            ---   main: accordion   ---
+            -------------------------*/
+            main .tbl {
+                position: fixed;
+                top: 15%;
+                left: 20%;
+                width: 60%;
+                height: 600px;
+                overflow: scroll;
+            }
+            main .smr_02 {
+                background-color: rgba(170,255,170,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_05 {
+                background-color: rgba(85,170,85,1);
+                color: rgba(0,0,0,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_08 {
+                background-color: rgba(15,85,15,1);
+                color: rgba(255,255,255,1);
+                height: 40px;
+                justify-content: center;
+            }
+            main .smr_btn_b {
+                display: inline-block;
+                position: relative;
+                top: -40%;
+                left: 1%;
+            }
+            main .smr_btn_b:before, .smr_btn_b:after {
+                content: "";
+                background-color: rgba(0,0,0,1);
+                border-radius: 10px;
+                width: 18px;
+                height: 4px;
+                position: absolute;
+                top: 7px;
+                left: 0;
+            }
+            main .smr_btn_b:before {  
+                transition: height 2.0s;
+                width: 4px;
+                height: 18px;
+                top: 0;
+                left: 7px;
+            }
+            main .smr_btn_b.is_active:before {
+                transition: height 2.0s;
+                width: 4px;
+                height: 0px;
+                top: 0;
+                left: 7px;
+            }
+            main .smr_btn_w {
+                display: inline-block;
+                position: relative;
+                top: -40%;
+                left: 1%;
+            }
+            main .smr_btn_w:before, .smr_btn_w:after {
+                content: "";
+                background-color: rgba(255,255,255,1);
+                border-radius: 10px;
+                width: 18px;
+                height: 4px;
+                position: absolute;
+                top: 7px;
+                left: 0;
+            }
+            main .smr_btn_w:before {  
+                transition: height 2.0s;
+                width: 4px;
+                height: 18px;
+                top: 0;
+                left: 7px;
+            }
+            main .smr_btn_w.is_active:before {
+                transition: height 2.0s;
+                width: 4px;
+                height: 0px;
+                top: 0;
+                left: 7px;
+            }
+            main .smr_txt {
+                display: inline-block;
+                margin-top: 10px;
+                margin-left: 40px;
+            }
+            main .rows {
+                /*--- transition setting ---*/
+                transition: height 2s;
+                height: 0px;
+                overflow: hidden;
+                /*--- other setting ---*/
+                color: rgba(0,0,0,1);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+            }
+            main .rows .is_active {
+                /*--- transition setting ---*/
+                transition: height 2s;
+                height: 80px;
+                overflow: hidden;
+            }
+            main .oddColor {
+                width: 100%;
+                height: 100%;
+                background-color: rgba(240,240,240,0.15);
+            }
+            main .evenColor {
+                width: 100%;
+                height: 100%;
+                background-color: rgba(240,240,240,0.85);
+            }
+            main .row {
+                width: 100%;
+                height: 50px;
+                padding: 0px;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            main .left_part {
+                width: 25%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            main .center_part {
+                width: 60%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            main .upper_side {
+                width: 100%;
+                margin-top: 2px;
+            }
+            main .lower_side {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                padding-left: 3px;
+                margin: 6px auto 0px auto;
+                font-size: 10px;
+                color: rgba(85,85,85,1);
+            }
+            main .right_part {
+                width: 15%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+
+            /*-------------------
+            ---   main: rng   ---
+            -------------------*/
+            main .rng {
+                width: 100%;
+                -webkit-appearance: none;
+                appearance: none;
+            }
+            main .rng:focus {
+                outline: none;
+            }
+            main .rng::-webkit-slider-runnable-track {
+                width: 100%;
+                height: 1px;
+                cursor: pointer;
+                box-shadow: none;
+                background: rgb(0,0,0);
+                border-radius: 0px;
+                border: 0px solid rgb(0,0,0);
+            }
+            main .rng::-moz-range-track {
+                width: 100%;
+                height: 1px;
+                cursor: pointer;
+                box-shadow: none;
+                background: rgb(0,0,0);
+                border-radius: 0px;
+                border: 0px solid rgb(0,0,0);
+            }
+            main .rng::-webkit-slider-thumb {
+                -webkit-appearance: none;
+                appearance: none;
+                box-shadow: none;
+                border: 0px solid rgb(80,80,80);
+                box-shadow: 0px 10px 10px rgba(80,80,80,0.25);
+                height: 18px;
+                width: 8px;
+                border-radius: 22px;
+                background: rgb(80,80,80);
+                cursor: pointer;
+                margin-top: -10px;
+            }
+            main .rng::-moz-range-thumb{
+                box-shadow: none;
+                border: 0px solid rgb(0,0,0);
+                box-shadow: 0px 10px 10px rgba(0,0,0,0.25);
+                height: 18px;
+                width: 8px;
+                border-radius: 22px;
+                background: rgba(0,0,0,1);
+                cursor: pointer;
+                -webkit-appearance: none;
+                appearance: none; /* Standard property for compatibility */
+                margin-top: -20px;
+            }
+            main .rng::-moz-focus-outer {
+                border: 0;
+            }
+            main .val {
+                font-weight: bold;
+                color: rgb(0,0,0);
+                font-size: 14px;
+            }
+
+            /*-------------------
+            ---   main: btn   ---
+            -------------------*/
+            main .next {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+            }
+            main .find_btn {
+                position: fixed;
+                top: 90%;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            main .find_btn:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: "";
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .find_btn:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .find_btn:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*----------------
+            ---   footer   ---
+            -----------------*/
+            footer {
+                position: fixed;
+                top: 95%;
+                left: 0%;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 5%;
+                background-color: rgba(0,0,0,0.15);
+            }
+            footer .footer_link {
+                width: 100%;
+                height: 100%;
+                background-image: url("media/logout.png");
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: -1%;
+            }
+            footer .footer_tips {
+                display: none;
+            }
+            footer .footer_link:hover + .footer_tips {
+                display: block;
+                position: absolute;
+                background-color: rgb(242,242,242);
+                border: 1px solid rgb(255,255,255);
+                color: rgb(97,64,57);
+                padding: 5px;
+                margin-bottom: 80px;
+                margin-right: 0px;
+                z-index: 1;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!---------------
+        ---   pulse   ---
+        ---------------->
+        <div class="loading" id="loading" style="display: none;">
+            <div class="spinner_box">
+                <div class="pulse_container">  
+                    <div class="pulse_bubble pulse_bubble_00"></div>
+                    <div class="pulse_bubble pulse_bubble_01"></div>
+                    <div class="pulse_bubble pulse_bubble_02"></div>
+                </div>
+            </div>
+        </div>
+
+        <!----------------
+        ---   header   ---
+        ----------------->
+        <header>
+            <img class="logo_img" src="media/logo.svg" id="logo_img">
+            <div class="right">
+                <div class="question_icon" id="question_icon"><img src="media/question.png" width="40px" height="40px"></div>
+                <div class="hamburger_icon" id="hamburger_icon">&#9776;</div>
+                <div class="modal_container" id="modal_container">
+                    <div class="modal" id="modal">
+                        <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
+                        <button class="transition_02 transition" id="transition_02" value="02">検索</button>
+                        <button class="transition_03 transition" id="transition_03" value="03" disabled>チャット</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!--------------
+        ---   main   ---
+        --------------->
+        <main>
+            <div class="support">
+                <div class="msg" id="msg"></div>
+                <button class="all_btn" id="all_btn" onclick="openAccordion()">全て開く／閉じる</button>
+            </div>
+
+            <!-------------------
+            ---   main: tbl   ---
+            -------------------->
+            <div class="tbl">
+                <div id="portableSkill">
+                    <div class="smr_02" id="portableSkill_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="portableSkill_btn"></span>
+                        <span class="smr_txt" id="portableSkill_txt">ポータブルスキル</span>
+                    </div>
+                    <div class="rows" id="portableSkill_cnt">
+                        <div class="row oddColor" id="portableSkill_01">
+                            <div class="left_part"><p>現状の把握</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row1" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row1"></p>
+                            </div>
+                        </div>
+                        <div class="row evenColor" id="portableSkill_02">
+                            <div class="left_part"><p>課題の設定</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row2" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row2"></p>
+                            </div>
+                        </div>
+                        <div class="row oddColor" id="portableSkill_03">
+                            <div class="left_part"><p>計画の立案</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row3" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row3"></p>
+                            </div>
+                        </div>
+                        <div class="row evenColor" id="portableSkill_04">
+                            <div class="left_part"><p>課題の遂行</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row4" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row4"></p>
+                            </div>
+                        </div>
+                        <div class="row oddColor" id="portableSkill_05">
+                            <div class="left_part"><p>状況への対応</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row5" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row5"></p>
+                            </div>
+                        </div>
+                        <div class="row evenColor" id="portableSkill_06">
+                            <div class="left_part"><p>社内対応</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row6" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row6"></p>
+                            </div>
+                        </div>
+                        <div class="row oddColor" id="portableSkill_07">
+                            <div class="left_part"><p>社外対応</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row7" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row7"></p>
+                            </div>
+                        </div>
+                        <div class="row evenColor" id="portableSkill_08">
+                            <div class="left_part"><p>上司対応</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row8" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row8"></p>
+                            </div>
+                        </div>
+                        <div class="row oddColor" id="portableSkill_09">
+                            <div class="left_part"><p>部下マネジメント</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row9" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row9"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="function">
+                    <div class="smr_05" id="function_smr" onclick="accordionAction()">
+                        <span class="smr_btn_b" id="function_btn"></span>
+                        <span class="smr_txt" id="function_txt">職能</span>
+                    </div>
+                    <div class="rows" id="function_cnt">
+                        <div class="row oddColor" id="function_01">
+                            <div class="left_part"><p>営業</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row10" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row10"></p>
+                            </div>
+                        </div>
+                        <div class="row evenColor" id="function_02">
+                            <div class="left_part"><p>販売・サービス</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row11" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row11"></p>
+                            </div>
+                        </div>
+                        <div class="row oddColor" id="function_03">
+                            <div class="left_part"><p>経営企画</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row12" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row12"></p>
+                            </div>
+                        </div>
+                        <div class="row evenColor" id="function_04">
+                            <div class="left_part"><p>財務</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row13" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row13"></p>
+                            </div>
+                        </div>
+                        <div class="row oddColor" id="function_05">
+                            <div class="left_part"><p>経理</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row14" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row14"></p>
+                            </div>
+                        </div>
+                        <div class="row evenColor" id="function_06">
+                            <div class="left_part"><p>人事・労務・総務</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row15" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row15"></p>
+                            </div>
+                        </div>
+                        <div class="row oddColor" id="function_07">
+                            <div class="left_part"><p>知財・特許</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row16" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row16"></p>
+                            </div>
+                        </div>
+                        <div class="row evenColor" id="function_08">
+                            <div class="left_part"><p>法務</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row17" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row17"></p>
+                            </div>
+                        </div>
+                        <div class="row oddColor" id="function_09">
+                            <div class="left_part"><p>広報・マーケティング</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row18" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row18"></p>
+                            </div>
+                        </div>
+                        <div class="row evenColor" id="function_10">
+                            <div class="left_part"><p>ドメイン知識</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row19" min="0" max="3" value="0" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>0</span><span>3</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row19"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="vision">
+                    <div class="smr_08" id="vision_smr" onclick="accordionAction()">
+                        <span class="smr_btn_w" id="vision_btn"></span>
+                        <span class="smr_txt" id="vision_txt">ビジョン</span>
+                    </div>
+                    <div class="rows" id="vision_cnt">
+                        <div class="row oddColor" id="vision_01">
+                            <div class="left_part"><p>類似度</p></div>
+                            <div class="center_part">
+                                <div class="upper_side">
+                                    <input type="range" class="rng" id="rng_row20" min="1" max="10" value="8" oninput="updateScore()">
+                                </div>
+                                <div class="lower_side">
+                                    <span>1</span><span>5</span>
+                                </div>    
+                            </div>
+                            <div class="right_part">
+                                <p class="val" id="val_row20"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <!-------------------
+            ---   main: tbl   ---
+            -------------------->
+
+            <div class="next">
+                <button class="find_btn" id="find_btn"">検索実行</button>
+                <span class="find_tips" id="find_tips"></span>
+            </div>
+        </main>
+
+        <footer>
+            <a href="login.html" class="footer_link"></a>
+            <span class="footer_tips">ログアウト</span>
+        </footer>
+
+        <script>
+            ///////////////////
+            //   variables   //
+            ///////////////////
+            const api_gateway_se = "https://hu1440uej5.execute-api.us-east-1.amazonaws.com/boundsless_se" // startExectuion
+            const api_gateway_de = "https://77zbraub9k.execute-api.us-east-1.amazonaws.com/boundsless_de" // descriveExectuion
+            const userid = sessionStorage.getItem("userid");
+            const name = sessionStorage.getItem("name");
+            const viewid = sessionStorage.getItem("viewid");
+            const viewname = sessionStorage.getItem("viewname");
+            const question_icon = document.getElementById("question_icon");
+            const question_modal_container = document.getElementById("question_modal_container");
+            const question_close = document.getElementById("question_close");
+            const hamburger_icon = document.getElementById("hamburger_icon");
+            const modal_container = document.getElementById("modal_container");
+            const next_btn = document.getElementById("next_btn");
+            const next_tips = document.getElementById("next_tips");
+            const transition_01 = document.getElementById("transition_01");
+            const transition_02 = document.getElementById("transition_02");
+            const transition_03 = document.getElementById("transition_03");
+
+            let portableSkillCount = 9;
+            let functionCount = 10;
+            let visionCount = 1;
+            let cntOpen = 0;
+
+            ///////////////////
+            //   functions   //
+            ///////////////////
+            function showLoading() {
+                document.getElementById("loading").style.display = "block";
+            };
+            function hideLoading() {
+                document.getElementById("loading").style.display = "none";
+            };
+
+            document.addEventListener("DOMContentLoaded", function() {
+                if (sessionStorage.getItem("msg") === "この条件では検索できません。緩和した条件を設定してください。") {
+                    document.getElementById("msg").innerHTML = sessionStorage.getItem("msg")
+                } else {
+                    document.getElementById("msg").innerHTML = "特定のポータブルスキルや職能を保有する人数、ビジョン類似度を設定できます";
+                };
+                updateScore();
+            });
+
+            function openAccordion() {
+                if (cntOpen % 2 === 0) {
+                    document.getElementById("portableSkill_cnt").classList.add("is_active");
+                    document.getElementById("portableSkill_btn").classList.add("is_active");
+                    document.getElementById("portableSkill_cnt").style.height = String(50 * portableSkillCount) + "px";
+                    document.getElementById("function_cnt").classList.add("is_active");
+                    document.getElementById("function_btn").classList.add("is_active");
+                    document.getElementById("function_cnt").style.height = String(50 * functionCount) + "px";
+                    document.getElementById("vision_cnt").classList.add("is_active");
+                    document.getElementById("vision_btn").classList.add("is_active");
+                    document.getElementById("vision_cnt").style.height = String(50 * visionCount) + "px";
+                    cntOpen += 1
+                } else {
+                    document.getElementById("portableSkill_cnt").classList.remove("is_active");
+                    document.getElementById("portableSkill_btn").classList.remove("is_active");
+                    document.getElementById("portableSkill_cnt").style.height = 0 + "px";
+                    document.getElementById("function_cnt").classList.remove("is_active");
+                    document.getElementById("function_btn").classList.remove("is_active");
+                    document.getElementById("function_cnt").style.height = 0 + "px";
+                    document.getElementById("vision_cnt").classList.remove("is_active");
+                    document.getElementById("vision_btn").classList.remove("is_active");
+                    document.getElementById("vision_cnt").style.height = 0 + "px";
+                    cntOpen += 1
+                }
+            };
+
+            async function accordionAction() {
+                let cnt = document.getElementById(event.target.id.slice(0,-4) + "_cnt");
+                let btn = document.getElementById(event.target.id.slice(0,-4) + "_btn");
+                
+                if (event.target.id.slice(0,-4) === "portableSkill") {
+                    heights = String(50 * portableSkillCount);
+                } else if (event.target.id.slice(0,-4) === "function") {
+                    heights = String(50 * functionCount);
+                } else if (event.target.id.slice(0,-4) === "vision") {
+                    heights = String(50 * visionCount);
+                };
+
+                if (cnt.classList.contains("is_active")) {
+                    cnt.classList.remove("is_active");
+                    btn.classList.remove("is_active");
+                    cnt.style.height = "0px";
+                } else {
+                    cnt.classList.add("is_active");
+                    btn.classList.add("is_active");
+                    cnt.style.height = heights + "px";
+                };
+            };
+
+            function updateScore() {
+                portableskill_understand = Number(document.getElementById("rng_row1").value);
+                portableskill_issue = Number(document.getElementById("rng_row2").value);
+                portableskill_plan = Number(document.getElementById("rng_row3").value);
+                portableskill_do = Number(document.getElementById("rng_row4").value);
+                portableskill_response = Number(document.getElementById("rng_row5").value);
+                portableskill_in = Number(document.getElementById("rng_row6").value);
+                portableskill_out = Number(document.getElementById("rng_row7").value);
+                portableskill_senior = Number(document.getElementById("rng_row8").value);
+                portableskill_junior = Number(document.getElementById("rng_row9").value);
+                val_row1.textContent = String(portableskill_understand) + "名以上";
+                document.getElementById("rng_row1").setAttribute("value", portableskill_understand);
+                val_row2.textContent = String(portableskill_issue) + "名以上";
+                document.getElementById("rng_row2").setAttribute("value", portableskill_issue);
+                val_row3.textContent = String(portableskill_plan) + "名以上";
+                document.getElementById("rng_row3").setAttribute("value", portableskill_plan);
+                val_row4.textContent = String(portableskill_do) + "名以上";
+                document.getElementById("rng_row4").setAttribute("value", portableskill_do);
+                val_row5.textContent = String(portableskill_response) + "名以上";
+                document.getElementById("rng_row5").setAttribute("value", portableskill_response);
+                val_row6.textContent = String(portableskill_in) + "名以上";
+                document.getElementById("rng_row6").setAttribute("value", portableskill_in);
+                val_row7.textContent = String(portableskill_out) + "名以上";
+                document.getElementById("rng_row7").setAttribute("value", portableskill_out);
+                val_row8.textContent = String(portableskill_senior) + "名以上";
+                document.getElementById("rng_row8").setAttribute("value", portableskill_senior);
+                val_row9.textContent = String(portableskill_junior) + "名以上";
+                document.getElementById("rng_row9").setAttribute("value", portableskill_junior);
+
+                function_sales = Number(document.getElementById("rng_row10").value);
+                function_service = Number(document.getElementById("rng_row11").value);
+                function_plan = Number(document.getElementById("rng_row12").value);
+                function_finance = Number(document.getElementById("rng_row13").value);
+                function_accounting = Number(document.getElementById("rng_row14").value);
+                function_ow = Number(document.getElementById("rng_row15").value);
+                function_ip = Number(document.getElementById("rng_row16").value);
+                function_law = Number(document.getElementById("rng_row17").value);
+                function_marketing = Number(document.getElementById("rng_row18").value);
+                function_ex = Number(document.getElementById("rng_row19").value);
+                val_row10.textContent = String(function_sales) + "名以上";
+                document.getElementById("rng_row10").setAttribute("value", function_sales);
+                val_row11.textContent = String(function_service) + "名以上";
+                document.getElementById("rng_row11").setAttribute("value", function_service);
+                val_row12.textContent = String(function_plan) + "名以上";
+                document.getElementById("rng_row12").setAttribute("value", function_plan);
+                val_row13.textContent = String(function_finance) + "名以上";
+                document.getElementById("rng_row13").setAttribute("value", function_finance);
+                val_row14.textContent = String(function_accounting) + "名以上";
+                document.getElementById("rng_row14").setAttribute("value", function_accounting);
+                val_row15.textContent = String(function_ow) + "名以上";
+                document.getElementById("rng_row15").setAttribute("value", function_ow);
+                val_row16.textContent = String(function_ip) + "名以上";
+                document.getElementById("rng_row16").setAttribute("value", function_ip);
+                val_row17.textContent = String(function_law) + "名以上";
+                document.getElementById("rng_row17").setAttribute("value", function_law);
+                val_row18.textContent = String(function_marketing) + "名以上";
+                document.getElementById("rng_row18").setAttribute("value", function_marketing);
+                val_row19.textContent = String(function_ex) + "名以上";
+                document.getElementById("rng_row19").setAttribute("value", function_ex);
+
+                vision_similarity = Number(document.getElementById("rng_row20").value)/2;
+                val_row20.textContent = "★" + String(vision_similarity) + "以上";
+                document.getElementById("rng_row20").setAttribute("value", vision_similarity*2);
+            };
+
+            function describeExecution(timestamp) {
+                let deData = {
+                    "task": "login",
+                    "timestamp": timestamp,
+                    "userid": userid,
+                    "name": name
+                };
+                fetch(api_gateway_de, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(deData),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log("API Response to api_gateway_de:", result);
+                    if (result === "RUNNING") {
+                        setTimeout(() => {
+                            describeExecution(timestamp);
+                        }, 5000);
+                    } else {
+                        let getData = result;
+                        console.log("getData ===>");
+                        sessionStorage.setItem("userid", getData.userid);
+                        sessionStorage.setItem("name", getData.name);
+                        sessionStorage.setItem("viewid_00", getData.viewid_00);
+                        sessionStorage.setItem("viewid_01", getData.viewid_01);
+                        sessionStorage.setItem("viewid_02", getData.viewid_02);
+                        sessionStorage.setItem("name_00", getData.name_00);
+                        sessionStorage.setItem("name_01", getData.name_01);
+                        sessionStorage.setItem("name_02", getData.name_02);
+                        sessionStorage.setItem("similarity_label_00", getData.similarity_label_00);
+                        sessionStorage.setItem("similarity_label_01", getData.similarity_label_01);
+                        sessionStorage.setItem("similarity_label_02", getData.similarity_label_02);
+                        sessionStorage.setItem("firstPortableSkill_00", getData.firstPortableSkill_00);
+                        sessionStorage.setItem("firstPortableSkill_01", getData.firstPortableSkill_01);
+                        sessionStorage.setItem("firstPortableSkill_02", getData.firstPortableSkill_02);
+                        sessionStorage.setItem("secondPortableSkill_00", getData.secondPortableSkill_00);
+                        sessionStorage.setItem("secondPortableSkill_01", getData.secondPortableSkill_01);
+                        sessionStorage.setItem("secondPortableSkill_02", getData.secondPortableSkill_02);
+                        sessionStorage.setItem("thirdPortableSkill_00", getData.thirdPortableSkill_00);
+                        sessionStorage.setItem("thirdPortableSkill_01", getData.thirdPortableSkill_01);
+                        sessionStorage.setItem("thirdPortableSkill_02", getData.thirdPortableSkill_02);
+                        sessionStorage.setItem("firstFunction_00", getData.firstFunction_00);
+                        sessionStorage.setItem("firstFunction_01", getData.firstFunction_01);
+                        sessionStorage.setItem("firstFunction_02", getData.firstFunction_02);
+                        console.log("Success!!");
+                        hideLoading();
+                        if (getData.status === "Infeasible") {
+                            sessionStorage.setItem("msg", "この条件では検索できません。緩和した条件を設定してください。");
+                            window.location.href = "find.html"
+                        } else {
+                            window.location.href = "index.html"
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error("API Error to api_gateway_de:", error);
+                })
+            };
+
+            document.getElementById("find_btn").addEventListener("click", () => {
+                let now = new Date();
+                let year = now.getFullYear();
+                let month = ("0" + (now.getMonth() + 1)).slice(-2);
+                let day = ("0" + now.getDate()).slice(-2);
+                let hours = ("0" + now.getHours()).slice(-2);
+                let minutes = ("0" + now.getMinutes()).slice(-2);
+                let seconds = ("0" + now.getSeconds()).slice(-2);
+                let timestamp = year + month + day + hours + minutes + seconds;
+                let seData = {
+                    "task": "login",
+                    "userid": userid,
+                    "name": name,
+                    "ui_portableskill_understand": Number(document.getElementById("rng_row1").value),
+                    "ui_portableskill_issue": Number(document.getElementById("rng_row2").value),
+                    "ui_portableskill_plan": Number(document.getElementById("rng_row3").value),
+                    "ui_portableskill_do": Number(document.getElementById("rng_row4").value),
+                    "ui_portableskill_response": Number(document.getElementById("rng_row5").value),
+                    "ui_portableskill_in": Number(document.getElementById("rng_row6").value),
+                    "ui_portableskill_out": Number(document.getElementById("rng_row7").value),
+                    "ui_portableskill_senior": Number(document.getElementById("rng_row8").value),
+                    "ui_portableskill_junior": Number(document.getElementById("rng_row9").value),
+                    "ui_function_sales": Number(document.getElementById("rng_row10").value),
+                    "ui_function_service": Number(document.getElementById("rng_row11").value),
+                    "ui_function_plan": Number(document.getElementById("rng_row12").value),
+                    "ui_function_finance": Number(document.getElementById("rng_row13").value),
+                    "ui_function_accounting": Number(document.getElementById("rng_row14").value),
+                    "ui_function_ow": Number(document.getElementById("rng_row15").value),
+                    "ui_function_ip": Number(document.getElementById("rng_row16").value),
+                    "ui_function_law": Number(document.getElementById("rng_row17").value),
+                    "ui_function_marketing": Number(document.getElementById("rng_row18").value),
+                    "ui_function_ex": Number(document.getElementById("rng_row19").value),
+                    "similarity_level": Number(document.getElementById("rng_row20").value)
+                };
+                console.log({
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(seData),
+                });
+                showLoading();
+                fetch(api_gateway_se, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(seData),
+                })
+                .then(response => response.json())
+                .then(result => {
+                    console.log("API Response to api_gateway_se:", result);
+                    if (result === "START") {
+                        describeExecution(timestamp);
+                    }
+                })
+                .catch(error => {
+                    console.error("API Error to api_gateway_se:", error);
+                });
+            });
+
+            hamburger_icon.addEventListener("click", () => {
+                if (hamburger_icon.innerHTML === "×" | hamburger_icon.innerHTML === "&times;") {
+                    modal_container.style.display = "none";
+                    hamburger_icon.innerHTML = "&#9776;";
+                } else {
+                    modal_container.style.display = "flex";
+                    hamburger_icon.innerHTML = "&times;";
+                };
+            });
+            
+            question_icon.addEventListener("click", () => {
+                window.location.href = "qa_ps_find.html";
+            });
+
+            transition_01.addEventListener("click", function() {
+                window.location.href = "index.html";
+            });
+
+            transition_02.addEventListener("click", function() {
+                window.location.href = "find.html";
+            });
+
+            transition_03.addEventListener("click", function() {
+                window.location.href = "index.html"; // have to change
+            });
+        </script>
+    </body>
+</html>

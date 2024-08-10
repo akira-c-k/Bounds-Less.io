@@ -417,7 +417,7 @@
             <div class="modal_container" id="modal_container">
                 <div class="modal" id="modal">
                     <button class="transition_01 transition" id="transition_01" value="01">マイページの更新</button>
-                    <button class="transition_02 transition" id="transition_02" value="02" disabled>検索</button>
+                    <button class="transition_02 transition" id="transition_02" value="02">検索</button>
                     <button class="transition_03 transition" id="transition_03" value="03" disabled>チャット</button>
                 </div>
             </div>
@@ -1235,6 +1235,15 @@
                 console.error("API Error to api_gateway:", error);
             });
         });
+
+        transition_02.addEventListener("click", function() {
+            window.location.href = "find.html";
+        });
+
+        question_icon.addEventListener("click", () => {
+            window.location.href = "qa_ps_index.html";
+        });
+
 
     </script>
     

@@ -639,12 +639,12 @@
         <header>
             <img class="logo_img" src="media/logo.svg" id="logo_img">
             <div class="right">
-                <div class="question_icon" id="question_icon"><img src="media/question.png" width="40px" height="40px"></div>
+                <!-- <div class="question_icon" id="question_icon"><img src="media/question.png" width="40px" height="40px"></div> -->
                 <div class="hamburger_icon" id="hamburger_icon">&#9776;</div>
                 <div class="modal_container" id="modal_container">
                     <div class="modal" id="modal">
                         <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
-                        <button class="transition_02 transition" id="transition_02" value="02" disabled>検索</button>
+                        <button class="transition_02 transition" id="transition_02" value="02">検索</button>
                         <button class="transition_03 transition" id="transition_03" value="03" disabled>チャット</button>
                     </div>
                 </div>
@@ -1130,7 +1130,7 @@
             });
 
             transition_02.addEventListener("click", function() {
-                window.location.href = "index.html"; // have to change
+                window.location.href = "find.html";
             });
 
             transition_03.addEventListener("click", function() {

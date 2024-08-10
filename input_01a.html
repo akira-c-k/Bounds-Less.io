@@ -546,7 +546,7 @@
                 <div class="modal_container" id="modal_container">
                     <div class="modal" id="modal">
                         <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
-                        <button class="transition_02 transition" id="transition_02" value="02" disabled>検索</button>
+                        <button class="transition_02 transition" id="transition_02" value="02">検索</button>
                         <button class="transition_03 transition" id="transition_03" value="03" disabled>チャット</button>
                     </div>
                 </div>
@@ -1027,16 +1027,16 @@
                 };
             });
             
-            // question_icon.addEventListener("click", () => {
-            //     window.location.href = "qa.html";
-            // });
+            question_icon.addEventListener("click", () => {
+                window.location.href = "qa_ps_input_01a.html";
+            });
 
             transition_01.addEventListener("click", function() {
                 window.location.href = "index.html";
             });
 
             transition_02.addEventListener("click", function() {
-                window.location.href = "index.html"; // have to change
+                window.location.href = "find.html";
             });
 
             transition_03.addEventListener("click", function() {

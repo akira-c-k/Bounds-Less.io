@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="ja">
+    <head>
+        <title>Bounds-Less</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            /*-------------
+            ---   all   ---
+            -------------*/
+            html {
+                background-color: rgb(255,255,255);
+            }
+
+            /*--------------
+            ---   body   ---
+            --------------*/
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                margin: 0 auto;
+                padding: 0 auto;
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                font-family: 'Times New Roman', serif;
+            }
+
+            /*----------------
+            ---   header   ---
+            -----------------*/
+            header {
+                position: fixed;
+                top: 0%;
+                left: 0%;
+                width: 100%;
+                height: 10%;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                background-color: rgb(85,85,85);
+                justify-content: space-between;
+                z-index: 999;
+            }
+            header .logo_img {
+                margin-left: 10px;
+                max-height: 80%;
+            }
+            header .right {
+                display: flex;
+                margin-left: auto;
+            }
+            header .hamburger_icon {
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                color: rgb(255,255,255);
+                font-size: 30px;
+                margin: 0px 10px;
+            }
+            header .modal_container {
+                display: none;
+                position: fixed;
+                top: 50px;
+                right: 50px;
+                width: 260px;
+                height: 150px;
+                background: rgba(0, 0, 0, 0.5);
+                align-items: center;
+                justify-content: center;
+                z-index: 1000;
+            }
+            header .modal {
+                display: flex;
+                flex-direction: column;
+                background-color: rgb(255,255,255);
+                width: 220px;
+                height: 120px;
+                padding: 5px;
+                border-radius: 5px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                align-items: center;
+            }
+            header .transition {
+                position: relative;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 80%;
+                height: 30%;
+                margin: 3%;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                cursor: pointer;
+            }
+            header .transition:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: '';
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            header .transition:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            /*--------------
+            ---   main   ---
+            ---------------*/
+            main {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgb(255,255,255);
+            }
+
+            /*------------------------
+            ---   main: carousel   ---
+            ------------------------*/
+            main .carousel_container {
+                position: fixed;
+                top: 12.5%;
+                left: 22%;
+                width: 56%;
+                height: 76%;
+                overflow: hidden;
+                margin: auto;
+            }
+            main .carousel {
+                display: flex;
+                transition: transform 0.5s ease;
+            }
+            main .carousel_item {
+                flex: 0 0 auto;
+                width: 100%;
+                height: 100%;
+            }
+            main .carousel_item img {
+                object-fit: fill;
+            }
+            main .carousel_controls {
+                position: fixed;
+                top: 88%;
+                text-align: center;
+                margin-top: 10px;
+            }
+            main .carousel_controls button {
+                width: 16px;
+                height: 16px;
+                margin: 8px;
+                border-radius: 50%;    
+                border: none;
+                background-color: black;
+            }
+
+            /*----------------
+            ---   footer   ---
+            -----------------*/
+            footer {
+                position: fixed;
+                top: 95%;
+                left: 0%;
+                display: flex;
+                align-items: center;
+                width: 100%;
+                height: 5%;
+                background-color: rgba(0,0,0,0.15);
+            }
+            footer .footer_link {
+                width: 100%;
+                height: 100%;
+                background-image: url("media/logout.png");
+                background-repeat: no-repeat;
+                background-size: contain;
+                background-position: -1%;
+            }
+            footer .footer_tips {
+                display: none;
+            }
+            footer .footer_link:hover + .footer_tips {
+                display: block;
+                position: absolute;
+                background-color: rgb(242,242,242);
+                border: 1px solid rgb(255,255,255);
+                color: rgb(97,64,57);
+                padding: 5px;
+                margin-bottom: 80px;
+                margin-right: 0px;
+                z-index: 1;
+            }
+        </style>
+    </head>
+    <body>
+
+        <!----------------
+        ---   header   ---
+        ----------------->
+        <header>
+            <img class="logo_img" src="media/logo.svg" id="logo_img">
+            <div class="right">
+                <div class="go_back_icon" id="go_back_icon"><img src="media/go_back.svg" width="40px" height="40px" style="margin-right: 20px;"></div>
+                <div class="hamburger_icon" id="hamburger_icon">&#9776;</div>
+                <div class="modal_container" id="modal_container">
+                    <div class="modal" id="modal">
+                        <button class="transition_01 transition" id="transition_01" value="01">トップページ</button>
+                        <button class="transition_02 transition" id="transition_02" value="02">検索</button>
+                        <button class="transition_03 transition" id="transition_03" value="03" disabled>チャット</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+
+        <main>
+            <div class="carousel_container">
+                <div class="carousel">
+                    <div class="carousel_item">
+                        <img src="media/portableSkills_01.svg" alt="Slide_01">
+                    </div>
+                    <div class="carousel_item">
+                        <img src="media/portableSkills_02.svg" alt="Slide_02">
+                    </div>
+                    <div class="carousel_item">
+                        <img src="media/portableSkills_03.svg" alt="Slide_03">
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel_controls">
+                <button onclick="prevSlide()"></button>
+                <button onclick="nextSlide()"></button>
+            </div>
+        </main>
+
+        <footer>
+            <a href="login.html" class="footer_link"></a>
+            <span class="footer_tips">ログアウト</span>
+        </footer>
+
+    </body>
+
+    <script>
+        const carousel = document.querySelector('.carousel');
+        const carouselItems = document.querySelectorAll('.carousel_item');
+        const totalItems = carouselItems.length;
+        let currentIndex = 0;
+        const hamburger_icon = document.getElementById("hamburger_icon");
+    
+        function showSlide(index) {
+            if (index < 0 || index >= totalItems) return;
+            const offset = -index * 100;
+            carousel.style.transform = `translateX(${offset}%)`;
+            currentIndex = index;
+        }
+    
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalItems;
+            showSlide(currentIndex);
+        }
+    
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+            showSlide(currentIndex);
+        }
+
+        hamburger_icon.addEventListener("click", () => {
+            if (hamburger_icon.innerHTML === "×" | hamburger_icon.innerHTML === "&times;") {
+                modal_container.style.display = "none";
+                hamburger_icon.innerHTML = "&#9776;";
+            } else {
+                modal_container.style.display = "flex";
+                hamburger_icon.innerHTML = "&times;";
+            };
+        });
+
+        go_back_icon.addEventListener("click", () => {
+            window.location.href = "view_01.html";
+        });
+
+        transition_01.addEventListener("click", function() {
+            window.location.href = "index.html";
+        });
+
+        transition_02.addEventListener("click", function() {
+            window.location.href = "find.html";
+        });
+
+    </script>
+    
+</html>
