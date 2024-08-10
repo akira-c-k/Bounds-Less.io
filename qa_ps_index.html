@@ -214,7 +214,7 @@
         <header>
             <img class="logo_img" src="media/logo.svg" id="logo_img">
             <div class="right">
-                <div class="ga_back_icon" id="ga_back_icon"><img src="media/ga_back.svg" width="40px" height="40px" style="margin-right: 20px;"></div>
+                <div class="go_back_icon" id="go_back_icon"><img src="media/go_back.svg" width="40px" height="40px" style="margin-right: 20px;"></div>
                 <div class="hamburger_icon" id="hamburger_icon">&#9776;</div>
                 <div class="modal_container" id="modal_container">
                     <div class="modal" id="modal">
@@ -278,7 +278,7 @@
             showSlide(currentIndex);
         }
 
-        go_back_icon.addEventListener("click", () => {
+        document.getElementById("go_back_icon").addEventListener("click", () => {
             window.location.href = "index.html";
         });
 
