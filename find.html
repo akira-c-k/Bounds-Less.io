@@ -104,7 +104,7 @@
                 display: flex;
                 margin-left: auto;
             }
-            header .question_icon {                
+            header .question_icon {
                 width: 50px;
                 height: 50px;
                 cursor: pointer;
@@ -466,6 +466,48 @@
                 font-size: 14px;
             }
 
+            /*---------------------
+            ---   main: modal   ---
+            ---------------------*/
+            main .modalArea {
+                display: none;
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                width: 800px;
+                height: 400px;
+                transform: translate(-50%, -50%);
+                background-color: rgba(0,0,0,0.7);
+                border: 1px solid rgba(0,0,0,0.7);
+                flex-direction: column;
+                align-items: center;
+                z-index: 2000;
+            }
+            main .modalMessage {
+                position: relative;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                font-size: 18px;
+                color: rgba(240,240,240,1);
+            }
+            main .modalBtn {
+                position: relative;
+                top: -9%;
+                left: 45%;
+                transform: translate(0%, -100%);
+                width: 40px;
+                height: 40px;
+                display: block;
+                background-color: rgba(0,0,0,0.0);
+                border: 0px solid rgba(0,0,0,0.0);
+                color: rgba(255,255,255,1);
+                font-size: 30px;
+                margin: auto;
+                cursor: pointer;
+            }
+
             /*-------------------
             ---   main: btn   ---
             -------------------*/
@@ -581,7 +623,7 @@
         --------------->
         <main>
             <div class="support">
-                <div class="msg" id="msg"></div>
+                <div class="msg" id="msg">特定のポータブルスキルや職能を保有する人数、ビジョン類似度を設定できます</div>
                 <button class="all_btn" id="all_btn" onclick="openAccordion()">全て開く／閉じる</button>
             </div>
 
@@ -901,6 +943,18 @@
             ---   main: tbl   ---
             -------------------->
 
+            <!---------------------
+            ---   main: modal   ---
+            ---------------------->
+            <div class="modalArea" id="modalArea">
+                <p class="modalMessage" id="modalMessage">この条件では検索できません。<br>緩和した条件を設定してください。</p>
+                <button class="modalBtn" id="modalBtn" onclick="closeAction(event)">&times;</button>
+            </div>    
+            <!---------------------
+            ---   main: modal   ---
+            ---------------------->
+
+
             <div class="next">
                 <button class="find_btn" id="find_btn"">検索実行</button>
                 <span class="find_tips" id="find_tips"></span>
@@ -927,8 +981,7 @@
             const question_close = document.getElementById("question_close");
             const hamburger_icon = document.getElementById("hamburger_icon");
             const modal_container = document.getElementById("modal_container");
-            const next_btn = document.getElementById("next_btn");
-            const next_tips = document.getElementById("next_tips");
+            const find_btn = document.getElementById("find_btn");
             const transition_01 = document.getElementById("transition_01");
             const transition_02 = document.getElementById("transition_02");
             const transition_03 = document.getElementById("transition_03");
@@ -949,13 +1002,17 @@
             };
 
             document.addEventListener("DOMContentLoaded", function() {
-                if (sessionStorage.getItem("msg") === "この条件では検索できません。緩和した条件を設定してください。") {
-                    document.getElementById("msg").innerHTML = sessionStorage.getItem("msg")
-                } else {
-                    document.getElementById("msg").innerHTML = "特定のポータブルスキルや職能を保有する人数、ビジョン類似度を設定できます";
+                if (sessionStorage.getItem("res") === "Infeasible") {
+                    modalArea.style.display = "block";
                 };
                 updateScore();
             });
+
+            function closeAction(event) {
+                let modalArea = document.getElementById("modalArea");
+                let modalMessageArea = document.getElementById("modalMessageArea");
+                modalArea.style.display = "none";
+            };
 
             function openAccordion() {
                 if (cntOpen % 2 === 0) {
@@ -1121,9 +1178,10 @@
                         console.log("Success!!");
                         hideLoading();
                         if (getData.status === "Infeasible") {
-                            sessionStorage.setItem("msg", "この条件では検索できません。緩和した条件を設定してください。");
+                            sessionStorage.setItem("res", "Infeasible");
                             window.location.href = "find.html"
                         } else {
+                            sessionStorage.setItem("res", "Optimal");
                             window.location.href = "index.html"
                         }
                     }
@@ -1133,7 +1191,7 @@
                 })
             };
 
-            document.getElementById("find_btn").addEventListener("click", () => {
+            find_btn.addEventListener("click", () => {
                 let now = new Date();
                 let year = now.getFullYear();
                 let month = ("0" + (now.getMonth() + 1)).slice(-2);
@@ -1144,6 +1202,7 @@
                 let timestamp = year + month + day + hours + minutes + seconds;
                 let seData = {
                     "task": "login",
+                    "timestamp": timestamp,
                     "userid": userid,
                     "name": name,
                     "ui_portableskill_understand": Number(document.getElementById("rng_row1").value),
