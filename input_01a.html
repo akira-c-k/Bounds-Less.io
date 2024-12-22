@@ -1,3 +1,4 @@
+<!-- モーダルをもう1枚作って、29点の説明を行う -->
 <!doctype html>
 <html lang="ja">
     <head>
@@ -14,9 +15,9 @@
 
             table {
                 position: fixed;
-                top: 15%;
-                left: 20%;
-                width: 60%;
+                top: 24%;
+                left: 27%;
+                width: 46%;
                 border-collapse: collapse;
                 border-spacing: 0;
             }
@@ -63,7 +64,7 @@
                 justify-content: center;
                 align-items: center;
                 background-color: rgba(255,255,255,0.8);
-                z-index: 1000;
+                z-index: 2000;
             }
             .pulse_container {
                 width: 120px;
@@ -210,33 +211,202 @@
                 left: 20%;
             }
 
+            /*---------------------
+            ---   main: score   ---
+            ---------------------*/
+            main .score {
+                position: fixed;
+                top: 12%;
+                right: 31.3%;
+                /* border: 1px solid rgba(90,90,90,1); */
+                width: 80px;
+                height: 80px;
+                border-radius: 10%;
+                display: none;
+                justify-content: center;
+                align-items: center;
+                background: radial-gradient(circle, rgba(130, 255, 130, 1), rgba(45, 170, 45, 1));
+                font-size: 30px;
+                font-weight: bold;
+                z-index: 1000;
+            }
+            main .minus {
+                display: inline-block;
+                padding: 5px 15px;
+                font-size: 20px;
+                font-weight: bold;
+                color: #fff;
+                background-color: rgba(15,65,15,1);
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+                transition: background-color 0.3s ease;
+            }
+            main .minus:hover {
+                background-color: rgba(15,65,15,0.85);
+            }
+            main .minus:active {
+                background-color: rgba(15,65,15,0.70);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+                transform: translateY(2px);
+            }
+            main .plus {
+                display: inline-block;
+                padding: 5px 15px;
+                font-size: 20px;
+                font-weight: bold;
+                color: #fff;
+                background-color: rgba(15,65,15,1);
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                text-align: center;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+                transition: background-color 0.3s ease;
+            }
+            main .plus:hover {
+                background-color: rgba(15,65,15,0.85);
+            }
+            main .plus:active {
+                background-color: rgba(15,65,15,0.70);
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+                transform: translateY(2px);
+            }
+
+            /*---------------------
+            ---   main: modal   ---
+            ---------------------*/
+            main .modalArea_00 {
+                position: fixed;
+                top: 10%;
+                width: 100%;
+                height: 90%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(0,0,0,0.7);
+                border: 1px solid rgba(0,0,0,0.7);
+                flex-direction: column;
+                z-index: 999;
+            }
+            main .modalOrder_00 {
+                position: fixed;
+                top: 13.2%;
+                /* left: 25%; */
+                color: rgba(255,255,255,1);
+                font-size: 17px;
+            }
+            main .modalBtn_00 {
+                position: fixed;
+                top: 90%;
+                display: block;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                margin: auto;
+                cursor: pointer;
+            }
+            main .modalBtn_00:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: '';
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .modalBtn_00:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .modalBtn_00:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
+            main .modalArea_01 {
+                position: fixed;
+                top: 10%;
+                width: 100%;
+                height: 90%;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                background-color: rgba(0,0,0,0.7);
+                border: 1px solid rgba(0,0,0,0.7);
+                flex-direction: column;
+                z-index: 999;
+            }
+            main .modalOrder_01 {
+                position: fixed;
+                top: 13.2%;
+                left: 25%;
+                color: rgba(255,255,255,1);
+                font-size: 17px;
+            }
+            main .modalBtn_01 {
+                position: fixed;
+                top: 90%;
+                display: block;
+                width: 120px;
+                height: 30px;
+                border: 2px solid rgba(0,0,0,1);
+                border-radius: 0;
+                background: rgba(255,255,255,1);
+                -webkit-transform-style: preserve-3d;
+                transform-style: preserve-3d;
+                margin: auto;
+                cursor: pointer;
+            }
+            main .modalBtn_01:before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 100%;
+                content: '';
+                -webkit-transition: all .3s;
+                transition: all .3s;
+                background: rgba(0,0,0,1);
+            }
+            main .modalBtn_01:hover {
+                color: rgba(255,255,255,1);
+                background: rgba(0,0,0,1);
+            }
+            main .modalBtn_01:hover:before {
+                background: rgba(255,255,255,1);
+            }
+
             /*-------------------
             ---   main: col   ---
             -------------------*/
-            main .hcol_1 {
-                width: 18%;
-            }
-            main .hcol_2 {
-                width: 38%;
-                margin: 0 auto;
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                justify-content: center;
-            }
-            main .hcol_3 {
-                width: 8%;
-                text-align: center;
+            main .hcol {
+                width: 100%;
             }
             main .col_1 {
-                width: 18%;
+                width: 70%;
                 text-align: center;
             }
             main .col_2 {
-                width: 38%;
+                width: 10%;
+                text-align: right;
             }
             main .col_3 {
-                width: 8%;
+                width: 10%;
+                text-align: center;
+            }
+            main .col_4 {
+                width: 10%;
+                text-align: left;
             }
 
             /*-------------------
@@ -246,157 +416,74 @@
                 background-color: rgba(85,85,85,0.15);
             }
             main .row0 {
-                background-color: rgba(85,85,255,0.85);
+                background-color: rgba(15,105,15,1);
                 color: rgba(255,255,255,1);
             }
-            main .row1 {
-                height: 60px;
-                background-color: rgba(15,15,170,0.15);
+            main .row01 {
+                height: 50px;
+                background-color: rgba(240,240,240,0.85);
                 color: rgba(0,0,0,1);
             }
-            main .row2 {
-                height: 60px;
-                background-color: rgba(85,85,255,0.15);
+            main .row02 {
+                height: 50px;
+                background-color: rgba(240,240,240,0.15);
                 color: rgba(0,0,0,1);
             }
-            main .row3 {
-                height: 60px;
-                background-color: rgba(15,15,170,0.15);
+            main .row03 {
+                height: 50px;
+                background-color: rgba(240,240,240,0.85);
                 color: rgba(0,0,0,1);
             }
-            main .row4 {
-                height: 60px;
-                background-color: rgba(85,85,255,0.15);
+            main .row04 {
+                height: 50px;
+                background-color: rgba(240,240,240,0.15);
                 color: rgba(0,0,0,1);
             }
-            main .row5 {
-                height: 60px;
-                background-color: rgba(15,15,170,0.15);
+            main .row05 {
+                height: 50px;
+                background-color: rgba(240,240,240,0.85);
                 color: rgba(0,0,0,1);
             }
-            main .row6 {
-                background-color: rgba(255,85,85,0.85);
+            main .row06 {
+                background-color: rgba(15,105,15,1);
                 color: rgba(255,255,255,1);
             }
-            main .row7 {
-                height: 60px;
-                background-color: rgba(170,15,15,0.15);
+            main .row07 {
+                height: 50px;
+                background-color: rgba(240,240,240,0.15);
                 color: rgba(0,0,0,1);
             }
-            main .row8 {
-                height: 60px;
-                background-color: rgba(255,85,85,0.15);
+            main .row08 {
+                height: 50px;
+                background-color: rgba(240,240,240,0.85);
                 color: rgba(0,0,0,1);
             }
-            main .row9 {
-                height: 60px;
-                background-color: rgba(170,15,15,0.15);
+            main .row09 {
+                height: 50px;
+                background-color: rgba(240,240,240,0.15);
                 color: rgba(0,0,0,1);
             }
             main .row10 {
-                height: 60px;
-                background-color: rgba(255,85,85,0.15);
+                height: 50px;
+                background-color: rgba(240,240,240,0.85);
                 color: rgba(0,0,0,1);
             }
-            main .row11 {
-                height: 60px;
-                background-color: rgba(85,85,85,0.85);
+            main .row011 {
+                height: 50px;
+                background-color: rgba(240,240,240,0.15);
                 color: rgba(255,255,255,1);
             }
 
-            /*---------------------------
-            ---   main: upper/lower   ---
-            ---------------------------*/
-            main .upper_side {
-                width: 360px;
-                margin-top: 2px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            main .lower_side {
-                width: 360px;
-                display: flex;
-                justify-content: space-between;
-                margin-top: 4px;
-                margin-left: auto;
-                margin-right: auto;
-                font-size: 10px;
-                color: rgba(85,85,85,1);
-            }
-
-            /*--------------------------
-            ---   main: uniqueness   ---
-            --------------------------*/
-            main .rng {
-                width: 360px;
-                -webkit-appearance: none;
-                appearance: none;
-            }
-            main .rng:focus {
-                outline: none;
-            }
-            main .rng::-webkit-slider-runnable-track {
-                width: 100%;
-                height: 1px;
-                cursor: pointer;
-                box-shadow: none;
-                background: rgb(0,0,0);
-                border-radius: 0px;
-                border: 0px solid rgb(0,0,0);
-            }
-            main .rng::-moz-range-track {
-                width: 100%;
-                height: 1px;
-                cursor: pointer;
-                box-shadow: none;
-                background: rgb(0,0,0);
-                border-radius: 0px;
-                border: 0px solid rgb(0,0,0);
-            }
-            main .rng::-webkit-slider-thumb {
-                -webkit-appearance: none;
-                appearance: none;
-                box-shadow: none;
-                border: 0px solid rgb(80,80,80);
-                box-shadow: 0px 10px 10px rgba(80,80,80,0.25);
-                height: 18px;
-                width: 8px;
-                border-radius: 22px;
-                background: rgb(80,80,80);
-                cursor: pointer;
-                margin-top: -10px;
-            }
-            main .rng::-moz-range-thumb{
-                    box-shadow: none;
-                    border: 0px solid rgb(0,0,0);
-                    box-shadow: 0px 10px 10px rgba(0,0,0,0.25);
-                    height: 18px;
-                    width: 8px;
-                    border-radius: 22px;
-                    background: rgba(0,0,0,1);
-                    cursor: pointer;
-                    -webkit-appearance: none;
-                    appearance: none; /* Standard property for compatibility */
-                    margin-top: -20px;
-            }
-            main .rng::-moz-focus-outer {
-                border: 0;
-            }
+            /*-------------------
+            ---   main: val   ---
+            -------------------*/
             main .val {
-                position: relative;
-                display: block;
                 width: 24px;
                 height: 24px;
-                background: transparent;
-                border-radius: 50%;
                 text-align: center;
                 font-weight: bold;
-                padding-top: 4px;
-                box-sizing: border-box;
-                border: 1px solid rgb(0,0,0);
                 color: rgb(0,0,0);
-                font-size: 12px;
-                margin: 0 auto;
+                font-size: 16px;
             }
 
             /*-------------------
@@ -408,41 +495,9 @@
                 justify-content: center;
                 align-items: center;
             }
-            main .back_btn {
-                position: fixed;
-                top: 90%;
-                margin-right: 15%;
-                width: 120px;
-                height: 30px;
-                border: 2px solid rgba(0,0,0,1);
-                border-radius: 0;
-                background: rgba(255,255,255,1);
-                -webkit-transform-style: preserve-3d;
-                transform-style: preserve-3d;
-                cursor: pointer;
-            }
-            main .back_btn:before {
-                position: absolute;
-                top: 0;
-                left: 0;
-                width: 5px;
-                height: 100%;
-                content: "";
-                -webkit-transition: all .3s;
-                transition: all .3s;
-                background: rgba(0,0,0,1);
-            }
-            main .back_btn:hover {
-                color: rgba(255,255,255,1);
-                background: rgba(0,0,0,1);
-            }
-            main .back_btn:hover:before {
-                background: rgba(255,255,255,1);
-            }
             main .next_btn {
                 position: fixed;
                 top: 90%;
-                margin-left: 15%;
                 width: 120px;
                 height: 30px;
                 border: 2px solid rgba(0,0,0,1);
@@ -558,14 +613,18 @@
         --------------->
         <main>
             <div class="msg" id="msg"></div>
+            <div class="score" id="score">
+                <div id="val_rest">XXX</div>
+            </div>
             <table>
                 <!----------------------------
                 ---   main: col => start   ---
                 ----------------------------->
                 <tr class="heading">
-                    <th class="hcol_1"></th>
-                    <th class="hcol_2">ポータブルスキル</th>
-                    <th class="hcol_3"><span id="val_row0"></span>点</th>
+                    <th class="col_1">ポータブルスキル</th>
+                    <th class="col_2"></th>
+                    <th class="col_3">スコア</th>
+                    <th class="col_4"></th>
                 </tr>
                 <!--------------------------
                 ---   main: col => end   ---
@@ -577,196 +636,182 @@
                     <th class="col_1">仕事の仕方</th>
                     <th class="col_2"></th>
                     <th class="col_3"></th>
+                    <th class="col_4"></th>
                 </tr>
                 <!---------------------------
                 ---   main: row0 => end   ---
                 ---------------------------->
                 <!-----------------------------
-                ---   main: row1 => start   ---
+                ---   main: row01 => start   ---
                 ------------------------------>
-                <tr class="row1">
+                <tr class="row01">
                     <td class="col_1">
                         <span>現状の把握</span>
                     </td>
                     <td class="col_2">
-                        <div class="upper_side">
-                            <input type="range" class="rng" id="rng_row1" min="1" max="7" value="1" oninput="updateScore()">
-                        </div>
-                        <div class="lower_side">
-                            <span>1</span><span>7</span>
-                        </div>
+                        <span class="minus" id="minus_row01" onclick="updateScore(event)">&minus;</span>
                     </td>
                     <td class="col_3">
-                        <span class="val" id="val_row1"></span>
+                        <span class="val" id="val_row01"></span>
+                    </td>
+                    <td class="col_4">
+                        <span class="plus" id="plus_row01" onclick="updateScore(event)">&plus;</span>
                     </td>
                 </tr>
                 <!---------------------------
-                ---   main: row1 => end   ---
+                ---   main: row01 => end   ---
                 ---------------------------->
                 <!-----------------------------
-                ---   main: row2 => start   ---
+                ---   main: row02 => start   ---
                 ------------------------------>
-                <tr class="row2">
+                <tr class="row02">
                     <td class="col_1">
                         <span>課題の設定</span>
                     </td>
                     <td class="col_2">
-                        <div class="upper_side">
-                            <input type="range" class="rng" id="rng_row2" min="1" max="7" value="1" oninput="updateScore()">
-                        </div>
-                        <div class="lower_side">
-                            <span>1</span><span>7</span>
-                        </div>
+                        <span class="minus" id="minus_row02" onclick="updateScore(event)">&minus;</span>
                     </td>
                     <td class="col_3">
-                        <span class="val" id="val_row2"></span>
+                        <span class="val" id="val_row02"></span>
+                    </td>
+                    <td class="col_4">
+                        <span class="plus" id="plus_row02" onclick="updateScore(event)">&plus;</span>
                     </td>
                 </tr>
                 <!---------------------------
-                ---   main: row2 => end   ---
+                ---   main: row02 => end   ---
                 ---------------------------->
                 <!-----------------------------
-                ---   main: row3 => start   ---
+                ---   main: row03 => start   ---
                 ------------------------------>
-                <tr class="row3">
+                <tr class="row03">
                     <td class="col_1">  
                         <span>計画の立案</span>
                     </td>
                     <td class="col_2">
-                        <div class="upper_side">
-                            <input type="range" class="rng" id="rng_row3" min="1" max="7" value="1" oninput="updateScore()">
-                        </div>
-                        <div class="lower_side">
-                            <span>1</span><span>7</span>
-                        </div>
+                        <span class="minus" id="minus_row03" onclick="updateScore(event)">&minus;</span>
                     </td>
                     <td class="col_3">
-                        <span class="val" id="val_row3"></span>
+                        <span class="val" id="val_row03"></span>
+                    </td>
+                    <td class="col_4">
+                        <span class="plus" id="plus_row03" onclick="updateScore(event)">&plus;</span>
                     </td>
                 </tr>
                 <!---------------------------
-                ---   main: row3 => end   ---
+                ---   main: row03 => end   ---
                 ---------------------------->
                 <!-----------------------------
-                ---   main: row4 => start   ---
+                ---   main: row04 => start   ---
                 ------------------------------>
-                <tr class="row4">
+                <tr class="row04">
                     <td class="col_1">
                         <span>課題の遂行</span>
                     </td>
                     <td class="col_2">
-                        <div class="upper_side">
-                            <input type="range" class="rng" id="rng_row4" min="1" max="7" value="1" oninput="updateScore()">
-                        </div>
-                        <div class="lower_side">
-                            <span>1</span><span>7</span>
-                        </div>
+                        <span class="minus" id="minus_row04" onclick="updateScore(event)">&minus;</span>
                     </td>
                     <td class="col_3">
-                        <span class="val" id="val_row4"></span>
+                        <span class="val" id="val_row04"></span>
+                    </td>
+                    <td class="col_4">
+                        <span class="plus" id="plus_row04" onclick="updateScore(event)">&plus;</span>
                     </td>
                 </tr>
                 <!---------------------------
-                ---   main: row4 => end   ---
+                ---   main: row04 => end   ---
                 ---------------------------->
                 <!-----------------------------
-                ---   main: row5 => start   ---
+                ---   main: row05 => start   ---
                 ------------------------------>
-                <tr class="row5">
+                <tr class="row05">
                     <td class="col_1">
                         <span>状況への対応</span>
                     </td>
                     <td class="col_2">
-                        <div class="upper_side">
-                            <input type="range" class="rng" id="rng_row5" min="1" max="7" value="1" oninput="updateScore()">
-                        </div>
-                        <div class="lower_side">
-                            <span>1</span><span>7</span>
-                        </div>
+                        <span class="minus" id="minus_row05" onclick="updateScore(event)">&minus;</span>
                     </td>
                     <td class="col_3">
-                        <span class="val" id="val_row5"></span>
+                        <span class="val" id="val_row05"></span>
+                    </td>
+                    <td class="col_4">
+                        <span class="plus" id="plus_row05" onclick="updateScore(event)">&plus;</span>
                     </td>
                 </tr>
                 <!---------------------------
-                ---   main: row5 => end   ---
+                ---   main: row05 => end   ---
                 ---------------------------->
                 <!-----------------------------
-                ---   main: row6 => start   ---
+                ---   main: row06 => start   ---
                 ------------------------------>
-                <tr class="row6">
+                <tr class="row06">
                     <th class="col_1">人との関わり方</th>
                     <th class="col_2"></th>
                     <th class="col_3"></th>
+                    <th class="col_4"></th>
                 </tr>
                 <!---------------------------
-                ---   main: row6 => end   ---
+                ---   main: row06 => end   ---
                 ---------------------------->
                 <!-----------------------------
-                ---   main: row7 => start   ---
+                ---   main: row07 => start   ---
                 ------------------------------>
-                <tr class="row7">
+                <tr class="row07">
                     <td class="col_1">
                         <span>社内対応</span>
                     </td>
                     <td class="col_2">
-                        <div class="upper_side">
-                            <input type="range" class="rng" id="rng_row7" min="1" max="7" value="1" oninput="updateScore()">
-                        </div>
-                        <div class="lower_side">
-                            <span>1</span><span>7</span>
-                        </div>
+                        <span class="minus" id="minus_row07" onclick="updateScore(event)">&minus;</span>
                     </td>
                     <td class="col_3">
-                        <span class="val" id="val_row7"></span>
+                        <span class="val" id="val_row07"></span>
+                    </td>
+                    <td class="col_4">
+                        <span class="plus" id="plus_row07" onclick="updateScore(event)">&plus;</span>
                     </td>
                 </tr>
                 <!---------------------------
-                ---   main: row7 => end   ---
+                ---   main: row07 => end   ---
                 ---------------------------->
                 <!-----------------------------
-                ---   main: row8 => start   ---
+                ---   main: row08 => start   ---
                 ------------------------------>
-                <tr class="row8">
+                <tr class="row08">
                     <td class="col_1">
                         <span>社外対応</span>
                     </td>
                     <td class="col_2">
-                        <div class="upper_side">
-                            <input type="range" class="rng" id="rng_row8" min="1" max="7" value="1" oninput="updateScore()">
-                        </div>
-                        <div class="lower_side">
-                            <span>1</span><span>7</span>
-                        </div>
+                        <span class="minus" id="minus_row08" onclick="updateScore(event)">&minus;</span>
                     </td>
                     <td class="col_3">
-                        <span class="val" id="val_row8"></span>
+                        <span class="val" id="val_row08"></span>
+                    </td>
+                    <td class="col_4">
+                        <span class="plus" id="plus_row08" onclick="updateScore(event)">&plus;</span>
                     </td>
                 </tr>
                 <!---------------------------
-                ---   main: row8 => end   ---
+                ---   main: row08 => end   ---
                 ---------------------------->
                 <!-----------------------------
-                ---   main: row9 => start   ---
+                ---   main: row09 => start   ---
                 ------------------------------>
-                <tr class="row9">
+                <tr class="row09">
                     <td class="col_1">
                         <span>上司対応</span>
                     </td>
                     <td class="col_2">
-                        <div class="upper_side">
-                            <input type="range" class="rng" id="rng_row9" min="1" max="7" value="1" oninput="updateScore()">
-                        </div>
-                        <div class="lower_side">
-                            <span>1</span><span>7</span>
-                        </div>
+                        <span class="minus" id="minus_row09" onclick="updateScore(event)">&minus;</span>
                     </td>
                     <td class="col_3">
-                        <span class="val" id="val_row9"></span>
+                        <span class="val" id="val_row09"></span>
+                    </td>
+                    <td class="col_4">
+                        <span class="plus" id="plus_row09" onclick="updateScore(event)">&plus;</span>
                     </td>
                 </tr>
                 <!---------------------------
-                ---   main: row9 => end   ---
+                ---   main: row09 => end   ---
                 ---------------------------->
                 <!------------------------------
                 ---   main: row10 => start   ---
@@ -776,15 +821,13 @@
                         <span>部下マネジメント</span>
                     </td>
                     <td class="col_2">
-                        <div class="upper_side">
-                            <input type="range" class="rng" id="rng_row10" min="1" max="7" value="1" oninput="updateScore()">
-                        </div>
-                        <div class="lower_side">
-                            <span>1</span><span>7</span>
-                        </div>
+                        <span class="minus" id="minus_row10" onclick="updateScore(event)">&minus;</span>
                     </td>
                     <td class="col_3">
                         <span class="val" id="val_row10"></span>
+                    </td>
+                    <td class="col_4">
+                        <span class="plus" id="plus_row10" onclick="updateScore(event)">&plus;</span>
                     </td>
                 </tr>
                 <!----------------------------
@@ -792,11 +835,29 @@
                 ----------------------------->
             </table>
             <div class="next">
-                <button class="back_btn" id="back_btn" onclick="view_transition(event)">前へ</button>
-                <span class="back_tips" id="back_tips"></span>
                 <button class="next_btn" id="next_btn" onclick="view_transition(event)" disabled>次へ</button>
                 <span class="next_tips" id="next_tips"></span>
             </div>
+
+            <!---------------------
+            ---   main: modal   ---
+            ---------------------->
+            <div class="modalArea_00" id="modalArea_00">
+                <p class="modalOrder_00" id="modalOrder_00">
+                    9つあるポータブルスキルの持ち点として、あなたには
+                    <span style="font-size: 20px; font-weight: bold;">29点</span>
+                    が与えられています
+                </p>
+                <button class="modalBtn_00" id="modalBtn_00" onclick="closeAction(event)">次に進む</button>
+            </div>    
+            <div class="modalArea_01" id="modalArea_01">
+                <p class="modalOrder_01" id="modalOrder_01">右の数値がちょうど「0」になるよう各スキルに数値を割り振ってください</p>
+                <button class="modalBtn_01" id="modalBtn_01" onclick="closeAction(event)">入力に進む</button>
+            </div>    
+            <!---------------------
+            ---   main: modal   ---
+            ---------------------->
+
         </main>
 
         <footer>
@@ -825,25 +886,16 @@
             const transition_03 = document.getElementById("transition_03");
 
             let val_row0 = document.getElementById("val_row0");
-            let val_row1 = document.getElementById("val_row1");
-            let rng_row1 = document.getElementById("rng_row1");
-            let val_row2 = document.getElementById("val_row2");
-            let rng_row2 = document.getElementById("rng_row2");
-            let val_row3 = document.getElementById("val_row3");
-            let rng_row3 = document.getElementById("rng_row3");
-            let val_row4 = document.getElementById("val_row4");
-            let rng_row4 = document.getElementById("rng_row4");
-            let val_row5 = document.getElementById("val_row5");
-            let rng_row5 = document.getElementById("rng_row5");
-            let val_row6 = document.getElementById("val_row6");
-            let val_row7 = document.getElementById("val_row7");
-            let rng_row7 = document.getElementById("rng_row7");
-            let val_row8 = document.getElementById("val_row8");
-            let rng_row8 = document.getElementById("rng_row8");
-            let val_row9 = document.getElementById("val_row9");
-            let rng_row9 = document.getElementById("rng_row9");
+            let val_row01 = document.getElementById("val_row01");
+            let val_row02 = document.getElementById("val_row02");
+            let val_row03 = document.getElementById("val_row03");
+            let val_row04 = document.getElementById("val_row04");
+            let val_row05 = document.getElementById("val_row05");
+            let val_row06 = document.getElementById("val_row06");
+            let val_row07 = document.getElementById("val_row07");
+            let val_row08 = document.getElementById("val_row08");
+            let val_row09 = document.getElementById("val_row09");
             let val_row10 = document.getElementById("val_row10");
-            let rng_row10 = document.getElementById("rng_row10");
 
             ///////////////////
             //   functions   //
@@ -856,100 +908,103 @@
             };
 
             document.addEventListener("DOMContentLoaded", function() {
-                document.getElementById("msg").innerHTML = name + "さんのポータブルスキル配分";
-                portableskill_understand_uniqueness = Number(sessionStorage.getItem("portableskill_understand_uniqueness"));
-                portableskill_issue_uniqueness = Number(sessionStorage.getItem("portableskill_issue_uniqueness"));
-                portableskill_plan_uniqueness = Number(sessionStorage.getItem("portableskill_plan_uniqueness"));
-                portableskill_do_uniqueness = Number(sessionStorage.getItem("portableskill_do_uniqueness"));
-                portableskill_response_uniqueness = Number(sessionStorage.getItem("portableskill_response_uniqueness"));
-                portableskill_in_uniqueness = Number(sessionStorage.getItem("portableskill_in_uniqueness"));
-                portableskill_out_uniqueness = Number(sessionStorage.getItem("portableskill_out_uniqueness"));
-                portableskill_senior_uniqueness = Number(sessionStorage.getItem("portableskill_senior_uniqueness"));
-                portableskill_junior_uniqueness = Number(sessionStorage.getItem("portableskill_junior_uniqueness"));
-                val_row1.textContent = portableskill_understand_uniqueness;
-                document.getElementById("rng_row1").setAttribute("value", portableskill_understand_uniqueness);
-                val_row2.textContent = portableskill_issue_uniqueness;
-                document.getElementById("rng_row2").setAttribute("value", portableskill_issue_uniqueness);
-                val_row3.textContent = portableskill_plan_uniqueness;
-                document.getElementById("rng_row3").setAttribute("value", portableskill_plan_uniqueness);
-                val_row4.textContent = portableskill_do_uniqueness;
-                document.getElementById("rng_row4").setAttribute("value", portableskill_do_uniqueness);
-                val_row5.textContent = portableskill_response_uniqueness;
-                document.getElementById("rng_row5").setAttribute("value", portableskill_response_uniqueness);
-                val_row7.textContent = portableskill_in_uniqueness;
-                document.getElementById("rng_row7").setAttribute("value", portableskill_in_uniqueness);
-                val_row8.textContent = portableskill_out_uniqueness;
-                document.getElementById("rng_row8").setAttribute("value", portableskill_out_uniqueness);
-                val_row9.textContent = portableskill_senior_uniqueness;
-                document.getElementById("rng_row9").setAttribute("value", portableskill_senior_uniqueness);
-                val_row10.textContent = portableskill_junior_uniqueness;
-                document.getElementById("rng_row10").setAttribute("value", portableskill_junior_uniqueness);
+                // document.getElementById("msg").innerHTML = name + "さんのポータブルスキル配分";
+                val_sum = 29
+                val_row01.textContent = Number(sessionStorage.getItem("portableskill_understand_uniqueness"));
+                val_row02.textContent = Number(sessionStorage.getItem("portableskill_issue_uniqueness"));
+                val_row03.textContent = Number(sessionStorage.getItem("portableskill_plan_uniqueness"));
+                val_row04.textContent = Number(sessionStorage.getItem("portableskill_do_uniqueness"));
+                val_row05.textContent = Number(sessionStorage.getItem("portableskill_response_uniqueness"));
+                val_row07.textContent = Number(sessionStorage.getItem("portableskill_in_uniqueness"));
+                val_row08.textContent = Number(sessionStorage.getItem("portableskill_out_uniqueness"));
+                val_row09.textContent = Number(sessionStorage.getItem("portableskill_senior_uniqueness"));
+                val_row10.textContent = Number(sessionStorage.getItem("portableskill_junior_uniqueness"));
                 let portableskill_sum =
-                    Number(val_row1.textContent) +
-                    Number(val_row2.textContent) +
-                    Number(val_row3.textContent) +
-                    Number(val_row4.textContent) +
-                    Number(val_row5.textContent) +
-                    Number(val_row7.textContent) +
-                    Number(val_row8.textContent) +
-                    Number(val_row9.textContent) +
+                    Number(val_row01.textContent) +
+                    Number(val_row02.textContent) +
+                    Number(val_row03.textContent) +
+                    Number(val_row04.textContent) +
+                    Number(val_row05.textContent) +
+                    Number(val_row07.textContent) +
+                    Number(val_row08.textContent) +
+                    Number(val_row09.textContent) +
                     Number(val_row10.textContent)
-                val_row0.textContent = portableskill_sum
+                val_rest.textContent = val_sum - portableskill_sum
                 if (portableskill_sum != 29) {
                     next_btn.disabled = true;
-                    next_tips.innerHTML = "持ち味は合計で29点にしてください";
+                    next_tips.innerHTML = "左上の数値を各スキルに割り振りきってください";
+                    document.getElementById("score").style.background =
+                        "radial-gradient(circle, rgba(240, 240, 240, 0.15), rgba(85, 85, 85, 0.85))";
                 } else {
                     next_btn.disabled = false;
                     next_tips.innerHTML = "";
-                };
+                    document.getElementById("score").style.background =
+                        "radial-gradient(circle, rgba(130, 255, 130, 1), rgba(45, 170, 45, 1))";
+                }
             });
 
-            function updateScore() {
-                portableskill_understand_uniqueness = Number(document.getElementById("rng_row1").value);
-                portableskill_issue_uniqueness = Number(document.getElementById("rng_row2").value);
-                portableskill_plan_uniqueness = Number(document.getElementById("rng_row3").value);
-                portableskill_do_uniqueness = Number(document.getElementById("rng_row4").value);
-                portableskill_response_uniqueness = Number(document.getElementById("rng_row5").value);
-                portableskill_in_uniqueness = Number(document.getElementById("rng_row7").value);
-                portableskill_out_uniqueness = Number(document.getElementById("rng_row8").value);
-                portableskill_senior_uniqueness = Number(document.getElementById("rng_row9").value);
-                portableskill_junior_uniqueness = Number(document.getElementById("rng_row10").value);
-                val_row1.textContent = portableskill_understand_uniqueness;
-                document.getElementById("rng_row1").setAttribute("value", portableskill_understand_uniqueness);
-                val_row2.textContent = portableskill_issue_uniqueness;
-                document.getElementById("rng_row2").setAttribute("value", portableskill_issue_uniqueness);
-                val_row3.textContent = portableskill_plan_uniqueness;
-                document.getElementById("rng_row3").setAttribute("value", portableskill_plan_uniqueness);
-                val_row4.textContent = portableskill_do_uniqueness;
-                document.getElementById("rng_row4").setAttribute("value", portableskill_do_uniqueness);
-                val_row5.textContent = portableskill_response_uniqueness;
-                document.getElementById("rng_row5").setAttribute("value", portableskill_response_uniqueness);
-                val_row7.textContent = portableskill_in_uniqueness;
-                document.getElementById("rng_row7").setAttribute("value", portableskill_in_uniqueness);
-                val_row8.textContent = portableskill_out_uniqueness;
-                document.getElementById("rng_row8").setAttribute("value", portableskill_out_uniqueness);
-                val_row9.textContent = portableskill_senior_uniqueness;
-                document.getElementById("rng_row9").setAttribute("value", portableskill_senior_uniqueness);
-                val_row10.textContent = portableskill_junior_uniqueness;
-                document.getElementById("rng_row10").setAttribute("value", portableskill_junior_uniqueness);
+            function updateScore(event) {
+                let row_num = event.target.id.slice(-2);
+                let calc_minus = event.target.id.slice(0, 5);
+                let calc_plus = event.target.id.slice(0, 4);
+                if (calc_minus === "minus") {
+                    if (Number(document.getElementById(`val_row${row_num}`).textContent) === 1) {
+                        document.getElementById(`val_row${row_num}`).textContent = 
+                            Number(document.getElementById(`val_row${row_num}`).textContent);
+                    } else {
+                        document.getElementById(`val_row${row_num}`).textContent = 
+                            Number(document.getElementById(`val_row${row_num}`).textContent) - 1;
+                    }
+                } else if (calc_plus === "plus") {
+                    document.getElementById(`val_row${row_num}`).textContent = 
+                        Number(document.getElementById(`val_row${row_num}`).textContent) + 1;
+                }
+                val_sum = 29
+                val_row01.textContent = Number(document.getElementById("val_row01").textContent);
+                val_row02.textContent = Number(document.getElementById("val_row02").textContent);
+                val_row03.textContent = Number(document.getElementById("val_row03").textContent);
+                val_row04.textContent = Number(document.getElementById("val_row04").textContent);
+                val_row05.textContent = Number(document.getElementById("val_row05").textContent);
+                val_row07.textContent = Number(document.getElementById("val_row07").textContent);
+                val_row08.textContent = Number(document.getElementById("val_row08").textContent);
+                val_row09.textContent = Number(document.getElementById("val_row09").textContent);
+                val_row10.textContent = Number(document.getElementById("val_row10").textContent);
                 let portableskill_sum =
-                    Number(val_row1.textContent) +
-                    Number(val_row2.textContent) +
-                    Number(val_row3.textContent) +
-                    Number(val_row4.textContent) +
-                    Number(val_row5.textContent) +
-                    Number(val_row7.textContent) +
-                    Number(val_row8.textContent) +
-                    Number(val_row9.textContent) +
+                    Number(val_row01.textContent) +
+                    Number(val_row02.textContent) +
+                    Number(val_row03.textContent) +
+                    Number(val_row04.textContent) +
+                    Number(val_row05.textContent) +
+                    Number(val_row07.textContent) +
+                    Number(val_row08.textContent) +
+                    Number(val_row09.textContent) +
                     Number(val_row10.textContent)
-                val_row0.textContent = portableskill_sum
+                val_rest.textContent = val_sum - portableskill_sum
                 if (portableskill_sum != 29) {
                     next_btn.disabled = true;
-                    next_tips.innerHTML = "持ち味は合計で29点にしてください";
+                    next_tips.innerHTML = "左上の数値を各スキルに割り振りきってください";
+                    document.getElementById("score").style.background =
+                        "radial-gradient(circle, rgba(240, 240, 240, 0.15), rgba(85, 85, 85, 0.85))";
                 } else {
                     next_btn.disabled = false;
                     next_tips.innerHTML = "";
-                };
+                    document.getElementById("score").style.background =
+                        "radial-gradient(circle, rgba(130, 255, 130, 1), rgba(45, 170, 45, 1))";
+                }                
+            };
+
+            function closeAction(event) {
+                let modalArea_00 = document.getElementById("modalArea_00");
+                let modalArea_01 = document.getElementById("modalArea_01");
+                let score = document.getElementById("score");
+                if (event.target.id.slice(-2) === "00") {
+                    modalArea_00.style.display = "none";
+                    modalArea_01.style.display = "flex";
+                    score.style.display = "flex";
+                } else if (event.target.id.slice(-2) === "01") {
+                    modalArea_00.style.display = "none";
+                    modalArea_01.style.display = "none";
+                }
             };
 
             function view_transition(event) {
@@ -962,21 +1017,20 @@
                 let minutes = ("0" + now.getMinutes()).slice(-2);
                 let seconds = ("0" + now.getSeconds()).slice(-2);
                 let timestamp = year + month + day + hours + minutes + seconds;
-                console.log(event.target.id.slice(-2));
                 let data = {
                     "task": "save_01a",
                     "timestamp": timestamp,
                     "userid": userid,
                     "name": name,
-                    "tmp_portableskill_understand_uniqueness": Number(document.getElementById("rng_row1").value),
-                    "tmp_portableskill_issue_uniqueness": Number(document.getElementById("rng_row2").value),
-                    "tmp_portableskill_plan_uniqueness": Number(document.getElementById("rng_row3").value),
-                    "tmp_portableskill_do_uniqueness": Number(document.getElementById("rng_row4").value),
-                    "tmp_portableskill_response_uniqueness": Number(document.getElementById("rng_row5").value),
-                    "tmp_portableskill_in_uniqueness": Number(document.getElementById("rng_row7").value),
-                    "tmp_portableskill_out_uniqueness": Number(document.getElementById("rng_row8").value),
-                    "tmp_portableskill_senior_uniqueness": Number(document.getElementById("rng_row9").value),
-                    "tmp_portableskill_junior_uniqueness": Number(document.getElementById("rng_row10").value)
+                    "tmp_portableskill_understand_uniqueness": Number(document.getElementById("val_row01").textContent),
+                    "tmp_portableskill_issue_uniqueness": Number(document.getElementById("val_row02").textContent),
+                    "tmp_portableskill_plan_uniqueness": Number(document.getElementById("val_row03").textContent),
+                    "tmp_portableskill_do_uniqueness": Number(document.getElementById("val_row04").textContent),
+                    "tmp_portableskill_response_uniqueness": Number(document.getElementById("val_row05").textContent),
+                    "tmp_portableskill_in_uniqueness": Number(document.getElementById("val_row07").textContent),
+                    "tmp_portableskill_out_uniqueness": Number(document.getElementById("val_row08").textContent),
+                    "tmp_portableskill_senior_uniqueness": Number(document.getElementById("val_row09").textContent),
+                    "tmp_portableskill_junior_uniqueness": Number(document.getElementById("val_row10").textContent)
                 };
                 console.log({
                     method: "POST",
@@ -996,15 +1050,15 @@
                 .then(response => response.json())
                 .then(result => {
                     console.log("Success!!");
-                    sessionStorage.setItem("portableskill_understand_uniqueness", Number(document.getElementById("rng_row1").value));
-                    sessionStorage.setItem("portableskill_issue_uniqueness", Number(document.getElementById("rng_row2").value));
-                    sessionStorage.setItem("portableskill_plan_uniqueness", Number(document.getElementById("rng_row3").value));
-                    sessionStorage.setItem("portableskill_do_uniqueness", Number(document.getElementById("rng_row4").value));
-                    sessionStorage.setItem("portableskill_response_uniqueness", Number(document.getElementById("rng_row5").value));
-                    sessionStorage.setItem("portableskill_in_uniqueness", Number(document.getElementById("rng_row7").value));
-                    sessionStorage.setItem("portableskill_out_uniqueness", Number(document.getElementById("rng_row8").value));
-                    sessionStorage.setItem("portableskill_senior_uniqueness", Number(document.getElementById("rng_row9").value));
-                    sessionStorage.setItem("portableskill_junior_uniqueness", Number(document.getElementById("rng_row10").value));
+                    sessionStorage.setItem("portableskill_understand_uniqueness", Number(document.getElementById("val_row01").textContent));
+                    sessionStorage.setItem("portableskill_issue_uniqueness", Number(document.getElementById("val_row02").textContent));
+                    sessionStorage.setItem("portableskill_plan_uniqueness", Number(document.getElementById("val_row03").textContent));
+                    sessionStorage.setItem("portableskill_do_uniqueness", Number(document.getElementById("val_row04").textContent));
+                    sessionStorage.setItem("portableskill_response_uniqueness", Number(document.getElementById("val_row05").textContent));
+                    sessionStorage.setItem("portableskill_in_uniqueness", Number(document.getElementById("val_row07").textContent));
+                    sessionStorage.setItem("portableskill_out_uniqueness", Number(document.getElementById("val_row08").textContent));
+                    sessionStorage.setItem("portableskill_senior_uniqueness", Number(document.getElementById("val_row09").textContent));
+                    sessionStorage.setItem("portableskill_junior_uniqueness", Number(document.getElementById("val_row10").textContent));
                     hideLoading();
                     if (action === "next_btn") {
                         window.location.href = "input_01b.html";
